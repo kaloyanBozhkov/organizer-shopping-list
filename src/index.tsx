@@ -1,17 +1,29 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
+import { createRoot } from 'react-dom'
 import App from './App'
-import reportWebVitals from './reportWebVitals'
 import 'scss/general.scss'
 
-ReactDOM.render(
-    <React.StrictMode>
-        <App />
-    </React.StrictMode>,
-    document.getElementById('root')
-)
+const rootElement = document.getElementById('root')
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals()
+if (!rootElement) throw Error('No #root element found on page!')
+
+const root = createRoot(rootElement)
+
+type Applications = 'app' | 'admin'
+
+export const renderApplication = (what: Applications) => {
+    let content
+
+    switch (what) {
+        case 'admin':
+            content = null
+            break
+        default:
+            content = <App />
+    }
+
+    root.render(<React.StrictMode>{content}</React.StrictMode>)
+}
+
+// rendr main app
+renderApplication('app')
