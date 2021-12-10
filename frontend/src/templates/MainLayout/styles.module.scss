@@ -1,0 +1,17 @@
+@import "scss/variables.scss";
+
+.mainLayout {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    header {
+        height: auto;
+    }
+
+    main {
+        flex: 1;
+        margin-top: $spacingMain;
+    }
+}

@@ -1,0 +1,8 @@
+@import "scss/mixins";
+@import "scss/keyframes";
+
+.cart {
+    grid-gap: 2rem;
+    max-width: 50vw;
+    @include animateChildren(slideInBottomWithOpacity);
+}

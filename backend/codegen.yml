@@ -1,0 +1,18 @@
+schema: ./src/graphql/typeDefs.graphql
+documents:
+    [
+        ./src/graphql/queries.graphql,
+        ./src/graphql/mutations.graphql,
+        ./src/graphql/subscriptions.graphql,
+    ]
+generates:
+    ./src/types/resolversTypes.generated.ts:
+        config:
+            useIndexSignature: true
+            contextType: ./context#ResolversContext
+            enumValues:
+                SortListItemsBy: ./enums#SortListItemsBy
+        plugins:
+            - typescript
+            - typescript-resolvers
+            - typescript-operations

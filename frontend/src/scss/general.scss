@@ -1,0 +1,59 @@
+@import "fonts.scss";
+@import "breakpoints.scss";
+@import "variables.scss";
+
+/**
+ * 1. Correct the line height in all browsers.
+ * 2. Prevent adjustments of font size after orientation changes in iOS.
+ */
+
+html {
+    //Defines what 1rem is: 1rem = 10px
+    font-size: 62.5%; // 10px / 16px = 62.5% *
+    line-height: 1.15; /* 1 */
+    -webkit-text-size-adjust: 100%; /* 2 */
+
+    @include breakpoint(big-desktop) {
+        font-size: 75%; //1 rem = 12px;
+    }
+
+    @include breakpoint(tablet-landscape) {
+        font-size: 56.25%; //1rem = 9px;
+    }
+
+    // mobile does not seem to have fonts changed by much
+    // @include breakpoint(tablet-portrait) {
+    //     font-size: 50%; //1rem = 8px; 8/16 = 50%
+    // }
+
+    // @include breakpoint(mobile) {
+    //     font-size: 37.5%; //1rem = 6px; 6/16 = 37.5%
+    // }
+}
+
+*,
+*::after,
+*::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-size: 1.6rem;
+    font-family: "Comfortaa", cursive;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+html,
+body,
+#root {
+    height: 100%;
+    width: 100%;
+    background: $black;
+}

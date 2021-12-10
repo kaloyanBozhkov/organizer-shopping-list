@@ -1,0 +1,22 @@
+schema: ../backend/src/graphql/typeDefs.graphql
+documents:
+    [
+        ../backend/src/graphql/queries.graphql,
+        ../backend/src/graphql/mutations.graphql,
+        ../backend/src/graphql/subscriptions.graphql,
+    ]
+generates:
+    ./src/types/graphQL.generated.ts:
+        config:
+            useIndexSignature: true
+            withHooks: true
+            withComponent: false
+            withHOC: false
+            contextType: ../../../backend/src/types/context#ResolversContext
+            enumValues:
+                SortListItemsBy: ../../../backend/src/types/enums#SortListItemsBy
+        plugins:
+            - typescript
+            - typescript-resolvers
+            - typescript-operations
+            - typescript-react-apollo

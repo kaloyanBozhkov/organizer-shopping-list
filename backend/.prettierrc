@@ -1,0 +1,28 @@
+{
+    "trailingComma": "es5",
+    "tabWidth": 4,
+    "semi": false,
+    "singleQuote": true,
+    "arrowParens": "always",
+    "printWidth": 100,
+    "overrides": [
+        {
+            "files": ["*.json", "*.graphql"],
+            "options": {
+                "printWidth": 120,
+                "singleQuote": false,
+                "trailingComma": "es5"
+            }
+        }
+    ],
+    "plugins": ["./node_modules/@trivago/prettier-plugin-sort-imports"],
+    "importOrder": [
+        "^types/(.*)$",
+        "^graphql/(.*)$",
+        "^helpers/(.*)$",
+        "^src/(.*)$",
+        "^[./]"
+    ],
+    "importOrderSeparation": true,
+    "importOrderSortSpecifiers": true
+}

@@ -1,0 +1,13 @@
+query GetAllListItems($sortBy: SortListItemsBy, $sortDirection: SortDirection) {
+    allListItems(sortBy: $sortBy, sortDirection: $sortDirection) {
+        id
+        name
+        price
+        currency
+        inShops {
+            id
+            isOpen
+            name: shopName
+        }
+    }
+}

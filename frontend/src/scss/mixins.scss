@@ -1,0 +1,88 @@
+@import "breakpoints.scss";
+@import "variables.scss";
+@import "keyframes.scss";
+
+@mixin generalLayoutStyles() {
+    height: 100%;
+    margin: auto;
+
+    @include mediaQuery(mobile) {
+        width: 85%;
+    }
+
+    @include mediaQuery(tablet-portrait) {
+        width: 75%;
+    }
+
+    @include mediaQuery(tablet-landscape) {
+        width: 65%;
+    }
+
+    width: 45.5%;
+
+    @include mediaQuery(big-desktop) {
+        width: 40%;
+    }
+}
+
+@mixin animate($keyframesName, $duration: 300ms, $delay: 0ms, $fillmode: forwards) {
+    animation-delay: $delay;
+    animation-duration: $duration;
+    animation-name: $keyframesName;
+    animation-fill-mode: $fillmode;
+}
+
+@mixin unselectable() {
+    -webkit-user-select: none; /* Chrome all / Safari all */
+    -moz-user-select: none; /* Firefox all */
+    -ms-user-select: none; /* IE 10+ */
+    user-select: none; /* Likely future */
+    -webkit-tap-highlight-color: transparent;
+}
+
+@mixin thinScrollBar($isVertical: true, $isVisibleOnHover: false) {
+    // for desktop show the scrollbar but make it thin!
+    &::-webkit-scrollbar {
+        // for mobile do not show the scroll bar, user can scroll without it
+        @include breakpoint(tablet-landscape) {
+            display: none;
+        }
+
+        @if ($isVertical) {
+            width: 4px;
+            height: 0;
+        } @else {
+            width: 0;
+            height: 4px;
+        }
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: $grey;
+    }
+
+    @if ($isVisibleOnHover) {
+        &:not(:hover) {
+            &::-webkit-scrollbar-thumb {
+                background-color: transparent;
+            }
+        }
+    }
+}
+
+@mixin closeBtnHoverable {
+    &:hover {
+        svg {
+            transform: scale(0.8);
+        }
+    }
+}
+
+@mixin animateChildren($keyframes, $animationSpeed: 600ms, $delayMultiplier: 100ms) {
+    @for $i from 0 through 20 {
+        > *:nth-child(#{$i}) {
+            opacity: 0;
+            @include animate($keyframes, $animationSpeed, $i * $delayMultiplier, forwards);
+        }
+    }
+}

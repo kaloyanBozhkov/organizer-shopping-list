@@ -1,0 +1,23 @@
+version: '3.8'
+# define each of our containers
+services:
+    # database that we have named organizer_shopping_list_db. This is important so we can reference this container later on.
+    organizer_shopping_list_db:
+        image: mysql:6
+        container_name: organizer_shopping_list_db
+        ports:
+            - '${DATABASE_PORT}:${DATABASE_PORT}'
+        # volumes list where we map the db_data volume to the /var/lib/mysql location within the MySQL container.
+        volumes:
+            - organizer_shopping_list_db_data:/var/lib/mysql
+        # ensure that our container is always running and even if something causes it to fail, it will automatically restart
+        restart: always
+        # makes it possible for to connect to our MySQL 8 database, changing the default authentication setting to the native MySQL password
+        command: --default-authentication-plugin=mysql_native_password
+        environment:
+            MYSQL_ROOT_PASSWORD: '${DATABASE_ROOT_PASSWORD}'
+            MYSQL_DATABASE: '${DATABASE_NAME}'
+            MYSQL_USER: '${DATABASE_USER}'
+            MYSQL_PASSWORD: '${DATABASE_PASSWORD}'
+volumes:
+    organizer_shopping_list_db_data:
