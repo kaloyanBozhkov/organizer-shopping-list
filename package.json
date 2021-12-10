@@ -11,9 +11,8 @@
     "start:both": "run-p run:fe run:be",
     "run:fe": "cd frontend && npm run start",
     "run:be": "cd backend && npm run start:dev"
-  }, 
+  },
   "dependencies": {
-    "npm-run-all": "^4.1.5",
-    "ttab": "^0.7.2"
+    "npm-run-all": "^4.1.5"
   }
 }
