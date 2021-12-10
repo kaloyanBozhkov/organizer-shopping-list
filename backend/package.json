@@ -6,7 +6,7 @@
         "start:dev": "ts-node-dev server.ts",
         "start": "ts-node server.ts",
         "remove_husky": "rimraf .husky",
-        "postinstall": "npm run remove_husky && cd ../ && husky install backend/.husky && husky add backend/.husky/pre-commit 'cd backend && npm run pre-commit' && husky add backend/.husky/pre-push 'cd backend && npm run pre-push' && cd backend && npm run generateGraphQLHooks",
+        "postinstall": "npm run remove_husky && cd ../ && husky install backend/.husky && husky add backend/.husky/pre-commit 'cd backend && npm run pre-commit' && husky add backend/.husky/pre-push 'cd backend && npm run pre-push' && cd backend && npm run generateGraphQLTypes",
         "pre-commit": "lint-staged",
         "pre-push": "npm run eslint_check",
         "eslint_check": "eslint 'src/**/*.{js,*.js,ts,*.ts,tsx,*.tsx}'",
@@ -15,9 +15,9 @@
         "prettier_fix": "prettier --write 'src/**/*.{js,*.js,ts,*.ts,json}'",
         "check_all": "npm run prettier_check && npm run eslint_check",
         "fix_all": "npm run prettier_fix && eslint_fix",
-        "generateGraphQLHooks": "graphql-codegen --require dotenv/config --config codegen.yml && npm run formatGeneratedCode",
+        "generateGraphQLTypes": "graphql-codegen --require dotenv/config --config codegen.yml && npm run formatGeneratedCode",
         "formatGeneratedCode": "prettier --write 'src/**/*.generated.ts'",
-        "generateGraphQLHooks:watch": "graphql-codegen --require dotenv/config --config codegen.yml --watch && npm run formatGeneratedCode"
+        "generateGraphQLTypes:watch": "graphql-codegen --require dotenv/config --config codegen.yml --watch && npm run formatGeneratedCode"
     },
     "lint-staged": {
         "src/**/*.{js,*.js,ts,*.ts,tsx,*.tsx,json}": [

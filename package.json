@@ -5,7 +5,7 @@
   "scripts": {
     "postinstall": "npm run i:both && npm run generateGraphQLHooks:both",
     "i:both": "run-p i:fe i:be",
-    "generateGraphQLHooks:both": "cd frontend && npm run generateGraphQLHooks && cd ../backend && npm run generateGraphQLHooks",
+    "generateGraphQLCode:both": "cd frontend && npm run generateGraphQLHooks && cd ../backend && npm run generateGraphQLTypes",
     "i:fe": "cd frontend && npm i",
     "i:be": "cd backend && npm i",
     "start:both": "run-p run:fe run:be",
