@@ -58,8 +58,8 @@
     },
     "scripts": {
         "remove_husky": "rimraf .husky",
-        "postinstall": "npm run remove_husky && cd ../ && husky install frontend/.husky && husky add frontend/.husky/pre-commit 'cd frontend && npm run pre-commit' && husky add frontend/.husky/pre-push 'cd frontend && npm run pre-push' && cd frontend && npm run generateGraphQLHooks && npm run formatGeneratedCode",
-        "pre-commit": "cd frontend && lint-staged",
+        "postinstall": "npm run remove_husky && cd ../ && husky install frontend/.husky && husky add frontend/.husky/pre-commit 'cd frontend && npm run pre-commit' && husky add frontend/.husky/pre-push 'cd frontend && npm run pre-push' && cd frontend && npm run generateGraphQLHooks",
+        "pre-commit": "lint-staged",
         "pre-push": "npm run check_all",
         "start": "react-scripts start",
         "build": "react-scripts build",
@@ -73,7 +73,7 @@
         "stylelint_fix": "stylelint 'src/**/*.{scss,*.scss,css,*.css}' --fix",
         "prettier_fix": "prettier --write 'src/**/*.{js,*.js,ts,*.ts,tsx,*.tsx,scss,*.scss,css,*.css,json}'",
         "fix_all": "npm run prettier_fix && npm run eslint_fix && npm run stylelint_fix",
-        "generateGraphQLHooks": "graphql-codegen --require dotenv/config --config codegen.yml",
+        "generateGraphQLHooks": "graphql-codegen --require dotenv/config --config codegen.yml && npm run formatGeneratedCode",
         "formatGeneratedCode": "prettier --write 'src/**/*.generated.ts'",
         "generateGraphQLHooks:watch": "graphql-codegen --require dotenv/config --config codegen.yml --watch"
     },

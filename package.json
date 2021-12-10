@@ -1,0 +1,19 @@
+{
+  "name": "booter",
+  "version": "0.0.1",
+  "description": "commands to boot project FE and BE on local",
+  "scripts": {
+    "postinstall": "npm run i:both && npm run generateGraphQLHooks:both",
+    "i:both": "run-p i:fe i:be",
+    "generateGraphQLHooks:both": "cd frontend && npm run generateGraphQLHooks && cd ../backend && npm run generateGraphQLHooks",
+    "i:fe": "cd frontend && npm i",
+    "i:be": "cd backend && npm i",
+    "start:both": "run-p run:fe run:be",
+    "run:fe": "cd frontend && npm run start",
+    "run:be": "cd backend && npm run start:dev"
+  }, 
+  "dependencies": {
+    "npm-run-all": "^4.1.5",
+    "ttab": "^0.7.2"
+  }
+}
