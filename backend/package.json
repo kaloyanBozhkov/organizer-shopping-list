@@ -9,8 +9,8 @@
         "postinstall": "npm run remove_husky && cd ../ && husky install backend/.husky && husky add backend/.husky/pre-commit 'cd backend && npm run pre-commit' && husky add backend/.husky/pre-push 'cd backend && npm run pre-push' && cd backend && npm run generateGraphQLTypes",
         "pre-commit": "lint-staged",
         "pre-push": "npm run eslint_check",
-        "eslint_check": "eslint 'src/**/*.{js,*.js,ts,*.ts,tsx,*.tsx}'",
-        "eslint_fix": "eslint 'src/**/*.{js,*.js,ts,*.ts,tsx,*.tsx}' --fix",
+        "eslint_check": "eslint 'src/**/*.{js,*.js,ts,*.ts}'",
+        "eslint_fix": "eslint 'src/**/*.{js,*.js,ts,*.ts}' --fix",
         "prettier_check": "prettier --check 'src/**/*.{js,*.js,ts,*.ts,,json}'",
         "prettier_fix": "prettier --write 'src/**/*.{js,*.js,ts,*.ts,json}'",
         "check_all": "npm run prettier_check && npm run eslint_check",
@@ -20,7 +20,7 @@
         "generateGraphQLTypes:watch": "graphql-codegen --require dotenv/config --config codegen.yml --watch && npm run formatGeneratedCode"
     },
     "lint-staged": {
-        "src/**/*.{js,*.js,ts,*.ts,tsx,*.tsx,json}": [
+        "src/**/*.{js,*.js,ts,*.ts,json}": [
             "prettier --write",
             "eslint --fix"
         ]
