@@ -44,21 +44,6 @@ export const ActionsProvider = ({
             onRemoveShoppingItemFromCart: (id) => {
                 console.warn('onRemoveShoppingItemFromCart', id)
             },
-            // onGetShoppingItems: (itemsResource) => {
-            //     setStore({
-            //         prop: 'shoppingItems',
-            //         value: {
-            //             read() {
-            //                 return (
-            //                     itemsResource
-            //                         .read()
-            //                         // quick format from arr to { id: ShoppingItem }
-            //                         .reduce((acc, item) => ({ ...acc, [item.id]: item }), {})
-            //                 )
-            //             },
-            //         },
-            //     })
-            // },
             onMarkPurchased: (id) => {
                 console.warn('onMarkPurchased', id)
             },

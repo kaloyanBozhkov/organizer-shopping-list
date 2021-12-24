@@ -1,14 +1,14 @@
 import React from 'react'
 
-import type ShoppingItem from 'classes/ShoppingItem'
+import { ListItem } from 'types/graphQL.generated'
 
 export type Actions = {
     onToggleLoginProcess: () => void
     onLogin: () => void
     onLogout: () => void
-    onAddShoppingItemToCart: (id: ShoppingItem['id']) => void
-    onRemoveShoppingItemFromCart: (id: ShoppingItem['id']) => void
-    onMarkPurchased: (id: ShoppingItem['id']) => void
+    onAddShoppingItemToCart: (id: ListItem['id']) => void
+    onRemoveShoppingItemFromCart: (id: ListItem['id']) => void
+    onMarkPurchased: (id: ListItem['id']) => void
 }
 
 const ActionsContext = React.createContext<Actions>({} as Actions)

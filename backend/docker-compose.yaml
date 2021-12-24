@@ -3,7 +3,7 @@ version: '3.8'
 services:
     # database that we have named organizer_shopping_list_db. This is important so we can reference this container later on.
     organizer_shopping_list_db:
-        image: mysql:6
+        image: mysql:8.0.27
         container_name: organizer_shopping_list_db
         ports:
             - '${DATABASE_PORT}:${DATABASE_PORT}'

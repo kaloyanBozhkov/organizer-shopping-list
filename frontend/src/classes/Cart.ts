@@ -1,23 +1,23 @@
-import ShoppingItem from './ShoppingItem'
+import { ListItem } from 'types/graphQL.generated'
 
 export default class Cart {
-    shoppingItems: Record<ShoppingItem['id'], ShoppingItem>
+    listItems: Record<ListItem['id'], ListItem>
 
     constructor() {
-        this.shoppingItems = {}
+        this.listItems = {}
     }
 
-    addItem(item: ShoppingItem) {
-        if (this.shoppingItems[item.id])
+    addItem(item: ListItem) {
+        if (this.listItems[item.id])
             throw Error(`Motherfucker wtf this "${item.id}" already exists`)
 
-        this.shoppingItems[item.id] = item
+        this.listItems[item.id] = item
     }
 
-    removeItem(id: ShoppingItem['id']) {
-        if (!Object.hasOwnProperty.call(this.shoppingItems, id))
+    removeItem(id: ListItem['id']) {
+        if (!Object.hasOwnProperty.call(this.listItems, id))
             throw Error(`You fool, can't remove ${id} since it dont exist in the cart`)
 
-        delete this.shoppingItems[id]
+        delete this.listItems[id]
     }
 }

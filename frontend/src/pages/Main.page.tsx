@@ -2,7 +2,7 @@
 // import templates
 import Suspensify from 'hoc/Suspensify'
 
-import React, { useContext } from 'react'
+import React, { Suspense, useContext } from 'react'
 
 import StoreContext from 'context/Store.context'
 
@@ -18,7 +18,9 @@ const MainPage = () => {
     return (
         <Suspensify message="Loading Items..." modifier="main">
             <MainLayout header={<Header />} dialog={activeDialog ? <LoginDialog /> : null}>
-                <Cart />
+                <Suspense fallback={<p>Loading</p>}>
+                    <Cart />
+                </Suspense>
             </MainLayout>
         </Suspensify>
     )

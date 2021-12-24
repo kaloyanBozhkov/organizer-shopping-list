@@ -28,6 +28,8 @@
         "^components/(.*)$",
         "^@mui/(.*)$",
         "^services/(.*)$",
+        "^helpers/(.*)$",
+        "^[../]",
         "^[./]",
         ".scss$",
         ".module.scss$"

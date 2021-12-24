@@ -1,4 +1,11 @@
-const { override, addWebpackModuleRule } = require('customize-cra')
+const {
+        override,
+        addWebpackModuleRule,
+        removeModuleScopePlugin,
+        addWebpackAlias,
+        babelInclude,
+    } = require('customize-cra'),
+    path = require('path')
 
 module.exports = override(
     // embedIndexStartFile,
@@ -40,5 +47,9 @@ module.exports = override(
                 publicPath: '../..',
             },
         },
-    })
+    }),
+    // circumvent limitation to import from only within the src folder
+    removeModuleScopePlugin(),
+    // tell babel to transpile sutff within our src folder but also ourside it, and where
+    babelInclude([path.resolve('src'), path.resolve('../backend/src')])
 )

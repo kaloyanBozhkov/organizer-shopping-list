@@ -1,22 +1,27 @@
-schema: ../backend/src/graphql/typeDefs.graphql
+schema: http://localhost:4000/graphql
 documents:
     [
-        ../backend/src/graphql/queries.graphql,
-        ../backend/src/graphql/mutations.graphql,
-        ../backend/src/graphql/subscriptions.graphql,
+        ./src/graphql/queries.graphql,
+        ./src/graphql/mutations.graphql,
+        ./src/graphql/subscriptions.graphql,
     ]
 generates:
     ./src/types/graphQL.generated.ts:
         config:
             useIndexSignature: true
-            withHooks: true
-            withComponent: false
-            withHOC: false
-            contextType: ../../../backend/src/types/context#ResolversContext
-            enumValues:
-                SortListItemsBy: ../../../backend/src/types/enums#SortListItemsBy
+            namingConvention:
+                - change-case-all#pascalCase
+            fetcher: 
+                endpoint: ${REACT_APP_ENDPOINT_URL}/graphql
+                fetchParams: fetchParams
         plugins:
+            - add:
+                content: "import { fetchParams } from 'helpers/fetchParams'"
             - typescript
             - typescript-resolvers
             - typescript-operations
-            - typescript-react-apollo
+            - typescript-react-query
+hooks:
+    afterAllFileWrite:
+        - prettier --write
+        - eslint --fix

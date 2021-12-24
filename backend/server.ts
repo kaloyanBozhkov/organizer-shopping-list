@@ -1,47 +1,47 @@
 import { ApolloServer } from 'apollo-server-express'
 import cors from 'cors'
 import express from 'express'
-// allow .graphql to be imported in ts friendly way
-import 'graphql-import-node'
 import expressPlayground from 'graphql-playground-middleware-express'
+import { buildSchema } from 'type-graphql'
 
-import { ResolversContext } from 'types/context'
+import 'reflect-metadata'
 
-import connection, { queryDB } from './src/databaseConnection'
-import rootValue from './src/graphql/rootValue'
-import typeDefs from './src/graphql/typeDefs.graphql'
+import { resolvers } from '@generated/type-graphql'
+import { PrismaClient } from '@prisma/client'
 
-const setupAndRunServer = async () => {
-    const app = express()
+const prisma = new PrismaClient(),
+    setupAndRunServer = async () => {
+        const schema = await buildSchema({
+                resolvers,
+                validate: false,
+            }),
+            app = express()
 
-    // Enable All CORS Requests
-    app.use(cors())
+        // Enable All CORS Requests
+        app.use(
+            cors({
+                origin: '*',
+                optionsSuccessStatus: 200,
+            })
+        )
 
-    app.get('/playground', expressPlayground({ endpoint: '/graphql' }))
+        app.get('/playground', expressPlayground({ endpoint: '/graphql' }))
 
-    app.get('/', (req, res) => res.end('Welcome to API'))
+        app.get('/', (req, res) => res.end('Welcome to API'))
 
-    app.listen({ port: 4000 }, () => console.log('listening on port 4000'))
+        app.listen({ port: 4000 }, () => console.log('listening on port 4000'))
 
-    const server = new ApolloServer({
-        typeDefs,
-        rootValue,
-        // make these available to all root values
-        context: {
-            connection,
-            queryDB,
-        } as ResolversContext,
-    })
+        const server = new ApolloServer({
+            schema,
+            // make these available to all root values
+            context: {
+                prisma,
+            },
+        })
 
-    await server.start()
+        await server.start()
 
-    server.applyMiddleware({ app })
-}
+        server.applyMiddleware({ app })
+    }
 
-// start the connection to DB
-connection.connect((error) => {
-    if (error) console.error(error)
-    console.log('connected to DB successfully!')
-
-    setupAndRunServer()
-})
+setupAndRunServer()

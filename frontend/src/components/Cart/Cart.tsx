@@ -1,28 +1,23 @@
-import React, { useContext } from 'react'
+import React from 'react'
 
-import ResourcesContext from 'context/Resources.context'
+import { SortDirection, SortListItemsBy, useGetAllListItemsQuery } from 'types/graphQL.generated'
 
-import useResource from 'hooks/useResource'
-
-import ShoppingItemCard from 'components/ShoppingItemCard/ShoppingItemCard'
+import ListItemCard from 'components/ListItemCard/ListItemCard'
 
 import { Grid } from '@mui/material'
 
 import styles from './styles.module.scss'
 
 const Cart = () => {
-    const { shoppingItemsResource } = useContext(ResourcesContext),
-        {
-            data: { shoppingItems },
-        } = useResource(shoppingItemsResource)
+    const { data } = useGetAllListItemsQuery(
+        { input: { sortBy: SortListItemsBy.importance, sortDirection: SortDirection.ascending } },
+        { suspense: true }
+    )
 
     return (
         <Grid className={styles.cart}>
-            {/* {cart.map((shoppingItemId) => (
-                <ShoppingItemCard key={shoppingItemId} {...shoppingItems[shoppingItemId]} />
-            ))} */}
-            {shoppingItems.map((item) => (
-                <ShoppingItemCard key={item.id} {...item} />
+            {data?.allListItems.map((listItem) => (
+                <ListItemCard key={listItem.id} {...listItem} />
             ))}
         </Grid>
     )

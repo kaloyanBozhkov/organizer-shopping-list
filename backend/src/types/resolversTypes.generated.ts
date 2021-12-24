@@ -1,17 +1,17 @@
-import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql'
+import type { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql'
 
-import { ResolversContext } from './context'
-import { SortListItemsBy } from './enums'
+import type { ResolversContext } from './context'
+import type { Currency, SortDirection, SortListItemsBy } from './enums'
 
 export type Maybe<T> = T | null
 export type InputMaybe<T> = Maybe<T>
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] }
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> }
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> }
+export type EnumResolverSignature<T, AllowedValues = any> = { [key in keyof T]?: AllowedValues }
 export type RequireFields<T, K extends keyof T> = { [X in Exclude<keyof T, K>]?: T[X] } & {
     [P in K]-?: NonNullable<T[P]>
 }
-export type EnumResolverSignature<T, AllowedValues = any> = { [key in keyof T]?: AllowedValues }
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
     ID: string
@@ -22,11 +22,7 @@ export type Scalars = {
     DateTime: any
 }
 
-export enum Currency {
-    Bgn = 'BGN',
-    Gbp = 'GBP',
-    Usd = 'USD',
-}
+export { Currency }
 
 /** A product in the shopping list */
 export type ListItem = Product & {
@@ -34,12 +30,18 @@ export type ListItem = Product & {
     currency: Currency
     id: Scalars['ID']
     importance: Scalars['Int']
-    /** The shops from which to buy the product */
+    /** The shops from which to buy the product! */
     inShops: Array<Shop>
     isPurchased: Scalars['Boolean']
     listItemId: Scalars['ID']
     name: Scalars['String']
-    price?: Maybe<Scalars['Float']>
+    price: Scalars['Float']
+    quantity: Scalars['Int']
+}
+
+export type ListItemsInput = {
+    sortBy?: InputMaybe<SortListItemsBy>
+    sortDirection?: InputMaybe<SortDirection>
 }
 
 export type Position = {
@@ -55,7 +57,7 @@ export type Product = {
     /** The shops from which to buy the product */
     inShops: Array<Shop>
     name: Scalars['String']
-    price?: Maybe<Scalars['Float']>
+    price: Scalars['Float']
 }
 
 export type Query = {
@@ -64,8 +66,7 @@ export type Query = {
 }
 
 export type QueryAllListItemsArgs = {
-    sortBy?: InputMaybe<SortListItemsBy>
-    sortDirection?: InputMaybe<SortDirection>
+    input: ListItemsInput
 }
 
 export type Shop = {
@@ -79,10 +80,7 @@ export type Shop = {
     shopName: Scalars['String']
 }
 
-export enum SortDirection {
-    Ascending = 'ASCENDING',
-    Descending = 'DESCENDING',
-}
+export { SortDirection }
 
 export { SortListItemsBy }
 
@@ -180,6 +178,7 @@ export type ResolversTypes = ResolversObject<{
     ID: ResolverTypeWrapper<Scalars['ID']>
     Int: ResolverTypeWrapper<Scalars['Int']>
     ListItem: ResolverTypeWrapper<ListItem>
+    ListItemsInput: ListItemsInput
     Position: ResolverTypeWrapper<Position>
     Product: ResolversTypes['ListItem']
     Query: ResolverTypeWrapper<{}>
@@ -197,12 +196,18 @@ export type ResolversParentTypes = ResolversObject<{
     ID: Scalars['ID']
     Int: Scalars['Int']
     ListItem: ListItem
+    ListItemsInput: ListItemsInput
     Position: Position
     Product: ResolversParentTypes['ListItem']
     Query: {}
     Shop: Shop
     String: Scalars['String']
 }>
+
+export type CurrencyResolvers = EnumResolverSignature<
+    { BGN?: any; EUR?: any; GBP?: any; USD?: any },
+    ResolversTypes['Currency']
+>
 
 export interface DateTimeScalarConfig
     extends GraphQLScalarTypeConfig<ResolversTypes['DateTime'], any> {
@@ -220,7 +225,8 @@ export type ListItemResolvers<
     isPurchased?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>
     listItemId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>
     name?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-    price?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>
+    price?: Resolver<ResolversTypes['Float'], ParentType, ContextType>
+    quantity?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
     __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }>
 
@@ -242,7 +248,7 @@ export type ProductResolvers<
     id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>
     inShops?: Resolver<Array<ResolversTypes['Shop']>, ParentType, ContextType>
     name?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-    price?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>
+    price?: Resolver<ResolversTypes['Float'], ParentType, ContextType>
 }>
 
 export type QueryResolvers<
@@ -253,7 +259,7 @@ export type QueryResolvers<
         Array<ResolversTypes['ListItem']>,
         ParentType,
         ContextType,
-        RequireFields<QueryAllListItemsArgs, 'sortBy' | 'sortDirection'>
+        RequireFields<QueryAllListItemsArgs, 'input'>
     >
 }>
 
@@ -270,6 +276,11 @@ export type ShopResolvers<
     __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }>
 
+export type SortDirectionResolvers = EnumResolverSignature<
+    { ASCENDING?: any; DESCENDING?: any },
+    ResolversTypes['SortDirection']
+>
+
 export type SortListItemsByResolvers = EnumResolverSignature<
     {
         CREATED?: any
@@ -283,18 +294,19 @@ export type SortListItemsByResolvers = EnumResolverSignature<
 >
 
 export type Resolvers<ContextType = ResolversContext> = ResolversObject<{
+    Currency?: CurrencyResolvers
     DateTime?: GraphQLScalarType
     ListItem?: ListItemResolvers<ContextType>
     Position?: PositionResolvers<ContextType>
     Product?: ProductResolvers<ContextType>
     Query?: QueryResolvers<ContextType>
     Shop?: ShopResolvers<ContextType>
+    SortDirection?: SortDirectionResolvers
     SortListItemsBy?: SortListItemsByResolvers
 }>
 
 export type GetAllListItemsQueryVariables = Exact<{
-    sortBy?: InputMaybe<SortListItemsBy>
-    sortDirection?: InputMaybe<SortDirection>
+    input: ListItemsInput
 }>
 
 export type GetAllListItemsQuery = {
@@ -302,9 +314,18 @@ export type GetAllListItemsQuery = {
     allListItems: Array<{
         __typename?: 'ListItem'
         id: string
+        listItemId: string
         name: string
-        price?: number | null | undefined
+        price: number
         currency: Currency
-        inShops: Array<{ __typename?: 'Shop'; id: string; isOpen: boolean; name: string }>
+        isPurchased: boolean
+        importance: number
+        quantity: number
+        inShops: Array<{
+            __typename?: 'Shop'
+            id: string
+            name: string
+            location: { __typename?: 'Position'; lat: number; long: number }
+        }>
     }>
 }

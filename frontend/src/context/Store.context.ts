@@ -1,11 +1,12 @@
 import React from 'react'
 
-import type ShoppingItem from 'classes/ShoppingItem'
+import { ListItem } from 'types/graphQL.generated'
+
 import type User from 'classes/User'
 
 export type Store = {
     user: null | User
-    cart: ShoppingItem['id'][]
+    cart: ListItem['id'][]
     activeDialog: null | 'login'
 }
 

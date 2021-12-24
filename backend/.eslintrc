@@ -47,10 +47,9 @@
             "error",
             {
                 "devDependencies": [
-                    // test files import dev deps such as enzyme -> no need to lint that
-                    "**/*.test.js",
-                    // customize-cra is a dev dependency, used only in the below file -> no need to lint that
-                    "config-overrides.js"
+                    // any generated file from prisma typegraphql-prisma generator
+                    "@generated/type-graphql",
+                    "organizer-shopping-list-backend"
                 ]
             }
         ],
@@ -65,9 +64,7 @@
             }
         ],
         // allow single non-default exports for a module
-        "import/prefer-default-export": ["off"],
-        // not providing subs yet
-        "jsx-a11y/media-has-caption": ["off"]
+        "import/prefer-default-export": ["off"]
     },
     "settings": {
         "import/resolver": {

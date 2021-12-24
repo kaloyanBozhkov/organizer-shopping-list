@@ -1,0 +1,106 @@
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator typegraphql {
+  provider = "typegraphql-prisma"
+  output   = "../../node_modules/@generated/type-graphql"
+}
+
+enum Currency {
+  BGN
+  USD
+  GBP
+  EUR
+}
+
+model Location {
+  id      String @id @default(uuid()) @db.VarChar(36)
+  lat     Float
+  long    Float
+  address String
+
+  ofShop Shop @relation(fields: [id], references: [id])
+
+  @@map("location")
+}
+
+model Shop {
+  id       String    @id @default(uuid()) @db.VarChar(36)
+  shopName String    @db.VarChar(255)
+  location Location?
+
+  hasProducts EdgeProductShop[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId    String @db.VarChar(36)
+  createdBy User   @relation(fields: [userId], references: [id])
+
+  @@map("shop")
+}
+
+model EdgeProductShop {
+  productId String  @db.VarChar(36)
+  product   Product @relation(fields: [productId], references: [id])
+  shopId    String  @db.VarChar(36)
+  shop      Shop    @relation(fields: [shopId], references: [id])
+  userId    String  @db.VarChar(36)
+  addedBy   User    @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@id([productId, shopId])
+  @@map("edgeProductShop")
+}
+
+model Product {
+  id       String   @id @default(uuid()) @db.VarChar(36)
+  name     String   @default("Unnamed")
+  price    Float    @default(0)
+  currency Currency @default(BGN)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  inShops    EdgeProductShop[]
+  inListItem ListItem[]
+
+  userId    String @db.VarChar(36)
+  createdBy User   @relation(fields: [userId], references: [id])
+
+  @@map("product")
+}
+
+model User {
+  id    String @id @default(uuid()) @db.VarChar(36)
+  alias String
+  email String @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  createdProdcuts      Product[]
+  createdShops         Shop[]
+  addedProductsToShops EdgeProductShop[]
+
+  @@map("user")
+}
+
+model ListItem {
+  id          String  @id @default(uuid()) @db.VarChar(36)
+  quntity     Int     @default(1)
+  importance  Int     @default(10)
+  isPurchased Boolean @default(false)
+
+  productId String  @db.VarChar(36)
+  product   Product @relation(fields: [productId], references: [id])
+  @@map("listItem")
+}

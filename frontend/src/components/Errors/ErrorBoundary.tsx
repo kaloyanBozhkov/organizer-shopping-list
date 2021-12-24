@@ -10,7 +10,7 @@ interface State {
     errorMsg: null | string
 }
 
-class ErrorBoundry extends Component<Props, State> {
+class ErrorBoundary extends Component<Props, State> {
     state: State = {
         errorMsg: null,
     }
@@ -34,4 +34,4 @@ class ErrorBoundry extends Component<Props, State> {
     }
 }
 
-export default ErrorBoundry
+export default ErrorBoundary
