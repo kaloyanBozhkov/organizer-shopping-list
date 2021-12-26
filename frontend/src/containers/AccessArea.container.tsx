@@ -9,6 +9,7 @@ import AccessAreaPage from 'pages/AccessArea.page'
 const AccessAreaContainer = () => {
     const addUserMutation = useAddUserMutation({
         onCompleted: (user) => console.warn(user),
+        onError: (err) => console.error('da err', err),
     })
 
     return (

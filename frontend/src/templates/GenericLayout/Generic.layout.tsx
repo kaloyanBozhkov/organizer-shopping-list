@@ -6,12 +6,10 @@ type GenericLayoutProps = {
     children: ReactNode
 }
 
-const GenericLayout = ({ children }: GenericLayoutProps) => {
-    return (
-        <div className={styles.genericLayout}>
-            <main>{children}</main>
-        </div>
-    )
-}
+const GenericLayout = ({ children }: GenericLayoutProps) => (
+    <div className={styles.genericLayout}>
+        <main>{children}</main>
+    </div>
+)
 
 export default GenericLayout

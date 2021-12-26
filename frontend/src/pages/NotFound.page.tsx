@@ -1,12 +1,13 @@
 import React from 'react'
-import { Outlet } from 'react-router-dom'
 
 import CenteredLayout from 'templates/CenteredLayout/Centered.layout'
 
-const AccessAreaPage = () => (
+import NotFound from 'components/NotFound/NotFound'
+
+const NotFoundPage = () => (
     <CenteredLayout>
-        <Outlet />
+        <NotFound />
     </CenteredLayout>
 )
 
-export default AccessAreaPage
+export default NotFoundPage

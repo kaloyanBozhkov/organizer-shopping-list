@@ -5,7 +5,7 @@ import { FormFieldDefinition, FormState } from 'types/form.types'
 import useFormState from 'hooks/Form/useFormState'
 import useFormValidation from 'hooks/Form/useFormValidation'
 
-import { Button, TextField } from '@material-ui/core'
+import { Button, CircularProgress, TextField } from '@material-ui/core'
 
 import styles from './styles.module.scss'
 
@@ -89,23 +89,20 @@ const Form = ({
                     }
                 )}
             </div>
-            {isSubmitPending ? (
-                <Button>Loading..</Button>
-            ) : (
-                <Button
-                    type="submit"
-                    variant="contained"
-                    color={(Object.values(invalidFields).length && 'secondary') || 'primary'}
-                    onClick={(e) => {
-                        // prevent default form behavior
-                        e.preventDefault()
+            <Button
+                disabled={isSubmitPending}
+                type="submit"
+                variant="contained"
+                color={(Object.values(invalidFields).length && 'secondary') || 'primary'}
+                onClick={(e) => {
+                    // prevent default form behavior
+                    e.preventDefault()
 
-                        if (onValidate()) onSubmit?.(formState)
-                    }}
-                >
-                    {submitLabel}
-                </Button>
-            )}
+                    if (onValidate()) onSubmit?.(formState)
+                }}
+            >
+                {isSubmitPending ? <CircularProgress /> : submitLabel}
+            </Button>
         </form>
     )
 }

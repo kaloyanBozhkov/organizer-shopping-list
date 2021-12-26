@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { ReactElement } from 'react'
 
 import MainPage from 'pages/Main.page'
 
-const MainContainer = () => {
+const MainContainer = (): ReactElement => {
     // const { onGetShoppingItems } = useContext(ActionsContext),
 
     return <MainPage />

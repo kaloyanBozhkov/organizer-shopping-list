@@ -18,6 +18,7 @@
     "plugins": ["./node_modules/@trivago/prettier-plugin-sort-imports"],
     "importOrder": [
         "react",
+        "^routing/(.*)",
         "^types/(.*)$",
         "^context/(.*)$",
         "^classes/(.*)$",

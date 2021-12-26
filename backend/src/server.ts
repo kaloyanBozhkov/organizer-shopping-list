@@ -37,6 +37,10 @@ const prisma = new PrismaClient(),
             context: {
                 prisma,
             },
+            formatError: (err) => {
+                console.log(err)
+                return new Error('Internal server error')
+            },
         })
 
         await server.start()

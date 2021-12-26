@@ -6,12 +6,10 @@ type CenteredLayoutProps = {
     children: ReactNode
 }
 
-const CenteredLayout = ({ children }: CenteredLayoutProps) => {
-    return (
-        <div className={styles.centeredLayout}>
-            <main>{children}</main>
-        </div>
-    )
-}
+const CenteredLayout = ({ children }: CenteredLayoutProps) => (
+    <div className={styles.centeredLayout}>
+        <main>{children}</main>
+    </div>
+)
 
 export default CenteredLayout

@@ -8,7 +8,7 @@ import {
     isValidEmailField,
 } from 'helpers/fieldValidators'
 
-export const REGISTER_FORM_DEFINITIONS: FormFieldDefinition[] = [
+const REGISTER_FORM_DEFINITIONS: FormFieldDefinition[] = [
     {
         name: 'alias',
         label: 'Alias',
@@ -49,3 +49,5 @@ export const REGISTER_FORM_DEFINITIONS: FormFieldDefinition[] = [
         ]),
     },
 ]
+
+export default REGISTER_FORM_DEFINITIONS

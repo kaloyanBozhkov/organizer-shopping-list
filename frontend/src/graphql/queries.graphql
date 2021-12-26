@@ -1,8 +1,7 @@
-query getAllUsers {
-  users {
-    id
-    alias
-    email
-    createdAt
-  }
+query getUserLogin($email: String!) {
+    user(where: { email: $email }) {
+        id
+        alias
+        email
+    }
 }

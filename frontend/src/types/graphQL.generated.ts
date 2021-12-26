@@ -2989,11 +2989,13 @@ export type AddUserMutation = {
     }
 }
 
-export type GetAllUsersQueryVariables = Exact<{ [key: string]: never }>
+export type GetUserLoginQueryVariables = Exact<{
+    email: Scalars['String']
+}>
 
-export type GetAllUsersQuery = {
+export type GetUserLoginQuery = {
     __typename?: 'Query'
-    users: Array<{ __typename?: 'User'; id: string; alias: string; email: string; createdAt: any }>
+    user?: { __typename?: 'User'; id: string; alias: string; email: string } | null | undefined
 }
 
 export const AddUserDocument = gql`
@@ -3039,53 +3041,56 @@ export type AddUserMutationOptions = Apollo.BaseMutationOptions<
     AddUserMutation,
     AddUserMutationVariables
 >
-export const GetAllUsersDocument = gql`
-    query getAllUsers {
-        users {
+export const GetUserLoginDocument = gql`
+    query getUserLogin($email: String!) {
+        user(where: { email: $email }) {
             id
             alias
             email
-            createdAt
         }
     }
 `
 
 /**
- * __useGetAllUsersQuery__
+ * __useGetUserLoginQuery__
  *
- * To run a query within a React component, call `useGetAllUsersQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetAllUsersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetUserLoginQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUserLoginQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetAllUsersQuery({
+ * const { data, loading, error } = useGetUserLoginQuery({
  *   variables: {
+ *      email: // value for 'email'
  *   },
  * });
  */
-export function useGetAllUsersQuery(
-    baseOptions?: Apollo.QueryHookOptions<GetAllUsersQuery, GetAllUsersQueryVariables>
+export function useGetUserLoginQuery(
+    baseOptions: Apollo.QueryHookOptions<GetUserLoginQuery, GetUserLoginQueryVariables>
 ) {
     const options = { ...defaultOptions, ...baseOptions }
-    return Apollo.useQuery<GetAllUsersQuery, GetAllUsersQueryVariables>(
-        GetAllUsersDocument,
+    return Apollo.useQuery<GetUserLoginQuery, GetUserLoginQueryVariables>(
+        GetUserLoginDocument,
         options
     )
 }
-export function useGetAllUsersLazyQuery(
-    baseOptions?: Apollo.LazyQueryHookOptions<GetAllUsersQuery, GetAllUsersQueryVariables>
+export function useGetUserLoginLazyQuery(
+    baseOptions?: Apollo.LazyQueryHookOptions<GetUserLoginQuery, GetUserLoginQueryVariables>
 ) {
     const options = { ...defaultOptions, ...baseOptions }
-    return Apollo.useLazyQuery<GetAllUsersQuery, GetAllUsersQueryVariables>(
-        GetAllUsersDocument,
+    return Apollo.useLazyQuery<GetUserLoginQuery, GetUserLoginQueryVariables>(
+        GetUserLoginDocument,
         options
     )
 }
-export type GetAllUsersQueryHookResult = ReturnType<typeof useGetAllUsersQuery>
-export type GetAllUsersLazyQueryHookResult = ReturnType<typeof useGetAllUsersLazyQuery>
-export type GetAllUsersQueryResult = Apollo.QueryResult<GetAllUsersQuery, GetAllUsersQueryVariables>
-export function refetchGetAllUsersQuery(variables?: GetAllUsersQueryVariables) {
-    return { query: GetAllUsersDocument, variables }
+export type GetUserLoginQueryHookResult = ReturnType<typeof useGetUserLoginQuery>
+export type GetUserLoginLazyQueryHookResult = ReturnType<typeof useGetUserLoginLazyQuery>
+export type GetUserLoginQueryResult = Apollo.QueryResult<
+    GetUserLoginQuery,
+    GetUserLoginQueryVariables
+>
+export function refetchGetUserLoginQuery(variables: GetUserLoginQueryVariables) {
+    return { query: GetUserLoginDocument, variables }
 }

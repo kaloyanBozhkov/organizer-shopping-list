@@ -1,0 +1,37 @@
+@import "scss/mixins.scss";
+@import "scss/breakpoints.scss";
+@import "scss/variables.scss";
+
+.notFoundWrapper {
+    @include genericPaperWrapper();
+
+    width: 100%;
+
+    h1,
+    svg {
+        color: $text;
+        margin: 2rem 0;
+    }
+
+    h1 {
+        text-align: center;
+        b {
+            color: $green;
+        }
+    }
+
+    svg {
+        width: 20rem;
+        height: 20rem;
+
+        @include breakpoint(mobile, landscape) {
+            width: 10rem;
+            height: 10rem;
+        }
+
+        @include breakpoint(tabletBig) {
+            width: 25rem;
+            height: 25rem;
+        }
+    }
+}

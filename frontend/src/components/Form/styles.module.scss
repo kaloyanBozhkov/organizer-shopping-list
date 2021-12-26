@@ -1,4 +1,5 @@
 @import "scss/breakpoints.scss";
+@import "scss/variables.scss";
 
 .form {
     width: 100%;
@@ -21,6 +22,17 @@
     > button {
         align-self: center;
         margin-top: 2rem;
+        height: 3.5rem;
+
+        &[disabled] {
+            background-color: $green;
+            svg {
+                transform: scale(0.5);
+                circle {
+                    color: $purple;
+                }
+            }
+        }
     }
 
     [form-field] {

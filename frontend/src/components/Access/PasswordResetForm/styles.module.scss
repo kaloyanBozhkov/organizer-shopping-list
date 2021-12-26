@@ -1,0 +1,13 @@
+@import "scss/mixins.scss";
+
+.passwordResetFormWrapper {
+    @include genericPaperFormWrapper(passwordResetForm, true);
+    .sideActions {
+        margin-top: 1rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+    }
+}

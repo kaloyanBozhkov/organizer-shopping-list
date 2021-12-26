@@ -87,27 +87,37 @@
     }
 }
 
-@mixin genericFormFormat($formId) {
+@mixin genericFormFormat($formId, $withoutGridForm: false) {
     form[form-id="#{$formId}"] {
         > [data-id="#{$formId}-fieldContainer"] {
             gap: 4rem;
 
-            @include breakpoint(mobile, landscape) {
-                gap: 1rem;
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-            }
+            @if $withoutGridForm == false {
+                @include breakpoint(mobile, landscape) {
+                    gap: 1rem;
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                }
 
-            @include breakpoint(tabletSmall, landscape) {
-                gap: 2rem;
-                display: grid;
-                grid-template-columns: 1fr 1fr;
+                @include breakpoint(tabletSmall, landscape) {
+                    gap: 2rem;
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                }
+            } @else {
+                @include breakpoint(mobile, landscape) {
+                    gap: 1.5rem;
+                }
             }
         }
     }
+
+    a {
+        font-size: 1.4rem;
+    }
 }
 
-@mixin genericPaperFormWrapper() {
+@mixin genericPaperWrapper {
     background-color: $paperBg;
     border-color: $paperBorder;
     padding: $padding_0;
@@ -126,8 +136,12 @@
     @include breakpoint(tabletSmall, portrait) {
         height: auto;
     }
+}
 
-    @include genericFormFormat(registerForm);
+@mixin genericPaperFormWrapper($formId, $withoutGridForm: false) {
+    @include genericPaperWrapper();
+
+    @include genericFormFormat($formId, $withoutGridForm);
 
     @include animate(popIn, 800ms);
 

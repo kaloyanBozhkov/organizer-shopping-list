@@ -8,14 +8,12 @@ type MainLayoutProps = {
     children: ReactNode
 }
 
-const MainLayout = ({ header, dialog, children }: MainLayoutProps) => {
-    return (
-        <div className={styles.mainLayout}>
-            <header>{header}</header>
-            <main>{children}</main>
-            <section>{dialog}</section>
-        </div>
-    )
-}
+const MainLayout = ({ header, dialog, children }: MainLayoutProps) => (
+    <div className={styles.mainLayout}>
+        <header>{header}</header>
+        <main>{children}</main>
+        <section>{dialog}</section>
+    </div>
+)
 
 export default MainLayout
