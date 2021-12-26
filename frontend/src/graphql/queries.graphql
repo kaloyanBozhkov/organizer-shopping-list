@@ -3,5 +3,7 @@ query getUserLogin($email: String!) {
         id
         alias
         email
+        createdAt
+        updatedAt
     }
 }

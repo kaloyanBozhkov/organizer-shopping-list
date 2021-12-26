@@ -2995,7 +2995,17 @@ export type GetUserLoginQueryVariables = Exact<{
 
 export type GetUserLoginQuery = {
     __typename?: 'Query'
-    user?: { __typename?: 'User'; id: string; alias: string; email: string } | null | undefined
+    user?:
+        | {
+              __typename?: 'User'
+              id: string
+              alias: string
+              email: string
+              createdAt: any
+              updatedAt: any
+          }
+        | null
+        | undefined
 }
 
 export const AddUserDocument = gql`
@@ -3047,6 +3057,8 @@ export const GetUserLoginDocument = gql`
             id
             alias
             email
+            createdAt
+            updatedAt
         }
     }
 `

@@ -1,14 +1,16 @@
-import React, { ReactElement, useContext } from 'react'
+import React, { ReactElement } from 'react'
 import { Navigate } from 'react-router-dom'
+import { userVar } from 'reactives/User.reactives'
 
-import GlobalContext from 'context/Global.context'
+import { useReactiveVar } from '@apollo/client'
 
 type PrivatePortalProps = {
     children: ReactElement
 }
 
 const PrivatePortal = ({ children }: PrivatePortalProps) => {
-    const { user } = useContext(GlobalContext)
+    const user = useReactiveVar(userVar)
+
     return user ? children : <Navigate to="access" />
 }
 

@@ -5,8 +5,6 @@
 .notFoundWrapper {
     @include genericPaperWrapper();
 
-    width: 100%;
-
     h1,
     svg {
         color: $text;

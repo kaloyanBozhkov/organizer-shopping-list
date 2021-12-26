@@ -1,5 +1,9 @@
 @import "scss/mixins.scss";
+@import "scss/breakpoints.scss";
 
 .loginFormWrapper {
     @include genericPaperFormWrapper(loginForm, true);
+    @include breakpoint(desktop) {
+        max-width: 55rem;
+    }
 }

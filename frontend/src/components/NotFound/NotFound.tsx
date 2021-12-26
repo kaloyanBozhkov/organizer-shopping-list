@@ -11,7 +11,7 @@ const NotFound = ({ message }: { message?: string }) => {
         nav = useNavigate()
 
     return (
-        <Paper className={styles.notFoundWrapper}>
+        <Paper variant="outlined" className={styles.notFoundWrapper}>
             <SentimentDissatisfiedIcon />
             {message ? (
                 <h1>message</h1>

@@ -16,6 +16,7 @@ type FormProps = {
     submitLabel: string
     // BE provided errors obj following submit
     fieldErrors?: Record<string, string>
+    errorMsg?: string
     onSubmit?: (formState: FormState) => void | boolean
     onFormStateChanged?: (fieldName: string) => void
     onFormFieldFocused?: (fieldName: string) => void
@@ -30,6 +31,7 @@ type FormProps = {
  * @param isSubmitPending boolean -> renders loading spinner instead of btn indicative or pending operation
  * @param submitLabel string for submit btn label
  * @param fieldErrors
+ * @param errorMsg string to show on top as error, does not impact layout since absolute poition
  * @param onSubmit fn to call on submit click, prevents default behavior runs fn and then submits form
  * @param onFormStateChanged fn to call when form state has changed -> useful for events relative to on form field change
  * @param onFormFieldFocused fn to call when a form field has been focused -> useful for removing fieldErrors or triggering smth on form field focus
@@ -41,6 +43,7 @@ const Form = ({
     submitLabel = 'Submit',
     fieldErrors = {},
     isSubmitPending = false,
+    errorMsg,
     onSubmit,
     onFormStateChanged,
     onFormFieldFocused,
@@ -49,7 +52,7 @@ const Form = ({
         [invalidFields, onValidate, onResetValidation] = useFormValidation(formState)
 
     return (
-        <form className={styles.form} form-id={formId} autoComplete="off">
+        <form className={styles.form} form-id={formId} autoComplete="off" data-error={errorMsg}>
             <div data-id={`${formId}-fieldContainer`}>
                 {Object.values(formState).map(
                     ({ name, type, label, value, required, description }) => {

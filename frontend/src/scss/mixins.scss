@@ -25,11 +25,12 @@
     }
 }
 
-@mixin animate($keyframesName, $duration: 300ms, $delay: 0ms, $fillmode: forwards) {
+@mixin animate($keyframesName, $duration: 300ms, $delay: 0ms, $fillmode: forwards, $animFn: $cubicBezier_0) {
     animation-delay: $delay;
     animation-duration: $duration;
     animation-name: $keyframesName;
     animation-fill-mode: $fillmode;
+    animation-timing-function: $animFn;
 }
 
 @mixin unselectable() {
@@ -129,6 +130,7 @@
     width: 100%;
     height: 100%;
     overflow: hidden auto;
+
     @include breakpoint(mobile, landscape) {
         gap: 1.5rem;
     }
@@ -140,6 +142,10 @@
 
 @mixin genericPaperFormWrapper($formId, $withoutGridForm: false) {
     @include genericPaperWrapper();
+
+    form {
+        margin-top: 1rem;
+    }
 
     @include genericFormFormat($formId, $withoutGridForm);
 

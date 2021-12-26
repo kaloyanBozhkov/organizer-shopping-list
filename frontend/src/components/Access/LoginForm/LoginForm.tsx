@@ -1,7 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { setLoggedInUser } from 'reactives/User.reactives'
 
 import { useGetUserLoginLazyQuery } from 'types/graphQL.generated'
+
+import useGraphQLErrorHandler from 'hooks/seGraphQLErrorHandler'
 
 import Form from 'components/Form/Form'
 import Logo from 'components/UI/Logo/Logo'
@@ -13,19 +16,25 @@ import LOGIN_FORM_DEFINITIONS from 'constants/form/login.form.constants'
 import styles from './styles.module.scss'
 
 const LoginForm = () => {
-    const [getUser, { loading, error }] = useGetUserLoginLazyQuery({
-        onCompleted: (data) => {
-            // eslint-disable-next-line
-            console.log(data)
-        },
-    })
+    const [getUser, { loading, error, data }] = useGetUserLoginLazyQuery({
+            onCompleted: ({ user }) => user && setLoggedInUser(user),
+            fetchPolicy: 'network-only',
+        }),
+        [errorMsg, clearErrorMsg] = useGraphQLErrorHandler({
+            prop: 'user',
+            errorMsg: 'Oops! Incorrect email or password :(',
+            data,
+            error,
+            loading,
+        })
 
     return (
         <Paper variant="outlined" className={styles.loginFormWrapper}>
             <Logo />
-            {error && <p>Oops! Incorrect email or password :(</p>}
             <Form
                 formId="loginForm"
+                errorMsg={errorMsg}
+                onFormStateChanged={clearErrorMsg}
                 definitions={LOGIN_FORM_DEFINITIONS}
                 submitLabel="Login"
                 onSubmit={(form) => {

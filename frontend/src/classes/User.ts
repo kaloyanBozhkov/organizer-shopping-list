@@ -1,10 +1,31 @@
 export default class User {
     id: string
 
-    username: string
+    email: string
 
-    constructor(id: string, username: string) {
+    alias: string
+
+    createdAt: string
+
+    updatedAt: string
+
+    constructor({
+        id,
+        email,
+        alias,
+        createdAt,
+        updatedAt,
+    }: {
+        id: string
+        email: string
+        alias: string
+        createdAt: string
+        updatedAt: string
+    }) {
         this.id = id
-        this.username = username
+        this.email = email
+        this.alias = alias
+        this.createdAt = createdAt
+        this.updatedAt = updatedAt
     }
 }

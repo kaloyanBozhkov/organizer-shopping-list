@@ -1,7 +1,12 @@
 @import "scss/mixins.scss";
+@import "scss/breakpoints.scss";
 
 .passwordResetFormWrapper {
     @include genericPaperFormWrapper(passwordResetForm, true);
+    @include breakpoint(desktop) {
+        max-width: 55rem;
+    }
+
     .sideActions {
         margin-top: 1rem;
         display: flex;
