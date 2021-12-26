@@ -1,4 +1,4 @@
-/* stylelint-disable no-descending-specificity */
+// stylelint-disable no-descending-specificity
 @import "scss/variables.scss";
 
 .MuiFormControl-root.MuiTextField-root {
@@ -6,6 +6,21 @@
     > p.MuiFormHelperText-root:not(.Mui-error),
     > .MuiInputBase-root > input {
         color: $text;
+    }
+
+    > .MuiInputBase-root {
+        > input {
+            font-size: 2rem;
+            &:-webkit-autofill {
+                transition-delay: 99999s;
+            }
+        }
+
+        &.MuiFilledInput-underline:not(.Mui-error) {
+            &::after {
+                border-bottom-color: $green;
+            }
+        }
     }
 
     > p.MuiFormHelperText-root {

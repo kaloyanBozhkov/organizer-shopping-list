@@ -8,6 +8,9 @@
 
 .logo {
     width: 100%;
+    @include breakpoint(mobile, landscape) {
+        max-width: 35vw;
+    }
     @include breakpoint(tabletSmall) {
         max-width: 35vw;
     }
@@ -33,9 +36,14 @@
             stroke: $green;
             text-align: center;
             fill: $text;
-            @include breakpoint(tabletSmall) {
-                stroke-width: 4px;
+
+            @include breakpoint(tabletBig, portrait) {
+                stroke-width: 3px;
             }
+            @include breakpoint(tabletBig, landscape) {
+                stroke-width: 3px;
+            }
+
             @include animate(dashArray, 40s, unset, none);
 
             animation-timing-function: linear;

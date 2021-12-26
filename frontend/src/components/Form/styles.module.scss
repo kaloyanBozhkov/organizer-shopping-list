@@ -8,6 +8,10 @@
     justify-content: center;
     gap: 4rem;
 
+    @include breakpoint(mobile, landscape) {
+        gap: 1rem;
+    }
+
     > div:first-child {
         display: flex;
         flex-direction: column;

@@ -23,7 +23,7 @@ $breakpoint argument choices:
 
     @if $breakpoint == tabletSmall {
         @if $orientation == portrait {
-            @media (min-width: 600px) and (orientation: $orientation) {
+            @media all and (min-width: 600px) and (orientation: $orientation) {
                 @content;
             }
         } @else {
