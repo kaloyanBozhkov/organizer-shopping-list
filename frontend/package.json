@@ -82,7 +82,7 @@
             "prettier --write",
             "eslint --fix"
         ],
-        "src/**/*.{scss,*.scss,css,*.css}": [
+        "src/**/*.{scss,*.scss,css,*.css,*.scss.d.ts,.scss.d.ts}": [
             "stylelint --fix"
         ]
     },
