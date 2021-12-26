@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react'
 
 import ActionsContext from 'context/Actions.context'
 
-import { Button, Dialog } from '@mui/material'
+import { Button, Dialog } from '@material-ui/core'
 
 const LoginDialog = () => {
     const [open, setOpen] = useState(true),

@@ -3,8 +3,6 @@ import React, { ReactElement, useMemo, useReducer } from 'react'
 import ActionsContext, { Actions } from 'context/Actions.context'
 import StoreContext, { Store, defaultStore } from 'context/Store.context'
 
-import User from 'classes/User'
-
 type StoreAction = {
     prop: keyof Store
     value: Store[keyof Store]
@@ -31,12 +29,6 @@ export const ActionsProvider = ({
                     prop: 'activeDialog',
                     value: store.activeDialog === 'login' ? null : 'login',
                 }))
-            },
-            onLogin: () => {
-                setStore({ prop: 'user', value: new User('UUID1', 'koko') })
-            },
-            onLogout: () => {
-                setStore({ prop: 'user', value: null })
             },
             onAddShoppingItemToCart: (id) => {
                 console.warn('onAddShoppingItemToCart', id)

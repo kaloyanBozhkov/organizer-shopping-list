@@ -1,36 +1,12 @@
-import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql'
-
-import { UseQueryOptions, useQuery } from 'react-query'
-
-import { fetchParams } from 'helpers/fetchParams'
+import { gql } from '@apollo/client'
+import * as Apollo from '@apollo/client'
 
 export type Maybe<T> = T | null
 export type InputMaybe<T> = Maybe<T>
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] }
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> }
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> }
-export type RequireFields<T, K extends keyof T> = { [X in Exclude<keyof T, K>]?: T[X] } & {
-    [P in K]-?: NonNullable<T[P]>
-}
-
-function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
-    return async (): Promise<TData> => {
-        const res = await fetch('http://localhost:4000/graphql', {
-                method: 'POST',
-                ...fetchParams,
-                body: JSON.stringify({ query, variables }),
-            }),
-            json = await res.json()
-
-        if (json.errors) {
-            const { message } = json.errors[0]
-
-            throw new Error(message)
-        }
-
-        return json.data
-    }
-}
+const defaultOptions = {}
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
     ID: string
@@ -152,6 +128,7 @@ export type EdgeProductShop = {
     __typename?: 'EdgeProductShop'
     addedBy: User
     createdAt: Scalars['DateTime']
+    id: Scalars['String']
     product: Product
     productId: Scalars['String']
     shop: Shop
@@ -164,6 +141,7 @@ export type EdgeProductShopCountAggregate = {
     __typename?: 'EdgeProductShopCountAggregate'
     _all: Scalars['Int']
     createdAt: Scalars['Int']
+    id: Scalars['Int']
     productId: Scalars['Int']
     shopId: Scalars['Int']
     updatedAt: Scalars['Int']
@@ -172,6 +150,7 @@ export type EdgeProductShopCountAggregate = {
 
 export type EdgeProductShopCountOrderByAggregateInput = {
     createdAt?: InputMaybe<SortOrder>
+    id?: InputMaybe<SortOrder>
     productId?: InputMaybe<SortOrder>
     shopId?: InputMaybe<SortOrder>
     updatedAt?: InputMaybe<SortOrder>
@@ -181,6 +160,7 @@ export type EdgeProductShopCountOrderByAggregateInput = {
 export type EdgeProductShopCreateInput = {
     addedBy: UserCreateNestedOneWithoutAddedProductsToShopsInput
     createdAt?: InputMaybe<Scalars['DateTime']>
+    id?: InputMaybe<Scalars['String']>
     product: ProductCreateNestedOneWithoutInShopsInput
     shop: ShopCreateNestedOneWithoutHasProductsInput
     updatedAt?: InputMaybe<Scalars['DateTime']>
@@ -188,6 +168,7 @@ export type EdgeProductShopCreateInput = {
 
 export type EdgeProductShopCreateManyAddedByInput = {
     createdAt?: InputMaybe<Scalars['DateTime']>
+    id?: InputMaybe<Scalars['String']>
     productId: Scalars['String']
     shopId: Scalars['String']
     updatedAt?: InputMaybe<Scalars['DateTime']>
@@ -200,6 +181,7 @@ export type EdgeProductShopCreateManyAddedByInputEnvelope = {
 
 export type EdgeProductShopCreateManyInput = {
     createdAt?: InputMaybe<Scalars['DateTime']>
+    id?: InputMaybe<Scalars['String']>
     productId: Scalars['String']
     shopId: Scalars['String']
     updatedAt?: InputMaybe<Scalars['DateTime']>
@@ -208,6 +190,7 @@ export type EdgeProductShopCreateManyInput = {
 
 export type EdgeProductShopCreateManyProductInput = {
     createdAt?: InputMaybe<Scalars['DateTime']>
+    id?: InputMaybe<Scalars['String']>
     shopId: Scalars['String']
     updatedAt?: InputMaybe<Scalars['DateTime']>
     userId: Scalars['String']
@@ -220,6 +203,7 @@ export type EdgeProductShopCreateManyProductInputEnvelope = {
 
 export type EdgeProductShopCreateManyShopInput = {
     createdAt?: InputMaybe<Scalars['DateTime']>
+    id?: InputMaybe<Scalars['String']>
     productId: Scalars['String']
     updatedAt?: InputMaybe<Scalars['DateTime']>
     userId: Scalars['String']
@@ -268,6 +252,7 @@ export type EdgeProductShopCreateOrConnectWithoutShopInput = {
 
 export type EdgeProductShopCreateWithoutAddedByInput = {
     createdAt?: InputMaybe<Scalars['DateTime']>
+    id?: InputMaybe<Scalars['String']>
     product: ProductCreateNestedOneWithoutInShopsInput
     shop: ShopCreateNestedOneWithoutHasProductsInput
     updatedAt?: InputMaybe<Scalars['DateTime']>
@@ -276,6 +261,7 @@ export type EdgeProductShopCreateWithoutAddedByInput = {
 export type EdgeProductShopCreateWithoutProductInput = {
     addedBy: UserCreateNestedOneWithoutAddedProductsToShopsInput
     createdAt?: InputMaybe<Scalars['DateTime']>
+    id?: InputMaybe<Scalars['String']>
     shop: ShopCreateNestedOneWithoutHasProductsInput
     updatedAt?: InputMaybe<Scalars['DateTime']>
 }
@@ -283,6 +269,7 @@ export type EdgeProductShopCreateWithoutProductInput = {
 export type EdgeProductShopCreateWithoutShopInput = {
     addedBy: UserCreateNestedOneWithoutAddedProductsToShopsInput
     createdAt?: InputMaybe<Scalars['DateTime']>
+    id?: InputMaybe<Scalars['String']>
     product: ProductCreateNestedOneWithoutInShopsInput
     updatedAt?: InputMaybe<Scalars['DateTime']>
 }
@@ -293,6 +280,7 @@ export type EdgeProductShopGroupBy = {
     _max?: Maybe<EdgeProductShopMaxAggregate>
     _min?: Maybe<EdgeProductShopMinAggregate>
     createdAt: Scalars['DateTime']
+    id: Scalars['String']
     productId: Scalars['String']
     shopId: Scalars['String']
     updatedAt: Scalars['DateTime']
@@ -308,6 +296,7 @@ export type EdgeProductShopListRelationFilter = {
 export type EdgeProductShopMaxAggregate = {
     __typename?: 'EdgeProductShopMaxAggregate'
     createdAt?: Maybe<Scalars['DateTime']>
+    id?: Maybe<Scalars['String']>
     productId?: Maybe<Scalars['String']>
     shopId?: Maybe<Scalars['String']>
     updatedAt?: Maybe<Scalars['DateTime']>
@@ -316,6 +305,7 @@ export type EdgeProductShopMaxAggregate = {
 
 export type EdgeProductShopMaxOrderByAggregateInput = {
     createdAt?: InputMaybe<SortOrder>
+    id?: InputMaybe<SortOrder>
     productId?: InputMaybe<SortOrder>
     shopId?: InputMaybe<SortOrder>
     updatedAt?: InputMaybe<SortOrder>
@@ -325,6 +315,7 @@ export type EdgeProductShopMaxOrderByAggregateInput = {
 export type EdgeProductShopMinAggregate = {
     __typename?: 'EdgeProductShopMinAggregate'
     createdAt?: Maybe<Scalars['DateTime']>
+    id?: Maybe<Scalars['String']>
     productId?: Maybe<Scalars['String']>
     shopId?: Maybe<Scalars['String']>
     updatedAt?: Maybe<Scalars['DateTime']>
@@ -333,6 +324,7 @@ export type EdgeProductShopMinAggregate = {
 
 export type EdgeProductShopMinOrderByAggregateInput = {
     createdAt?: InputMaybe<SortOrder>
+    id?: InputMaybe<SortOrder>
     productId?: InputMaybe<SortOrder>
     shopId?: InputMaybe<SortOrder>
     updatedAt?: InputMaybe<SortOrder>
@@ -348,6 +340,7 @@ export type EdgeProductShopOrderByWithAggregationInput = {
     _max?: InputMaybe<EdgeProductShopMaxOrderByAggregateInput>
     _min?: InputMaybe<EdgeProductShopMinOrderByAggregateInput>
     createdAt?: InputMaybe<SortOrder>
+    id?: InputMaybe<SortOrder>
     productId?: InputMaybe<SortOrder>
     shopId?: InputMaybe<SortOrder>
     updatedAt?: InputMaybe<SortOrder>
@@ -357,6 +350,7 @@ export type EdgeProductShopOrderByWithAggregationInput = {
 export type EdgeProductShopOrderByWithRelationInput = {
     addedBy?: InputMaybe<UserOrderByWithRelationInput>
     createdAt?: InputMaybe<SortOrder>
+    id?: InputMaybe<SortOrder>
     product?: InputMaybe<ProductOrderByWithRelationInput>
     productId?: InputMaybe<SortOrder>
     shop?: InputMaybe<ShopOrderByWithRelationInput>
@@ -365,13 +359,9 @@ export type EdgeProductShopOrderByWithRelationInput = {
     userId?: InputMaybe<SortOrder>
 }
 
-export type EdgeProductShopProductIdShopIdCompoundUniqueInput = {
-    productId: Scalars['String']
-    shopId: Scalars['String']
-}
-
 export enum EdgeProductShopScalarFieldEnum {
     CreatedAt = 'createdAt',
+    Id = 'id',
     ProductId = 'productId',
     ShopId = 'shopId',
     UpdatedAt = 'updatedAt',
@@ -383,6 +373,7 @@ export type EdgeProductShopScalarWhereInput = {
     NOT?: InputMaybe<Array<EdgeProductShopScalarWhereInput>>
     OR?: InputMaybe<Array<EdgeProductShopScalarWhereInput>>
     createdAt?: InputMaybe<DateTimeFilter>
+    id?: InputMaybe<StringFilter>
     productId?: InputMaybe<StringFilter>
     shopId?: InputMaybe<StringFilter>
     updatedAt?: InputMaybe<DateTimeFilter>
@@ -394,6 +385,7 @@ export type EdgeProductShopScalarWhereWithAggregatesInput = {
     NOT?: InputMaybe<Array<EdgeProductShopScalarWhereWithAggregatesInput>>
     OR?: InputMaybe<Array<EdgeProductShopScalarWhereWithAggregatesInput>>
     createdAt?: InputMaybe<DateTimeWithAggregatesFilter>
+    id?: InputMaybe<StringWithAggregatesFilter>
     productId?: InputMaybe<StringWithAggregatesFilter>
     shopId?: InputMaybe<StringWithAggregatesFilter>
     updatedAt?: InputMaybe<DateTimeWithAggregatesFilter>
@@ -403,6 +395,7 @@ export type EdgeProductShopScalarWhereWithAggregatesInput = {
 export type EdgeProductShopUpdateInput = {
     addedBy?: InputMaybe<UserUpdateOneRequiredWithoutAddedProductsToShopsInput>
     createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>
+    id?: InputMaybe<StringFieldUpdateOperationsInput>
     product?: InputMaybe<ProductUpdateOneRequiredWithoutInShopsInput>
     shop?: InputMaybe<ShopUpdateOneRequiredWithoutHasProductsInput>
     updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>
@@ -410,6 +403,7 @@ export type EdgeProductShopUpdateInput = {
 
 export type EdgeProductShopUpdateManyMutationInput = {
     createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>
+    id?: InputMaybe<StringFieldUpdateOperationsInput>
     updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>
 }
 
@@ -487,6 +481,7 @@ export type EdgeProductShopUpdateWithWhereUniqueWithoutShopInput = {
 
 export type EdgeProductShopUpdateWithoutAddedByInput = {
     createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>
+    id?: InputMaybe<StringFieldUpdateOperationsInput>
     product?: InputMaybe<ProductUpdateOneRequiredWithoutInShopsInput>
     shop?: InputMaybe<ShopUpdateOneRequiredWithoutHasProductsInput>
     updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>
@@ -495,6 +490,7 @@ export type EdgeProductShopUpdateWithoutAddedByInput = {
 export type EdgeProductShopUpdateWithoutProductInput = {
     addedBy?: InputMaybe<UserUpdateOneRequiredWithoutAddedProductsToShopsInput>
     createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>
+    id?: InputMaybe<StringFieldUpdateOperationsInput>
     shop?: InputMaybe<ShopUpdateOneRequiredWithoutHasProductsInput>
     updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>
 }
@@ -502,6 +498,7 @@ export type EdgeProductShopUpdateWithoutProductInput = {
 export type EdgeProductShopUpdateWithoutShopInput = {
     addedBy?: InputMaybe<UserUpdateOneRequiredWithoutAddedProductsToShopsInput>
     createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>
+    id?: InputMaybe<StringFieldUpdateOperationsInput>
     product?: InputMaybe<ProductUpdateOneRequiredWithoutInShopsInput>
     updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>
 }
@@ -530,6 +527,7 @@ export type EdgeProductShopWhereInput = {
     OR?: InputMaybe<Array<EdgeProductShopWhereInput>>
     addedBy?: InputMaybe<UserRelationFilter>
     createdAt?: InputMaybe<DateTimeFilter>
+    id?: InputMaybe<StringFilter>
     product?: InputMaybe<ProductRelationFilter>
     productId?: InputMaybe<StringFilter>
     shop?: InputMaybe<ShopRelationFilter>
@@ -539,7 +537,7 @@ export type EdgeProductShopWhereInput = {
 }
 
 export type EdgeProductShopWhereUniqueInput = {
-    productId_shopId?: InputMaybe<EdgeProductShopProductIdShopIdCompoundUniqueInput>
+    id?: InputMaybe<Scalars['String']>
 }
 
 export type EnumCurrencyFieldUpdateOperationsInput = {
@@ -640,18 +638,18 @@ export type ListItem = {
     isPurchased: Scalars['Boolean']
     product: Product
     productId: Scalars['String']
-    quntity: Scalars['Int']
+    quantity: Scalars['Int']
 }
 
 export type ListItemAvgAggregate = {
     __typename?: 'ListItemAvgAggregate'
     importance?: Maybe<Scalars['Float']>
-    quntity?: Maybe<Scalars['Float']>
+    quantity?: Maybe<Scalars['Float']>
 }
 
 export type ListItemAvgOrderByAggregateInput = {
     importance?: InputMaybe<SortOrder>
-    quntity?: InputMaybe<SortOrder>
+    quantity?: InputMaybe<SortOrder>
 }
 
 export type ListItemCountAggregate = {
@@ -661,7 +659,7 @@ export type ListItemCountAggregate = {
     importance: Scalars['Int']
     isPurchased: Scalars['Int']
     productId: Scalars['Int']
-    quntity: Scalars['Int']
+    quantity: Scalars['Int']
 }
 
 export type ListItemCountOrderByAggregateInput = {
@@ -669,7 +667,7 @@ export type ListItemCountOrderByAggregateInput = {
     importance?: InputMaybe<SortOrder>
     isPurchased?: InputMaybe<SortOrder>
     productId?: InputMaybe<SortOrder>
-    quntity?: InputMaybe<SortOrder>
+    quantity?: InputMaybe<SortOrder>
 }
 
 export type ListItemCreateInput = {
@@ -677,7 +675,7 @@ export type ListItemCreateInput = {
     importance?: InputMaybe<Scalars['Int']>
     isPurchased?: InputMaybe<Scalars['Boolean']>
     product: ProductCreateNestedOneWithoutInListItemInput
-    quntity?: InputMaybe<Scalars['Int']>
+    quantity?: InputMaybe<Scalars['Int']>
 }
 
 export type ListItemCreateManyInput = {
@@ -685,14 +683,14 @@ export type ListItemCreateManyInput = {
     importance?: InputMaybe<Scalars['Int']>
     isPurchased?: InputMaybe<Scalars['Boolean']>
     productId: Scalars['String']
-    quntity?: InputMaybe<Scalars['Int']>
+    quantity?: InputMaybe<Scalars['Int']>
 }
 
 export type ListItemCreateManyProductInput = {
     id?: InputMaybe<Scalars['String']>
     importance?: InputMaybe<Scalars['Int']>
     isPurchased?: InputMaybe<Scalars['Boolean']>
-    quntity?: InputMaybe<Scalars['Int']>
+    quantity?: InputMaybe<Scalars['Int']>
 }
 
 export type ListItemCreateManyProductInputEnvelope = {
@@ -716,7 +714,7 @@ export type ListItemCreateWithoutProductInput = {
     id?: InputMaybe<Scalars['String']>
     importance?: InputMaybe<Scalars['Int']>
     isPurchased?: InputMaybe<Scalars['Boolean']>
-    quntity?: InputMaybe<Scalars['Int']>
+    quantity?: InputMaybe<Scalars['Int']>
 }
 
 export type ListItemGroupBy = {
@@ -730,7 +728,7 @@ export type ListItemGroupBy = {
     importance: Scalars['Int']
     isPurchased: Scalars['Boolean']
     productId: Scalars['String']
-    quntity: Scalars['Int']
+    quantity: Scalars['Int']
 }
 
 export type ListItemListRelationFilter = {
@@ -745,7 +743,7 @@ export type ListItemMaxAggregate = {
     importance?: Maybe<Scalars['Int']>
     isPurchased?: Maybe<Scalars['Boolean']>
     productId?: Maybe<Scalars['String']>
-    quntity?: Maybe<Scalars['Int']>
+    quantity?: Maybe<Scalars['Int']>
 }
 
 export type ListItemMaxOrderByAggregateInput = {
@@ -753,7 +751,7 @@ export type ListItemMaxOrderByAggregateInput = {
     importance?: InputMaybe<SortOrder>
     isPurchased?: InputMaybe<SortOrder>
     productId?: InputMaybe<SortOrder>
-    quntity?: InputMaybe<SortOrder>
+    quantity?: InputMaybe<SortOrder>
 }
 
 export type ListItemMinAggregate = {
@@ -762,7 +760,7 @@ export type ListItemMinAggregate = {
     importance?: Maybe<Scalars['Int']>
     isPurchased?: Maybe<Scalars['Boolean']>
     productId?: Maybe<Scalars['String']>
-    quntity?: Maybe<Scalars['Int']>
+    quantity?: Maybe<Scalars['Int']>
 }
 
 export type ListItemMinOrderByAggregateInput = {
@@ -770,7 +768,7 @@ export type ListItemMinOrderByAggregateInput = {
     importance?: InputMaybe<SortOrder>
     isPurchased?: InputMaybe<SortOrder>
     productId?: InputMaybe<SortOrder>
-    quntity?: InputMaybe<SortOrder>
+    quantity?: InputMaybe<SortOrder>
 }
 
 export type ListItemOrderByRelationAggregateInput = {
@@ -787,7 +785,7 @@ export type ListItemOrderByWithAggregationInput = {
     importance?: InputMaybe<SortOrder>
     isPurchased?: InputMaybe<SortOrder>
     productId?: InputMaybe<SortOrder>
-    quntity?: InputMaybe<SortOrder>
+    quantity?: InputMaybe<SortOrder>
 }
 
 export type ListItemOrderByWithRelationInput = {
@@ -796,7 +794,7 @@ export type ListItemOrderByWithRelationInput = {
     isPurchased?: InputMaybe<SortOrder>
     product?: InputMaybe<ProductOrderByWithRelationInput>
     productId?: InputMaybe<SortOrder>
-    quntity?: InputMaybe<SortOrder>
+    quantity?: InputMaybe<SortOrder>
 }
 
 export enum ListItemScalarFieldEnum {
@@ -804,7 +802,7 @@ export enum ListItemScalarFieldEnum {
     Importance = 'importance',
     IsPurchased = 'isPurchased',
     ProductId = 'productId',
-    Quntity = 'quntity',
+    Quantity = 'quantity',
 }
 
 export type ListItemScalarWhereInput = {
@@ -815,7 +813,7 @@ export type ListItemScalarWhereInput = {
     importance?: InputMaybe<IntFilter>
     isPurchased?: InputMaybe<BoolFilter>
     productId?: InputMaybe<StringFilter>
-    quntity?: InputMaybe<IntFilter>
+    quantity?: InputMaybe<IntFilter>
 }
 
 export type ListItemScalarWhereWithAggregatesInput = {
@@ -826,18 +824,18 @@ export type ListItemScalarWhereWithAggregatesInput = {
     importance?: InputMaybe<IntWithAggregatesFilter>
     isPurchased?: InputMaybe<BoolWithAggregatesFilter>
     productId?: InputMaybe<StringWithAggregatesFilter>
-    quntity?: InputMaybe<IntWithAggregatesFilter>
+    quantity?: InputMaybe<IntWithAggregatesFilter>
 }
 
 export type ListItemSumAggregate = {
     __typename?: 'ListItemSumAggregate'
     importance?: Maybe<Scalars['Int']>
-    quntity?: Maybe<Scalars['Int']>
+    quantity?: Maybe<Scalars['Int']>
 }
 
 export type ListItemSumOrderByAggregateInput = {
     importance?: InputMaybe<SortOrder>
-    quntity?: InputMaybe<SortOrder>
+    quantity?: InputMaybe<SortOrder>
 }
 
 export type ListItemUpdateInput = {
@@ -845,14 +843,14 @@ export type ListItemUpdateInput = {
     importance?: InputMaybe<IntFieldUpdateOperationsInput>
     isPurchased?: InputMaybe<BoolFieldUpdateOperationsInput>
     product?: InputMaybe<ProductUpdateOneRequiredWithoutInListItemInput>
-    quntity?: InputMaybe<IntFieldUpdateOperationsInput>
+    quantity?: InputMaybe<IntFieldUpdateOperationsInput>
 }
 
 export type ListItemUpdateManyMutationInput = {
     id?: InputMaybe<StringFieldUpdateOperationsInput>
     importance?: InputMaybe<IntFieldUpdateOperationsInput>
     isPurchased?: InputMaybe<BoolFieldUpdateOperationsInput>
-    quntity?: InputMaybe<IntFieldUpdateOperationsInput>
+    quantity?: InputMaybe<IntFieldUpdateOperationsInput>
 }
 
 export type ListItemUpdateManyWithWhereWithoutProductInput = {
@@ -883,7 +881,7 @@ export type ListItemUpdateWithoutProductInput = {
     id?: InputMaybe<StringFieldUpdateOperationsInput>
     importance?: InputMaybe<IntFieldUpdateOperationsInput>
     isPurchased?: InputMaybe<BoolFieldUpdateOperationsInput>
-    quntity?: InputMaybe<IntFieldUpdateOperationsInput>
+    quantity?: InputMaybe<IntFieldUpdateOperationsInput>
 }
 
 export type ListItemUpsertWithWhereUniqueWithoutProductInput = {
@@ -901,7 +899,7 @@ export type ListItemWhereInput = {
     isPurchased?: InputMaybe<BoolFilter>
     product?: InputMaybe<ProductRelationFilter>
     productId?: InputMaybe<StringFilter>
-    quntity?: InputMaybe<IntFilter>
+    quantity?: InputMaybe<IntFilter>
 }
 
 export type ListItemWhereUniqueInput = {
@@ -2974,1805 +2972,120 @@ export type UserWhereUniqueInput = {
     id?: InputMaybe<Scalars['String']>
 }
 
-export type WithIndex<TObject> = TObject & Record<string, any>
-export type ResolversObject<TObject> = WithIndex<TObject>
+export type AddUserMutationVariables = Exact<{
+    alias: Scalars['String']
+    email: Scalars['String']
+}>
 
-export type ResolverTypeWrapper<T> = Promise<T> | T
-
-export type ResolverWithResolve<TResult, TParent, TContext, TArgs> = {
-    resolve: ResolverFn<TResult, TParent, TContext, TArgs>
+export type AddUserMutation = {
+    __typename?: 'Mutation'
+    createUser: {
+        __typename?: 'User'
+        id: string
+        alias: string
+        email: string
+        createdAt: any
+        updatedAt: any
+    }
 }
-export type Resolver<TResult, TParent = {}, TContext = {}, TArgs = {}> =
-    | ResolverFn<TResult, TParent, TContext, TArgs>
-    | ResolverWithResolve<TResult, TParent, TContext, TArgs>
-
-export type ResolverFn<TResult, TParent, TContext, TArgs> = (
-    parent: TParent,
-    args: TArgs,
-    context: TContext,
-    info: GraphQLResolveInfo
-) => Promise<TResult> | TResult
-
-export type SubscriptionSubscribeFn<TResult, TParent, TContext, TArgs> = (
-    parent: TParent,
-    args: TArgs,
-    context: TContext,
-    info: GraphQLResolveInfo
-) => AsyncIterable<TResult> | Promise<AsyncIterable<TResult>>
-
-export type SubscriptionResolveFn<TResult, TParent, TContext, TArgs> = (
-    parent: TParent,
-    args: TArgs,
-    context: TContext,
-    info: GraphQLResolveInfo
-) => TResult | Promise<TResult>
-
-export interface SubscriptionSubscriberObject<
-    TResult,
-    TKey extends string,
-    TParent,
-    TContext,
-    TArgs
-> {
-    subscribe: SubscriptionSubscribeFn<{ [key in TKey]: TResult }, TParent, TContext, TArgs>
-    resolve?: SubscriptionResolveFn<TResult, { [key in TKey]: TResult }, TContext, TArgs>
-}
-
-export interface SubscriptionResolverObject<TResult, TParent, TContext, TArgs> {
-    subscribe: SubscriptionSubscribeFn<any, TParent, TContext, TArgs>
-    resolve: SubscriptionResolveFn<TResult, any, TContext, TArgs>
-}
-
-export type SubscriptionObject<TResult, TKey extends string, TParent, TContext, TArgs> =
-    | SubscriptionSubscriberObject<TResult, TKey, TParent, TContext, TArgs>
-    | SubscriptionResolverObject<TResult, TParent, TContext, TArgs>
-
-export type SubscriptionResolver<
-    TResult,
-    TKey extends string,
-    TParent = {},
-    TContext = {},
-    TArgs = {}
-> =
-    | ((...args: any[]) => SubscriptionObject<TResult, TKey, TParent, TContext, TArgs>)
-    | SubscriptionObject<TResult, TKey, TParent, TContext, TArgs>
-
-export type TypeResolveFn<TTypes, TParent = {}, TContext = {}> = (
-    parent: TParent,
-    context: TContext,
-    info: GraphQLResolveInfo
-) => Maybe<TTypes> | Promise<Maybe<TTypes>>
-
-export type IsTypeOfResolverFn<T = {}, TContext = {}> = (
-    obj: T,
-    context: TContext,
-    info: GraphQLResolveInfo
-) => boolean | Promise<boolean>
-
-export type NextResolverFn<T> = () => Promise<T>
-
-export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs = {}> = (
-    next: NextResolverFn<TResult>,
-    parent: TParent,
-    args: TArgs,
-    context: TContext,
-    info: GraphQLResolveInfo
-) => TResult | Promise<TResult>
-
-/** Mapping between all available schema types and the resolvers types */
-export type ResolversTypes = ResolversObject<{
-    AffectedRowsOutput: ResolverTypeWrapper<AffectedRowsOutput>
-    AggregateEdgeProductShop: ResolverTypeWrapper<AggregateEdgeProductShop>
-    AggregateListItem: ResolverTypeWrapper<AggregateListItem>
-    AggregateLocation: ResolverTypeWrapper<AggregateLocation>
-    AggregateProduct: ResolverTypeWrapper<AggregateProduct>
-    AggregateShop: ResolverTypeWrapper<AggregateShop>
-    AggregateUser: ResolverTypeWrapper<AggregateUser>
-    BoolFieldUpdateOperationsInput: BoolFieldUpdateOperationsInput
-    BoolFilter: BoolFilter
-    BoolWithAggregatesFilter: BoolWithAggregatesFilter
-    Boolean: ResolverTypeWrapper<Scalars['Boolean']>
-    Currency: Currency
-    DateTime: ResolverTypeWrapper<Scalars['DateTime']>
-    DateTimeFieldUpdateOperationsInput: DateTimeFieldUpdateOperationsInput
-    DateTimeFilter: DateTimeFilter
-    DateTimeWithAggregatesFilter: DateTimeWithAggregatesFilter
-    EdgeProductShop: ResolverTypeWrapper<EdgeProductShop>
-    EdgeProductShopCountAggregate: ResolverTypeWrapper<EdgeProductShopCountAggregate>
-    EdgeProductShopCountOrderByAggregateInput: EdgeProductShopCountOrderByAggregateInput
-    EdgeProductShopCreateInput: EdgeProductShopCreateInput
-    EdgeProductShopCreateManyAddedByInput: EdgeProductShopCreateManyAddedByInput
-    EdgeProductShopCreateManyAddedByInputEnvelope: EdgeProductShopCreateManyAddedByInputEnvelope
-    EdgeProductShopCreateManyInput: EdgeProductShopCreateManyInput
-    EdgeProductShopCreateManyProductInput: EdgeProductShopCreateManyProductInput
-    EdgeProductShopCreateManyProductInputEnvelope: EdgeProductShopCreateManyProductInputEnvelope
-    EdgeProductShopCreateManyShopInput: EdgeProductShopCreateManyShopInput
-    EdgeProductShopCreateManyShopInputEnvelope: EdgeProductShopCreateManyShopInputEnvelope
-    EdgeProductShopCreateNestedManyWithoutAddedByInput: EdgeProductShopCreateNestedManyWithoutAddedByInput
-    EdgeProductShopCreateNestedManyWithoutProductInput: EdgeProductShopCreateNestedManyWithoutProductInput
-    EdgeProductShopCreateNestedManyWithoutShopInput: EdgeProductShopCreateNestedManyWithoutShopInput
-    EdgeProductShopCreateOrConnectWithoutAddedByInput: EdgeProductShopCreateOrConnectWithoutAddedByInput
-    EdgeProductShopCreateOrConnectWithoutProductInput: EdgeProductShopCreateOrConnectWithoutProductInput
-    EdgeProductShopCreateOrConnectWithoutShopInput: EdgeProductShopCreateOrConnectWithoutShopInput
-    EdgeProductShopCreateWithoutAddedByInput: EdgeProductShopCreateWithoutAddedByInput
-    EdgeProductShopCreateWithoutProductInput: EdgeProductShopCreateWithoutProductInput
-    EdgeProductShopCreateWithoutShopInput: EdgeProductShopCreateWithoutShopInput
-    EdgeProductShopGroupBy: ResolverTypeWrapper<EdgeProductShopGroupBy>
-    EdgeProductShopListRelationFilter: EdgeProductShopListRelationFilter
-    EdgeProductShopMaxAggregate: ResolverTypeWrapper<EdgeProductShopMaxAggregate>
-    EdgeProductShopMaxOrderByAggregateInput: EdgeProductShopMaxOrderByAggregateInput
-    EdgeProductShopMinAggregate: ResolverTypeWrapper<EdgeProductShopMinAggregate>
-    EdgeProductShopMinOrderByAggregateInput: EdgeProductShopMinOrderByAggregateInput
-    EdgeProductShopOrderByRelationAggregateInput: EdgeProductShopOrderByRelationAggregateInput
-    EdgeProductShopOrderByWithAggregationInput: EdgeProductShopOrderByWithAggregationInput
-    EdgeProductShopOrderByWithRelationInput: EdgeProductShopOrderByWithRelationInput
-    EdgeProductShopProductIdShopIdCompoundUniqueInput: EdgeProductShopProductIdShopIdCompoundUniqueInput
-    EdgeProductShopScalarFieldEnum: EdgeProductShopScalarFieldEnum
-    EdgeProductShopScalarWhereInput: EdgeProductShopScalarWhereInput
-    EdgeProductShopScalarWhereWithAggregatesInput: EdgeProductShopScalarWhereWithAggregatesInput
-    EdgeProductShopUpdateInput: EdgeProductShopUpdateInput
-    EdgeProductShopUpdateManyMutationInput: EdgeProductShopUpdateManyMutationInput
-    EdgeProductShopUpdateManyWithWhereWithoutAddedByInput: EdgeProductShopUpdateManyWithWhereWithoutAddedByInput
-    EdgeProductShopUpdateManyWithWhereWithoutProductInput: EdgeProductShopUpdateManyWithWhereWithoutProductInput
-    EdgeProductShopUpdateManyWithWhereWithoutShopInput: EdgeProductShopUpdateManyWithWhereWithoutShopInput
-    EdgeProductShopUpdateManyWithoutAddedByInput: EdgeProductShopUpdateManyWithoutAddedByInput
-    EdgeProductShopUpdateManyWithoutProductInput: EdgeProductShopUpdateManyWithoutProductInput
-    EdgeProductShopUpdateManyWithoutShopInput: EdgeProductShopUpdateManyWithoutShopInput
-    EdgeProductShopUpdateWithWhereUniqueWithoutAddedByInput: EdgeProductShopUpdateWithWhereUniqueWithoutAddedByInput
-    EdgeProductShopUpdateWithWhereUniqueWithoutProductInput: EdgeProductShopUpdateWithWhereUniqueWithoutProductInput
-    EdgeProductShopUpdateWithWhereUniqueWithoutShopInput: EdgeProductShopUpdateWithWhereUniqueWithoutShopInput
-    EdgeProductShopUpdateWithoutAddedByInput: EdgeProductShopUpdateWithoutAddedByInput
-    EdgeProductShopUpdateWithoutProductInput: EdgeProductShopUpdateWithoutProductInput
-    EdgeProductShopUpdateWithoutShopInput: EdgeProductShopUpdateWithoutShopInput
-    EdgeProductShopUpsertWithWhereUniqueWithoutAddedByInput: EdgeProductShopUpsertWithWhereUniqueWithoutAddedByInput
-    EdgeProductShopUpsertWithWhereUniqueWithoutProductInput: EdgeProductShopUpsertWithWhereUniqueWithoutProductInput
-    EdgeProductShopUpsertWithWhereUniqueWithoutShopInput: EdgeProductShopUpsertWithWhereUniqueWithoutShopInput
-    EdgeProductShopWhereInput: EdgeProductShopWhereInput
-    EdgeProductShopWhereUniqueInput: EdgeProductShopWhereUniqueInput
-    EnumCurrencyFieldUpdateOperationsInput: EnumCurrencyFieldUpdateOperationsInput
-    EnumCurrencyFilter: EnumCurrencyFilter
-    EnumCurrencyWithAggregatesFilter: EnumCurrencyWithAggregatesFilter
-    Float: ResolverTypeWrapper<Scalars['Float']>
-    FloatFieldUpdateOperationsInput: FloatFieldUpdateOperationsInput
-    FloatFilter: FloatFilter
-    FloatWithAggregatesFilter: FloatWithAggregatesFilter
-    Int: ResolverTypeWrapper<Scalars['Int']>
-    IntFieldUpdateOperationsInput: IntFieldUpdateOperationsInput
-    IntFilter: IntFilter
-    IntWithAggregatesFilter: IntWithAggregatesFilter
-    ListItem: ResolverTypeWrapper<ListItem>
-    ListItemAvgAggregate: ResolverTypeWrapper<ListItemAvgAggregate>
-    ListItemAvgOrderByAggregateInput: ListItemAvgOrderByAggregateInput
-    ListItemCountAggregate: ResolverTypeWrapper<ListItemCountAggregate>
-    ListItemCountOrderByAggregateInput: ListItemCountOrderByAggregateInput
-    ListItemCreateInput: ListItemCreateInput
-    ListItemCreateManyInput: ListItemCreateManyInput
-    ListItemCreateManyProductInput: ListItemCreateManyProductInput
-    ListItemCreateManyProductInputEnvelope: ListItemCreateManyProductInputEnvelope
-    ListItemCreateNestedManyWithoutProductInput: ListItemCreateNestedManyWithoutProductInput
-    ListItemCreateOrConnectWithoutProductInput: ListItemCreateOrConnectWithoutProductInput
-    ListItemCreateWithoutProductInput: ListItemCreateWithoutProductInput
-    ListItemGroupBy: ResolverTypeWrapper<ListItemGroupBy>
-    ListItemListRelationFilter: ListItemListRelationFilter
-    ListItemMaxAggregate: ResolverTypeWrapper<ListItemMaxAggregate>
-    ListItemMaxOrderByAggregateInput: ListItemMaxOrderByAggregateInput
-    ListItemMinAggregate: ResolverTypeWrapper<ListItemMinAggregate>
-    ListItemMinOrderByAggregateInput: ListItemMinOrderByAggregateInput
-    ListItemOrderByRelationAggregateInput: ListItemOrderByRelationAggregateInput
-    ListItemOrderByWithAggregationInput: ListItemOrderByWithAggregationInput
-    ListItemOrderByWithRelationInput: ListItemOrderByWithRelationInput
-    ListItemScalarFieldEnum: ListItemScalarFieldEnum
-    ListItemScalarWhereInput: ListItemScalarWhereInput
-    ListItemScalarWhereWithAggregatesInput: ListItemScalarWhereWithAggregatesInput
-    ListItemSumAggregate: ResolverTypeWrapper<ListItemSumAggregate>
-    ListItemSumOrderByAggregateInput: ListItemSumOrderByAggregateInput
-    ListItemUpdateInput: ListItemUpdateInput
-    ListItemUpdateManyMutationInput: ListItemUpdateManyMutationInput
-    ListItemUpdateManyWithWhereWithoutProductInput: ListItemUpdateManyWithWhereWithoutProductInput
-    ListItemUpdateManyWithoutProductInput: ListItemUpdateManyWithoutProductInput
-    ListItemUpdateWithWhereUniqueWithoutProductInput: ListItemUpdateWithWhereUniqueWithoutProductInput
-    ListItemUpdateWithoutProductInput: ListItemUpdateWithoutProductInput
-    ListItemUpsertWithWhereUniqueWithoutProductInput: ListItemUpsertWithWhereUniqueWithoutProductInput
-    ListItemWhereInput: ListItemWhereInput
-    ListItemWhereUniqueInput: ListItemWhereUniqueInput
-    Location: ResolverTypeWrapper<Location>
-    LocationAvgAggregate: ResolverTypeWrapper<LocationAvgAggregate>
-    LocationAvgOrderByAggregateInput: LocationAvgOrderByAggregateInput
-    LocationCountAggregate: ResolverTypeWrapper<LocationCountAggregate>
-    LocationCountOrderByAggregateInput: LocationCountOrderByAggregateInput
-    LocationCreateInput: LocationCreateInput
-    LocationCreateManyInput: LocationCreateManyInput
-    LocationCreateNestedOneWithoutOfShopInput: LocationCreateNestedOneWithoutOfShopInput
-    LocationCreateOrConnectWithoutOfShopInput: LocationCreateOrConnectWithoutOfShopInput
-    LocationCreateWithoutOfShopInput: LocationCreateWithoutOfShopInput
-    LocationGroupBy: ResolverTypeWrapper<LocationGroupBy>
-    LocationMaxAggregate: ResolverTypeWrapper<LocationMaxAggregate>
-    LocationMaxOrderByAggregateInput: LocationMaxOrderByAggregateInput
-    LocationMinAggregate: ResolverTypeWrapper<LocationMinAggregate>
-    LocationMinOrderByAggregateInput: LocationMinOrderByAggregateInput
-    LocationOrderByWithAggregationInput: LocationOrderByWithAggregationInput
-    LocationOrderByWithRelationInput: LocationOrderByWithRelationInput
-    LocationRelationFilter: LocationRelationFilter
-    LocationScalarFieldEnum: LocationScalarFieldEnum
-    LocationScalarWhereWithAggregatesInput: LocationScalarWhereWithAggregatesInput
-    LocationSumAggregate: ResolverTypeWrapper<LocationSumAggregate>
-    LocationSumOrderByAggregateInput: LocationSumOrderByAggregateInput
-    LocationUpdateInput: LocationUpdateInput
-    LocationUpdateManyMutationInput: LocationUpdateManyMutationInput
-    LocationUpdateOneWithoutOfShopInput: LocationUpdateOneWithoutOfShopInput
-    LocationUpdateWithoutOfShopInput: LocationUpdateWithoutOfShopInput
-    LocationUpsertWithoutOfShopInput: LocationUpsertWithoutOfShopInput
-    LocationWhereInput: LocationWhereInput
-    LocationWhereUniqueInput: LocationWhereUniqueInput
-    Mutation: ResolverTypeWrapper<{}>
-    NestedBoolFilter: NestedBoolFilter
-    NestedBoolWithAggregatesFilter: NestedBoolWithAggregatesFilter
-    NestedDateTimeFilter: NestedDateTimeFilter
-    NestedDateTimeWithAggregatesFilter: NestedDateTimeWithAggregatesFilter
-    NestedEnumCurrencyFilter: NestedEnumCurrencyFilter
-    NestedEnumCurrencyWithAggregatesFilter: NestedEnumCurrencyWithAggregatesFilter
-    NestedFloatFilter: NestedFloatFilter
-    NestedFloatWithAggregatesFilter: NestedFloatWithAggregatesFilter
-    NestedIntFilter: NestedIntFilter
-    NestedIntWithAggregatesFilter: NestedIntWithAggregatesFilter
-    NestedStringFilter: NestedStringFilter
-    NestedStringWithAggregatesFilter: NestedStringWithAggregatesFilter
-    Product: ResolverTypeWrapper<Product>
-    ProductAvgAggregate: ResolverTypeWrapper<ProductAvgAggregate>
-    ProductAvgOrderByAggregateInput: ProductAvgOrderByAggregateInput
-    ProductCount: ResolverTypeWrapper<ProductCount>
-    ProductCountAggregate: ResolverTypeWrapper<ProductCountAggregate>
-    ProductCountOrderByAggregateInput: ProductCountOrderByAggregateInput
-    ProductCreateInput: ProductCreateInput
-    ProductCreateManyCreatedByInput: ProductCreateManyCreatedByInput
-    ProductCreateManyCreatedByInputEnvelope: ProductCreateManyCreatedByInputEnvelope
-    ProductCreateManyInput: ProductCreateManyInput
-    ProductCreateNestedManyWithoutCreatedByInput: ProductCreateNestedManyWithoutCreatedByInput
-    ProductCreateNestedOneWithoutInListItemInput: ProductCreateNestedOneWithoutInListItemInput
-    ProductCreateNestedOneWithoutInShopsInput: ProductCreateNestedOneWithoutInShopsInput
-    ProductCreateOrConnectWithoutCreatedByInput: ProductCreateOrConnectWithoutCreatedByInput
-    ProductCreateOrConnectWithoutInListItemInput: ProductCreateOrConnectWithoutInListItemInput
-    ProductCreateOrConnectWithoutInShopsInput: ProductCreateOrConnectWithoutInShopsInput
-    ProductCreateWithoutCreatedByInput: ProductCreateWithoutCreatedByInput
-    ProductCreateWithoutInListItemInput: ProductCreateWithoutInListItemInput
-    ProductCreateWithoutInShopsInput: ProductCreateWithoutInShopsInput
-    ProductGroupBy: ResolverTypeWrapper<ProductGroupBy>
-    ProductListRelationFilter: ProductListRelationFilter
-    ProductMaxAggregate: ResolverTypeWrapper<ProductMaxAggregate>
-    ProductMaxOrderByAggregateInput: ProductMaxOrderByAggregateInput
-    ProductMinAggregate: ResolverTypeWrapper<ProductMinAggregate>
-    ProductMinOrderByAggregateInput: ProductMinOrderByAggregateInput
-    ProductOrderByRelationAggregateInput: ProductOrderByRelationAggregateInput
-    ProductOrderByWithAggregationInput: ProductOrderByWithAggregationInput
-    ProductOrderByWithRelationInput: ProductOrderByWithRelationInput
-    ProductRelationFilter: ProductRelationFilter
-    ProductScalarFieldEnum: ProductScalarFieldEnum
-    ProductScalarWhereInput: ProductScalarWhereInput
-    ProductScalarWhereWithAggregatesInput: ProductScalarWhereWithAggregatesInput
-    ProductSumAggregate: ResolverTypeWrapper<ProductSumAggregate>
-    ProductSumOrderByAggregateInput: ProductSumOrderByAggregateInput
-    ProductUpdateInput: ProductUpdateInput
-    ProductUpdateManyMutationInput: ProductUpdateManyMutationInput
-    ProductUpdateManyWithWhereWithoutCreatedByInput: ProductUpdateManyWithWhereWithoutCreatedByInput
-    ProductUpdateManyWithoutCreatedByInput: ProductUpdateManyWithoutCreatedByInput
-    ProductUpdateOneRequiredWithoutInListItemInput: ProductUpdateOneRequiredWithoutInListItemInput
-    ProductUpdateOneRequiredWithoutInShopsInput: ProductUpdateOneRequiredWithoutInShopsInput
-    ProductUpdateWithWhereUniqueWithoutCreatedByInput: ProductUpdateWithWhereUniqueWithoutCreatedByInput
-    ProductUpdateWithoutCreatedByInput: ProductUpdateWithoutCreatedByInput
-    ProductUpdateWithoutInListItemInput: ProductUpdateWithoutInListItemInput
-    ProductUpdateWithoutInShopsInput: ProductUpdateWithoutInShopsInput
-    ProductUpsertWithWhereUniqueWithoutCreatedByInput: ProductUpsertWithWhereUniqueWithoutCreatedByInput
-    ProductUpsertWithoutInListItemInput: ProductUpsertWithoutInListItemInput
-    ProductUpsertWithoutInShopsInput: ProductUpsertWithoutInShopsInput
-    ProductWhereInput: ProductWhereInput
-    ProductWhereUniqueInput: ProductWhereUniqueInput
-    Query: ResolverTypeWrapper<{}>
-    Shop: ResolverTypeWrapper<Shop>
-    ShopCount: ResolverTypeWrapper<ShopCount>
-    ShopCountAggregate: ResolverTypeWrapper<ShopCountAggregate>
-    ShopCountOrderByAggregateInput: ShopCountOrderByAggregateInput
-    ShopCreateInput: ShopCreateInput
-    ShopCreateManyCreatedByInput: ShopCreateManyCreatedByInput
-    ShopCreateManyCreatedByInputEnvelope: ShopCreateManyCreatedByInputEnvelope
-    ShopCreateManyInput: ShopCreateManyInput
-    ShopCreateNestedManyWithoutCreatedByInput: ShopCreateNestedManyWithoutCreatedByInput
-    ShopCreateNestedOneWithoutHasProductsInput: ShopCreateNestedOneWithoutHasProductsInput
-    ShopCreateNestedOneWithoutLocationInput: ShopCreateNestedOneWithoutLocationInput
-    ShopCreateOrConnectWithoutCreatedByInput: ShopCreateOrConnectWithoutCreatedByInput
-    ShopCreateOrConnectWithoutHasProductsInput: ShopCreateOrConnectWithoutHasProductsInput
-    ShopCreateOrConnectWithoutLocationInput: ShopCreateOrConnectWithoutLocationInput
-    ShopCreateWithoutCreatedByInput: ShopCreateWithoutCreatedByInput
-    ShopCreateWithoutHasProductsInput: ShopCreateWithoutHasProductsInput
-    ShopCreateWithoutLocationInput: ShopCreateWithoutLocationInput
-    ShopGroupBy: ResolverTypeWrapper<ShopGroupBy>
-    ShopListRelationFilter: ShopListRelationFilter
-    ShopMaxAggregate: ResolverTypeWrapper<ShopMaxAggregate>
-    ShopMaxOrderByAggregateInput: ShopMaxOrderByAggregateInput
-    ShopMinAggregate: ResolverTypeWrapper<ShopMinAggregate>
-    ShopMinOrderByAggregateInput: ShopMinOrderByAggregateInput
-    ShopOrderByRelationAggregateInput: ShopOrderByRelationAggregateInput
-    ShopOrderByWithAggregationInput: ShopOrderByWithAggregationInput
-    ShopOrderByWithRelationInput: ShopOrderByWithRelationInput
-    ShopRelationFilter: ShopRelationFilter
-    ShopScalarFieldEnum: ShopScalarFieldEnum
-    ShopScalarWhereInput: ShopScalarWhereInput
-    ShopScalarWhereWithAggregatesInput: ShopScalarWhereWithAggregatesInput
-    ShopUpdateInput: ShopUpdateInput
-    ShopUpdateManyMutationInput: ShopUpdateManyMutationInput
-    ShopUpdateManyWithWhereWithoutCreatedByInput: ShopUpdateManyWithWhereWithoutCreatedByInput
-    ShopUpdateManyWithoutCreatedByInput: ShopUpdateManyWithoutCreatedByInput
-    ShopUpdateOneRequiredWithoutHasProductsInput: ShopUpdateOneRequiredWithoutHasProductsInput
-    ShopUpdateOneRequiredWithoutLocationInput: ShopUpdateOneRequiredWithoutLocationInput
-    ShopUpdateWithWhereUniqueWithoutCreatedByInput: ShopUpdateWithWhereUniqueWithoutCreatedByInput
-    ShopUpdateWithoutCreatedByInput: ShopUpdateWithoutCreatedByInput
-    ShopUpdateWithoutHasProductsInput: ShopUpdateWithoutHasProductsInput
-    ShopUpdateWithoutLocationInput: ShopUpdateWithoutLocationInput
-    ShopUpsertWithWhereUniqueWithoutCreatedByInput: ShopUpsertWithWhereUniqueWithoutCreatedByInput
-    ShopUpsertWithoutHasProductsInput: ShopUpsertWithoutHasProductsInput
-    ShopUpsertWithoutLocationInput: ShopUpsertWithoutLocationInput
-    ShopWhereInput: ShopWhereInput
-    ShopWhereUniqueInput: ShopWhereUniqueInput
-    SortOrder: SortOrder
-    String: ResolverTypeWrapper<Scalars['String']>
-    StringFieldUpdateOperationsInput: StringFieldUpdateOperationsInput
-    StringFilter: StringFilter
-    StringWithAggregatesFilter: StringWithAggregatesFilter
-    User: ResolverTypeWrapper<User>
-    UserCount: ResolverTypeWrapper<UserCount>
-    UserCountAggregate: ResolverTypeWrapper<UserCountAggregate>
-    UserCountOrderByAggregateInput: UserCountOrderByAggregateInput
-    UserCreateInput: UserCreateInput
-    UserCreateManyInput: UserCreateManyInput
-    UserCreateNestedOneWithoutAddedProductsToShopsInput: UserCreateNestedOneWithoutAddedProductsToShopsInput
-    UserCreateNestedOneWithoutCreatedProdcutsInput: UserCreateNestedOneWithoutCreatedProdcutsInput
-    UserCreateNestedOneWithoutCreatedShopsInput: UserCreateNestedOneWithoutCreatedShopsInput
-    UserCreateOrConnectWithoutAddedProductsToShopsInput: UserCreateOrConnectWithoutAddedProductsToShopsInput
-    UserCreateOrConnectWithoutCreatedProdcutsInput: UserCreateOrConnectWithoutCreatedProdcutsInput
-    UserCreateOrConnectWithoutCreatedShopsInput: UserCreateOrConnectWithoutCreatedShopsInput
-    UserCreateWithoutAddedProductsToShopsInput: UserCreateWithoutAddedProductsToShopsInput
-    UserCreateWithoutCreatedProdcutsInput: UserCreateWithoutCreatedProdcutsInput
-    UserCreateWithoutCreatedShopsInput: UserCreateWithoutCreatedShopsInput
-    UserGroupBy: ResolverTypeWrapper<UserGroupBy>
-    UserMaxAggregate: ResolverTypeWrapper<UserMaxAggregate>
-    UserMaxOrderByAggregateInput: UserMaxOrderByAggregateInput
-    UserMinAggregate: ResolverTypeWrapper<UserMinAggregate>
-    UserMinOrderByAggregateInput: UserMinOrderByAggregateInput
-    UserOrderByWithAggregationInput: UserOrderByWithAggregationInput
-    UserOrderByWithRelationInput: UserOrderByWithRelationInput
-    UserRelationFilter: UserRelationFilter
-    UserScalarFieldEnum: UserScalarFieldEnum
-    UserScalarWhereWithAggregatesInput: UserScalarWhereWithAggregatesInput
-    UserUpdateInput: UserUpdateInput
-    UserUpdateManyMutationInput: UserUpdateManyMutationInput
-    UserUpdateOneRequiredWithoutAddedProductsToShopsInput: UserUpdateOneRequiredWithoutAddedProductsToShopsInput
-    UserUpdateOneRequiredWithoutCreatedProdcutsInput: UserUpdateOneRequiredWithoutCreatedProdcutsInput
-    UserUpdateOneRequiredWithoutCreatedShopsInput: UserUpdateOneRequiredWithoutCreatedShopsInput
-    UserUpdateWithoutAddedProductsToShopsInput: UserUpdateWithoutAddedProductsToShopsInput
-    UserUpdateWithoutCreatedProdcutsInput: UserUpdateWithoutCreatedProdcutsInput
-    UserUpdateWithoutCreatedShopsInput: UserUpdateWithoutCreatedShopsInput
-    UserUpsertWithoutAddedProductsToShopsInput: UserUpsertWithoutAddedProductsToShopsInput
-    UserUpsertWithoutCreatedProdcutsInput: UserUpsertWithoutCreatedProdcutsInput
-    UserUpsertWithoutCreatedShopsInput: UserUpsertWithoutCreatedShopsInput
-    UserWhereInput: UserWhereInput
-    UserWhereUniqueInput: UserWhereUniqueInput
-}>
-
-/** Mapping between all available schema types and the resolvers parents */
-export type ResolversParentTypes = ResolversObject<{
-    AffectedRowsOutput: AffectedRowsOutput
-    AggregateEdgeProductShop: AggregateEdgeProductShop
-    AggregateListItem: AggregateListItem
-    AggregateLocation: AggregateLocation
-    AggregateProduct: AggregateProduct
-    AggregateShop: AggregateShop
-    AggregateUser: AggregateUser
-    BoolFieldUpdateOperationsInput: BoolFieldUpdateOperationsInput
-    BoolFilter: BoolFilter
-    BoolWithAggregatesFilter: BoolWithAggregatesFilter
-    Boolean: Scalars['Boolean']
-    DateTime: Scalars['DateTime']
-    DateTimeFieldUpdateOperationsInput: DateTimeFieldUpdateOperationsInput
-    DateTimeFilter: DateTimeFilter
-    DateTimeWithAggregatesFilter: DateTimeWithAggregatesFilter
-    EdgeProductShop: EdgeProductShop
-    EdgeProductShopCountAggregate: EdgeProductShopCountAggregate
-    EdgeProductShopCountOrderByAggregateInput: EdgeProductShopCountOrderByAggregateInput
-    EdgeProductShopCreateInput: EdgeProductShopCreateInput
-    EdgeProductShopCreateManyAddedByInput: EdgeProductShopCreateManyAddedByInput
-    EdgeProductShopCreateManyAddedByInputEnvelope: EdgeProductShopCreateManyAddedByInputEnvelope
-    EdgeProductShopCreateManyInput: EdgeProductShopCreateManyInput
-    EdgeProductShopCreateManyProductInput: EdgeProductShopCreateManyProductInput
-    EdgeProductShopCreateManyProductInputEnvelope: EdgeProductShopCreateManyProductInputEnvelope
-    EdgeProductShopCreateManyShopInput: EdgeProductShopCreateManyShopInput
-    EdgeProductShopCreateManyShopInputEnvelope: EdgeProductShopCreateManyShopInputEnvelope
-    EdgeProductShopCreateNestedManyWithoutAddedByInput: EdgeProductShopCreateNestedManyWithoutAddedByInput
-    EdgeProductShopCreateNestedManyWithoutProductInput: EdgeProductShopCreateNestedManyWithoutProductInput
-    EdgeProductShopCreateNestedManyWithoutShopInput: EdgeProductShopCreateNestedManyWithoutShopInput
-    EdgeProductShopCreateOrConnectWithoutAddedByInput: EdgeProductShopCreateOrConnectWithoutAddedByInput
-    EdgeProductShopCreateOrConnectWithoutProductInput: EdgeProductShopCreateOrConnectWithoutProductInput
-    EdgeProductShopCreateOrConnectWithoutShopInput: EdgeProductShopCreateOrConnectWithoutShopInput
-    EdgeProductShopCreateWithoutAddedByInput: EdgeProductShopCreateWithoutAddedByInput
-    EdgeProductShopCreateWithoutProductInput: EdgeProductShopCreateWithoutProductInput
-    EdgeProductShopCreateWithoutShopInput: EdgeProductShopCreateWithoutShopInput
-    EdgeProductShopGroupBy: EdgeProductShopGroupBy
-    EdgeProductShopListRelationFilter: EdgeProductShopListRelationFilter
-    EdgeProductShopMaxAggregate: EdgeProductShopMaxAggregate
-    EdgeProductShopMaxOrderByAggregateInput: EdgeProductShopMaxOrderByAggregateInput
-    EdgeProductShopMinAggregate: EdgeProductShopMinAggregate
-    EdgeProductShopMinOrderByAggregateInput: EdgeProductShopMinOrderByAggregateInput
-    EdgeProductShopOrderByRelationAggregateInput: EdgeProductShopOrderByRelationAggregateInput
-    EdgeProductShopOrderByWithAggregationInput: EdgeProductShopOrderByWithAggregationInput
-    EdgeProductShopOrderByWithRelationInput: EdgeProductShopOrderByWithRelationInput
-    EdgeProductShopProductIdShopIdCompoundUniqueInput: EdgeProductShopProductIdShopIdCompoundUniqueInput
-    EdgeProductShopScalarWhereInput: EdgeProductShopScalarWhereInput
-    EdgeProductShopScalarWhereWithAggregatesInput: EdgeProductShopScalarWhereWithAggregatesInput
-    EdgeProductShopUpdateInput: EdgeProductShopUpdateInput
-    EdgeProductShopUpdateManyMutationInput: EdgeProductShopUpdateManyMutationInput
-    EdgeProductShopUpdateManyWithWhereWithoutAddedByInput: EdgeProductShopUpdateManyWithWhereWithoutAddedByInput
-    EdgeProductShopUpdateManyWithWhereWithoutProductInput: EdgeProductShopUpdateManyWithWhereWithoutProductInput
-    EdgeProductShopUpdateManyWithWhereWithoutShopInput: EdgeProductShopUpdateManyWithWhereWithoutShopInput
-    EdgeProductShopUpdateManyWithoutAddedByInput: EdgeProductShopUpdateManyWithoutAddedByInput
-    EdgeProductShopUpdateManyWithoutProductInput: EdgeProductShopUpdateManyWithoutProductInput
-    EdgeProductShopUpdateManyWithoutShopInput: EdgeProductShopUpdateManyWithoutShopInput
-    EdgeProductShopUpdateWithWhereUniqueWithoutAddedByInput: EdgeProductShopUpdateWithWhereUniqueWithoutAddedByInput
-    EdgeProductShopUpdateWithWhereUniqueWithoutProductInput: EdgeProductShopUpdateWithWhereUniqueWithoutProductInput
-    EdgeProductShopUpdateWithWhereUniqueWithoutShopInput: EdgeProductShopUpdateWithWhereUniqueWithoutShopInput
-    EdgeProductShopUpdateWithoutAddedByInput: EdgeProductShopUpdateWithoutAddedByInput
-    EdgeProductShopUpdateWithoutProductInput: EdgeProductShopUpdateWithoutProductInput
-    EdgeProductShopUpdateWithoutShopInput: EdgeProductShopUpdateWithoutShopInput
-    EdgeProductShopUpsertWithWhereUniqueWithoutAddedByInput: EdgeProductShopUpsertWithWhereUniqueWithoutAddedByInput
-    EdgeProductShopUpsertWithWhereUniqueWithoutProductInput: EdgeProductShopUpsertWithWhereUniqueWithoutProductInput
-    EdgeProductShopUpsertWithWhereUniqueWithoutShopInput: EdgeProductShopUpsertWithWhereUniqueWithoutShopInput
-    EdgeProductShopWhereInput: EdgeProductShopWhereInput
-    EdgeProductShopWhereUniqueInput: EdgeProductShopWhereUniqueInput
-    EnumCurrencyFieldUpdateOperationsInput: EnumCurrencyFieldUpdateOperationsInput
-    EnumCurrencyFilter: EnumCurrencyFilter
-    EnumCurrencyWithAggregatesFilter: EnumCurrencyWithAggregatesFilter
-    Float: Scalars['Float']
-    FloatFieldUpdateOperationsInput: FloatFieldUpdateOperationsInput
-    FloatFilter: FloatFilter
-    FloatWithAggregatesFilter: FloatWithAggregatesFilter
-    Int: Scalars['Int']
-    IntFieldUpdateOperationsInput: IntFieldUpdateOperationsInput
-    IntFilter: IntFilter
-    IntWithAggregatesFilter: IntWithAggregatesFilter
-    ListItem: ListItem
-    ListItemAvgAggregate: ListItemAvgAggregate
-    ListItemAvgOrderByAggregateInput: ListItemAvgOrderByAggregateInput
-    ListItemCountAggregate: ListItemCountAggregate
-    ListItemCountOrderByAggregateInput: ListItemCountOrderByAggregateInput
-    ListItemCreateInput: ListItemCreateInput
-    ListItemCreateManyInput: ListItemCreateManyInput
-    ListItemCreateManyProductInput: ListItemCreateManyProductInput
-    ListItemCreateManyProductInputEnvelope: ListItemCreateManyProductInputEnvelope
-    ListItemCreateNestedManyWithoutProductInput: ListItemCreateNestedManyWithoutProductInput
-    ListItemCreateOrConnectWithoutProductInput: ListItemCreateOrConnectWithoutProductInput
-    ListItemCreateWithoutProductInput: ListItemCreateWithoutProductInput
-    ListItemGroupBy: ListItemGroupBy
-    ListItemListRelationFilter: ListItemListRelationFilter
-    ListItemMaxAggregate: ListItemMaxAggregate
-    ListItemMaxOrderByAggregateInput: ListItemMaxOrderByAggregateInput
-    ListItemMinAggregate: ListItemMinAggregate
-    ListItemMinOrderByAggregateInput: ListItemMinOrderByAggregateInput
-    ListItemOrderByRelationAggregateInput: ListItemOrderByRelationAggregateInput
-    ListItemOrderByWithAggregationInput: ListItemOrderByWithAggregationInput
-    ListItemOrderByWithRelationInput: ListItemOrderByWithRelationInput
-    ListItemScalarWhereInput: ListItemScalarWhereInput
-    ListItemScalarWhereWithAggregatesInput: ListItemScalarWhereWithAggregatesInput
-    ListItemSumAggregate: ListItemSumAggregate
-    ListItemSumOrderByAggregateInput: ListItemSumOrderByAggregateInput
-    ListItemUpdateInput: ListItemUpdateInput
-    ListItemUpdateManyMutationInput: ListItemUpdateManyMutationInput
-    ListItemUpdateManyWithWhereWithoutProductInput: ListItemUpdateManyWithWhereWithoutProductInput
-    ListItemUpdateManyWithoutProductInput: ListItemUpdateManyWithoutProductInput
-    ListItemUpdateWithWhereUniqueWithoutProductInput: ListItemUpdateWithWhereUniqueWithoutProductInput
-    ListItemUpdateWithoutProductInput: ListItemUpdateWithoutProductInput
-    ListItemUpsertWithWhereUniqueWithoutProductInput: ListItemUpsertWithWhereUniqueWithoutProductInput
-    ListItemWhereInput: ListItemWhereInput
-    ListItemWhereUniqueInput: ListItemWhereUniqueInput
-    Location: Location
-    LocationAvgAggregate: LocationAvgAggregate
-    LocationAvgOrderByAggregateInput: LocationAvgOrderByAggregateInput
-    LocationCountAggregate: LocationCountAggregate
-    LocationCountOrderByAggregateInput: LocationCountOrderByAggregateInput
-    LocationCreateInput: LocationCreateInput
-    LocationCreateManyInput: LocationCreateManyInput
-    LocationCreateNestedOneWithoutOfShopInput: LocationCreateNestedOneWithoutOfShopInput
-    LocationCreateOrConnectWithoutOfShopInput: LocationCreateOrConnectWithoutOfShopInput
-    LocationCreateWithoutOfShopInput: LocationCreateWithoutOfShopInput
-    LocationGroupBy: LocationGroupBy
-    LocationMaxAggregate: LocationMaxAggregate
-    LocationMaxOrderByAggregateInput: LocationMaxOrderByAggregateInput
-    LocationMinAggregate: LocationMinAggregate
-    LocationMinOrderByAggregateInput: LocationMinOrderByAggregateInput
-    LocationOrderByWithAggregationInput: LocationOrderByWithAggregationInput
-    LocationOrderByWithRelationInput: LocationOrderByWithRelationInput
-    LocationRelationFilter: LocationRelationFilter
-    LocationScalarWhereWithAggregatesInput: LocationScalarWhereWithAggregatesInput
-    LocationSumAggregate: LocationSumAggregate
-    LocationSumOrderByAggregateInput: LocationSumOrderByAggregateInput
-    LocationUpdateInput: LocationUpdateInput
-    LocationUpdateManyMutationInput: LocationUpdateManyMutationInput
-    LocationUpdateOneWithoutOfShopInput: LocationUpdateOneWithoutOfShopInput
-    LocationUpdateWithoutOfShopInput: LocationUpdateWithoutOfShopInput
-    LocationUpsertWithoutOfShopInput: LocationUpsertWithoutOfShopInput
-    LocationWhereInput: LocationWhereInput
-    LocationWhereUniqueInput: LocationWhereUniqueInput
-    Mutation: {}
-    NestedBoolFilter: NestedBoolFilter
-    NestedBoolWithAggregatesFilter: NestedBoolWithAggregatesFilter
-    NestedDateTimeFilter: NestedDateTimeFilter
-    NestedDateTimeWithAggregatesFilter: NestedDateTimeWithAggregatesFilter
-    NestedEnumCurrencyFilter: NestedEnumCurrencyFilter
-    NestedEnumCurrencyWithAggregatesFilter: NestedEnumCurrencyWithAggregatesFilter
-    NestedFloatFilter: NestedFloatFilter
-    NestedFloatWithAggregatesFilter: NestedFloatWithAggregatesFilter
-    NestedIntFilter: NestedIntFilter
-    NestedIntWithAggregatesFilter: NestedIntWithAggregatesFilter
-    NestedStringFilter: NestedStringFilter
-    NestedStringWithAggregatesFilter: NestedStringWithAggregatesFilter
-    Product: Product
-    ProductAvgAggregate: ProductAvgAggregate
-    ProductAvgOrderByAggregateInput: ProductAvgOrderByAggregateInput
-    ProductCount: ProductCount
-    ProductCountAggregate: ProductCountAggregate
-    ProductCountOrderByAggregateInput: ProductCountOrderByAggregateInput
-    ProductCreateInput: ProductCreateInput
-    ProductCreateManyCreatedByInput: ProductCreateManyCreatedByInput
-    ProductCreateManyCreatedByInputEnvelope: ProductCreateManyCreatedByInputEnvelope
-    ProductCreateManyInput: ProductCreateManyInput
-    ProductCreateNestedManyWithoutCreatedByInput: ProductCreateNestedManyWithoutCreatedByInput
-    ProductCreateNestedOneWithoutInListItemInput: ProductCreateNestedOneWithoutInListItemInput
-    ProductCreateNestedOneWithoutInShopsInput: ProductCreateNestedOneWithoutInShopsInput
-    ProductCreateOrConnectWithoutCreatedByInput: ProductCreateOrConnectWithoutCreatedByInput
-    ProductCreateOrConnectWithoutInListItemInput: ProductCreateOrConnectWithoutInListItemInput
-    ProductCreateOrConnectWithoutInShopsInput: ProductCreateOrConnectWithoutInShopsInput
-    ProductCreateWithoutCreatedByInput: ProductCreateWithoutCreatedByInput
-    ProductCreateWithoutInListItemInput: ProductCreateWithoutInListItemInput
-    ProductCreateWithoutInShopsInput: ProductCreateWithoutInShopsInput
-    ProductGroupBy: ProductGroupBy
-    ProductListRelationFilter: ProductListRelationFilter
-    ProductMaxAggregate: ProductMaxAggregate
-    ProductMaxOrderByAggregateInput: ProductMaxOrderByAggregateInput
-    ProductMinAggregate: ProductMinAggregate
-    ProductMinOrderByAggregateInput: ProductMinOrderByAggregateInput
-    ProductOrderByRelationAggregateInput: ProductOrderByRelationAggregateInput
-    ProductOrderByWithAggregationInput: ProductOrderByWithAggregationInput
-    ProductOrderByWithRelationInput: ProductOrderByWithRelationInput
-    ProductRelationFilter: ProductRelationFilter
-    ProductScalarWhereInput: ProductScalarWhereInput
-    ProductScalarWhereWithAggregatesInput: ProductScalarWhereWithAggregatesInput
-    ProductSumAggregate: ProductSumAggregate
-    ProductSumOrderByAggregateInput: ProductSumOrderByAggregateInput
-    ProductUpdateInput: ProductUpdateInput
-    ProductUpdateManyMutationInput: ProductUpdateManyMutationInput
-    ProductUpdateManyWithWhereWithoutCreatedByInput: ProductUpdateManyWithWhereWithoutCreatedByInput
-    ProductUpdateManyWithoutCreatedByInput: ProductUpdateManyWithoutCreatedByInput
-    ProductUpdateOneRequiredWithoutInListItemInput: ProductUpdateOneRequiredWithoutInListItemInput
-    ProductUpdateOneRequiredWithoutInShopsInput: ProductUpdateOneRequiredWithoutInShopsInput
-    ProductUpdateWithWhereUniqueWithoutCreatedByInput: ProductUpdateWithWhereUniqueWithoutCreatedByInput
-    ProductUpdateWithoutCreatedByInput: ProductUpdateWithoutCreatedByInput
-    ProductUpdateWithoutInListItemInput: ProductUpdateWithoutInListItemInput
-    ProductUpdateWithoutInShopsInput: ProductUpdateWithoutInShopsInput
-    ProductUpsertWithWhereUniqueWithoutCreatedByInput: ProductUpsertWithWhereUniqueWithoutCreatedByInput
-    ProductUpsertWithoutInListItemInput: ProductUpsertWithoutInListItemInput
-    ProductUpsertWithoutInShopsInput: ProductUpsertWithoutInShopsInput
-    ProductWhereInput: ProductWhereInput
-    ProductWhereUniqueInput: ProductWhereUniqueInput
-    Query: {}
-    Shop: Shop
-    ShopCount: ShopCount
-    ShopCountAggregate: ShopCountAggregate
-    ShopCountOrderByAggregateInput: ShopCountOrderByAggregateInput
-    ShopCreateInput: ShopCreateInput
-    ShopCreateManyCreatedByInput: ShopCreateManyCreatedByInput
-    ShopCreateManyCreatedByInputEnvelope: ShopCreateManyCreatedByInputEnvelope
-    ShopCreateManyInput: ShopCreateManyInput
-    ShopCreateNestedManyWithoutCreatedByInput: ShopCreateNestedManyWithoutCreatedByInput
-    ShopCreateNestedOneWithoutHasProductsInput: ShopCreateNestedOneWithoutHasProductsInput
-    ShopCreateNestedOneWithoutLocationInput: ShopCreateNestedOneWithoutLocationInput
-    ShopCreateOrConnectWithoutCreatedByInput: ShopCreateOrConnectWithoutCreatedByInput
-    ShopCreateOrConnectWithoutHasProductsInput: ShopCreateOrConnectWithoutHasProductsInput
-    ShopCreateOrConnectWithoutLocationInput: ShopCreateOrConnectWithoutLocationInput
-    ShopCreateWithoutCreatedByInput: ShopCreateWithoutCreatedByInput
-    ShopCreateWithoutHasProductsInput: ShopCreateWithoutHasProductsInput
-    ShopCreateWithoutLocationInput: ShopCreateWithoutLocationInput
-    ShopGroupBy: ShopGroupBy
-    ShopListRelationFilter: ShopListRelationFilter
-    ShopMaxAggregate: ShopMaxAggregate
-    ShopMaxOrderByAggregateInput: ShopMaxOrderByAggregateInput
-    ShopMinAggregate: ShopMinAggregate
-    ShopMinOrderByAggregateInput: ShopMinOrderByAggregateInput
-    ShopOrderByRelationAggregateInput: ShopOrderByRelationAggregateInput
-    ShopOrderByWithAggregationInput: ShopOrderByWithAggregationInput
-    ShopOrderByWithRelationInput: ShopOrderByWithRelationInput
-    ShopRelationFilter: ShopRelationFilter
-    ShopScalarWhereInput: ShopScalarWhereInput
-    ShopScalarWhereWithAggregatesInput: ShopScalarWhereWithAggregatesInput
-    ShopUpdateInput: ShopUpdateInput
-    ShopUpdateManyMutationInput: ShopUpdateManyMutationInput
-    ShopUpdateManyWithWhereWithoutCreatedByInput: ShopUpdateManyWithWhereWithoutCreatedByInput
-    ShopUpdateManyWithoutCreatedByInput: ShopUpdateManyWithoutCreatedByInput
-    ShopUpdateOneRequiredWithoutHasProductsInput: ShopUpdateOneRequiredWithoutHasProductsInput
-    ShopUpdateOneRequiredWithoutLocationInput: ShopUpdateOneRequiredWithoutLocationInput
-    ShopUpdateWithWhereUniqueWithoutCreatedByInput: ShopUpdateWithWhereUniqueWithoutCreatedByInput
-    ShopUpdateWithoutCreatedByInput: ShopUpdateWithoutCreatedByInput
-    ShopUpdateWithoutHasProductsInput: ShopUpdateWithoutHasProductsInput
-    ShopUpdateWithoutLocationInput: ShopUpdateWithoutLocationInput
-    ShopUpsertWithWhereUniqueWithoutCreatedByInput: ShopUpsertWithWhereUniqueWithoutCreatedByInput
-    ShopUpsertWithoutHasProductsInput: ShopUpsertWithoutHasProductsInput
-    ShopUpsertWithoutLocationInput: ShopUpsertWithoutLocationInput
-    ShopWhereInput: ShopWhereInput
-    ShopWhereUniqueInput: ShopWhereUniqueInput
-    String: Scalars['String']
-    StringFieldUpdateOperationsInput: StringFieldUpdateOperationsInput
-    StringFilter: StringFilter
-    StringWithAggregatesFilter: StringWithAggregatesFilter
-    User: User
-    UserCount: UserCount
-    UserCountAggregate: UserCountAggregate
-    UserCountOrderByAggregateInput: UserCountOrderByAggregateInput
-    UserCreateInput: UserCreateInput
-    UserCreateManyInput: UserCreateManyInput
-    UserCreateNestedOneWithoutAddedProductsToShopsInput: UserCreateNestedOneWithoutAddedProductsToShopsInput
-    UserCreateNestedOneWithoutCreatedProdcutsInput: UserCreateNestedOneWithoutCreatedProdcutsInput
-    UserCreateNestedOneWithoutCreatedShopsInput: UserCreateNestedOneWithoutCreatedShopsInput
-    UserCreateOrConnectWithoutAddedProductsToShopsInput: UserCreateOrConnectWithoutAddedProductsToShopsInput
-    UserCreateOrConnectWithoutCreatedProdcutsInput: UserCreateOrConnectWithoutCreatedProdcutsInput
-    UserCreateOrConnectWithoutCreatedShopsInput: UserCreateOrConnectWithoutCreatedShopsInput
-    UserCreateWithoutAddedProductsToShopsInput: UserCreateWithoutAddedProductsToShopsInput
-    UserCreateWithoutCreatedProdcutsInput: UserCreateWithoutCreatedProdcutsInput
-    UserCreateWithoutCreatedShopsInput: UserCreateWithoutCreatedShopsInput
-    UserGroupBy: UserGroupBy
-    UserMaxAggregate: UserMaxAggregate
-    UserMaxOrderByAggregateInput: UserMaxOrderByAggregateInput
-    UserMinAggregate: UserMinAggregate
-    UserMinOrderByAggregateInput: UserMinOrderByAggregateInput
-    UserOrderByWithAggregationInput: UserOrderByWithAggregationInput
-    UserOrderByWithRelationInput: UserOrderByWithRelationInput
-    UserRelationFilter: UserRelationFilter
-    UserScalarWhereWithAggregatesInput: UserScalarWhereWithAggregatesInput
-    UserUpdateInput: UserUpdateInput
-    UserUpdateManyMutationInput: UserUpdateManyMutationInput
-    UserUpdateOneRequiredWithoutAddedProductsToShopsInput: UserUpdateOneRequiredWithoutAddedProductsToShopsInput
-    UserUpdateOneRequiredWithoutCreatedProdcutsInput: UserUpdateOneRequiredWithoutCreatedProdcutsInput
-    UserUpdateOneRequiredWithoutCreatedShopsInput: UserUpdateOneRequiredWithoutCreatedShopsInput
-    UserUpdateWithoutAddedProductsToShopsInput: UserUpdateWithoutAddedProductsToShopsInput
-    UserUpdateWithoutCreatedProdcutsInput: UserUpdateWithoutCreatedProdcutsInput
-    UserUpdateWithoutCreatedShopsInput: UserUpdateWithoutCreatedShopsInput
-    UserUpsertWithoutAddedProductsToShopsInput: UserUpsertWithoutAddedProductsToShopsInput
-    UserUpsertWithoutCreatedProdcutsInput: UserUpsertWithoutCreatedProdcutsInput
-    UserUpsertWithoutCreatedShopsInput: UserUpsertWithoutCreatedShopsInput
-    UserWhereInput: UserWhereInput
-    UserWhereUniqueInput: UserWhereUniqueInput
-}>
-
-export type AffectedRowsOutputResolvers<
-    ContextType = any,
-    ParentType extends ResolversParentTypes['AffectedRowsOutput'] = ResolversParentTypes['AffectedRowsOutput']
-> = ResolversObject<{
-    count?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
-}>
-
-export type AggregateEdgeProductShopResolvers<
-    ContextType = any,
-    ParentType extends ResolversParentTypes['AggregateEdgeProductShop'] = ResolversParentTypes['AggregateEdgeProductShop']
-> = ResolversObject<{
-    _count?: Resolver<
-        Maybe<ResolversTypes['EdgeProductShopCountAggregate']>,
-        ParentType,
-        ContextType
-    >
-    _max?: Resolver<Maybe<ResolversTypes['EdgeProductShopMaxAggregate']>, ParentType, ContextType>
-    _min?: Resolver<Maybe<ResolversTypes['EdgeProductShopMinAggregate']>, ParentType, ContextType>
-    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
-}>
-
-export type AggregateListItemResolvers<
-    ContextType = any,
-    ParentType extends ResolversParentTypes['AggregateListItem'] = ResolversParentTypes['AggregateListItem']
-> = ResolversObject<{
-    _avg?: Resolver<Maybe<ResolversTypes['ListItemAvgAggregate']>, ParentType, ContextType>
-    _count?: Resolver<Maybe<ResolversTypes['ListItemCountAggregate']>, ParentType, ContextType>
-    _max?: Resolver<Maybe<ResolversTypes['ListItemMaxAggregate']>, ParentType, ContextType>
-    _min?: Resolver<Maybe<ResolversTypes['ListItemMinAggregate']>, ParentType, ContextType>
-    _sum?: Resolver<Maybe<ResolversTypes['ListItemSumAggregate']>, ParentType, ContextType>
-    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
-}>
-
-export type AggregateLocationResolvers<
-    ContextType = any,
-    ParentType extends ResolversParentTypes['AggregateLocation'] = ResolversParentTypes['AggregateLocation']
-> = ResolversObject<{
-    _avg?: Resolver<Maybe<ResolversTypes['LocationAvgAggregate']>, ParentType, ContextType>
-    _count?: Resolver<Maybe<ResolversTypes['LocationCountAggregate']>, ParentType, ContextType>
-    _max?: Resolver<Maybe<ResolversTypes['LocationMaxAggregate']>, ParentType, ContextType>
-    _min?: Resolver<Maybe<ResolversTypes['LocationMinAggregate']>, ParentType, ContextType>
-    _sum?: Resolver<Maybe<ResolversTypes['LocationSumAggregate']>, ParentType, ContextType>
-    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
-}>
-
-export type AggregateProductResolvers<
-    ContextType = any,
-    ParentType extends ResolversParentTypes['AggregateProduct'] = ResolversParentTypes['AggregateProduct']
-> = ResolversObject<{
-    _avg?: Resolver<Maybe<ResolversTypes['ProductAvgAggregate']>, ParentType, ContextType>
-    _count?: Resolver<Maybe<ResolversTypes['ProductCountAggregate']>, ParentType, ContextType>
-    _max?: Resolver<Maybe<ResolversTypes['ProductMaxAggregate']>, ParentType, ContextType>
-    _min?: Resolver<Maybe<ResolversTypes['ProductMinAggregate']>, ParentType, ContextType>
-    _sum?: Resolver<Maybe<ResolversTypes['ProductSumAggregate']>, ParentType, ContextType>
-    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
-}>
-
-export type AggregateShopResolvers<
-    ContextType = any,
-    ParentType extends ResolversParentTypes['AggregateShop'] = ResolversParentTypes['AggregateShop']
-> = ResolversObject<{
-    _count?: Resolver<Maybe<ResolversTypes['ShopCountAggregate']>, ParentType, ContextType>
-    _max?: Resolver<Maybe<ResolversTypes['ShopMaxAggregate']>, ParentType, ContextType>
-    _min?: Resolver<Maybe<ResolversTypes['ShopMinAggregate']>, ParentType, ContextType>
-    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
-}>
-
-export type AggregateUserResolvers<
-    ContextType = any,
-    ParentType extends ResolversParentTypes['AggregateUser'] = ResolversParentTypes['AggregateUser']
-> = ResolversObject<{
-    _count?: Resolver<Maybe<ResolversTypes['UserCountAggregate']>, ParentType, ContextType>
-    _max?: Resolver<Maybe<ResolversTypes['UserMaxAggregate']>, ParentType, ContextType>
-    _min?: Resolver<Maybe<ResolversTypes['UserMinAggregate']>, ParentType, ContextType>
-    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
-}>
-
-export interface DateTimeScalarConfig
-    extends GraphQLScalarTypeConfig<ResolversTypes['DateTime'], any> {
-    name: 'DateTime'
-}
-
-export type EdgeProductShopResolvers<
-    ContextType = any,
-    ParentType extends ResolversParentTypes['EdgeProductShop'] = ResolversParentTypes['EdgeProductShop']
-> = ResolversObject<{
-    addedBy?: Resolver<ResolversTypes['User'], ParentType, ContextType>
-    createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>
-    product?: Resolver<ResolversTypes['Product'], ParentType, ContextType>
-    productId?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-    shop?: Resolver<ResolversTypes['Shop'], ParentType, ContextType>
-    shopId?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-    updatedAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>
-    userId?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
-}>
-
-export type EdgeProductShopCountAggregateResolvers<
-    ContextType = any,
-    ParentType extends ResolversParentTypes['EdgeProductShopCountAggregate'] = ResolversParentTypes['EdgeProductShopCountAggregate']
-> = ResolversObject<{
-    _all?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-    createdAt?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-    productId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-    shopId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-    updatedAt?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-    userId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
-}>
-
-export type EdgeProductShopGroupByResolvers<
-    ContextType = any,
-    ParentType extends ResolversParentTypes['EdgeProductShopGroupBy'] = ResolversParentTypes['EdgeProductShopGroupBy']
-> = ResolversObject<{
-    _count?: Resolver<
-        Maybe<ResolversTypes['EdgeProductShopCountAggregate']>,
-        ParentType,
-        ContextType
-    >
-    _max?: Resolver<Maybe<ResolversTypes['EdgeProductShopMaxAggregate']>, ParentType, ContextType>
-    _min?: Resolver<Maybe<ResolversTypes['EdgeProductShopMinAggregate']>, ParentType, ContextType>
-    createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>
-    productId?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-    shopId?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-    updatedAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>
-    userId?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
-}>
-
-export type EdgeProductShopMaxAggregateResolvers<
-    ContextType = any,
-    ParentType extends ResolversParentTypes['EdgeProductShopMaxAggregate'] = ResolversParentTypes['EdgeProductShopMaxAggregate']
-> = ResolversObject<{
-    createdAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>
-    productId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
-    shopId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
-    updatedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>
-    userId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
-    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
-}>
-
-export type EdgeProductShopMinAggregateResolvers<
-    ContextType = any,
-    ParentType extends ResolversParentTypes['EdgeProductShopMinAggregate'] = ResolversParentTypes['EdgeProductShopMinAggregate']
-> = ResolversObject<{
-    createdAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>
-    productId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
-    shopId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
-    updatedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>
-    userId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
-    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
-}>
-
-export type ListItemResolvers<
-    ContextType = any,
-    ParentType extends ResolversParentTypes['ListItem'] = ResolversParentTypes['ListItem']
-> = ResolversObject<{
-    id?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-    importance?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-    isPurchased?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>
-    product?: Resolver<ResolversTypes['Product'], ParentType, ContextType>
-    productId?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-    quntity?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
-}>
-
-export type ListItemAvgAggregateResolvers<
-    ContextType = any,
-    ParentType extends ResolversParentTypes['ListItemAvgAggregate'] = ResolversParentTypes['ListItemAvgAggregate']
-> = ResolversObject<{
-    importance?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>
-    quntity?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>
-    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
-}>
-
-export type ListItemCountAggregateResolvers<
-    ContextType = any,
-    ParentType extends ResolversParentTypes['ListItemCountAggregate'] = ResolversParentTypes['ListItemCountAggregate']
-> = ResolversObject<{
-    _all?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-    id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-    importance?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-    isPurchased?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-    productId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-    quntity?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
-}>
-
-export type ListItemGroupByResolvers<
-    ContextType = any,
-    ParentType extends ResolversParentTypes['ListItemGroupBy'] = ResolversParentTypes['ListItemGroupBy']
-> = ResolversObject<{
-    _avg?: Resolver<Maybe<ResolversTypes['ListItemAvgAggregate']>, ParentType, ContextType>
-    _count?: Resolver<Maybe<ResolversTypes['ListItemCountAggregate']>, ParentType, ContextType>
-    _max?: Resolver<Maybe<ResolversTypes['ListItemMaxAggregate']>, ParentType, ContextType>
-    _min?: Resolver<Maybe<ResolversTypes['ListItemMinAggregate']>, ParentType, ContextType>
-    _sum?: Resolver<Maybe<ResolversTypes['ListItemSumAggregate']>, ParentType, ContextType>
-    id?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-    importance?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-    isPurchased?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>
-    productId?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-    quntity?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
-}>
-
-export type ListItemMaxAggregateResolvers<
-    ContextType = any,
-    ParentType extends ResolversParentTypes['ListItemMaxAggregate'] = ResolversParentTypes['ListItemMaxAggregate']
-> = ResolversObject<{
-    id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
-    importance?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>
-    isPurchased?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>
-    productId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
-    quntity?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>
-    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
-}>
-
-export type ListItemMinAggregateResolvers<
-    ContextType = any,
-    ParentType extends ResolversParentTypes['ListItemMinAggregate'] = ResolversParentTypes['ListItemMinAggregate']
-> = ResolversObject<{
-    id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
-    importance?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>
-    isPurchased?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>
-    productId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
-    quntity?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>
-    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
-}>
-
-export type ListItemSumAggregateResolvers<
-    ContextType = any,
-    ParentType extends ResolversParentTypes['ListItemSumAggregate'] = ResolversParentTypes['ListItemSumAggregate']
-> = ResolversObject<{
-    importance?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>
-    quntity?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>
-    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
-}>
-
-export type LocationResolvers<
-    ContextType = any,
-    ParentType extends ResolversParentTypes['Location'] = ResolversParentTypes['Location']
-> = ResolversObject<{
-    address?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-    id?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-    lat?: Resolver<ResolversTypes['Float'], ParentType, ContextType>
-    long?: Resolver<ResolversTypes['Float'], ParentType, ContextType>
-    ofShop?: Resolver<ResolversTypes['Shop'], ParentType, ContextType>
-    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
-}>
-
-export type LocationAvgAggregateResolvers<
-    ContextType = any,
-    ParentType extends ResolversParentTypes['LocationAvgAggregate'] = ResolversParentTypes['LocationAvgAggregate']
-> = ResolversObject<{
-    lat?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>
-    long?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>
-    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
-}>
-
-export type LocationCountAggregateResolvers<
-    ContextType = any,
-    ParentType extends ResolversParentTypes['LocationCountAggregate'] = ResolversParentTypes['LocationCountAggregate']
-> = ResolversObject<{
-    _all?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-    address?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-    id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-    lat?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-    long?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
-}>
-
-export type LocationGroupByResolvers<
-    ContextType = any,
-    ParentType extends ResolversParentTypes['LocationGroupBy'] = ResolversParentTypes['LocationGroupBy']
-> = ResolversObject<{
-    _avg?: Resolver<Maybe<ResolversTypes['LocationAvgAggregate']>, ParentType, ContextType>
-    _count?: Resolver<Maybe<ResolversTypes['LocationCountAggregate']>, ParentType, ContextType>
-    _max?: Resolver<Maybe<ResolversTypes['LocationMaxAggregate']>, ParentType, ContextType>
-    _min?: Resolver<Maybe<ResolversTypes['LocationMinAggregate']>, ParentType, ContextType>
-    _sum?: Resolver<Maybe<ResolversTypes['LocationSumAggregate']>, ParentType, ContextType>
-    address?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-    id?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-    lat?: Resolver<ResolversTypes['Float'], ParentType, ContextType>
-    long?: Resolver<ResolversTypes['Float'], ParentType, ContextType>
-    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
-}>
-
-export type LocationMaxAggregateResolvers<
-    ContextType = any,
-    ParentType extends ResolversParentTypes['LocationMaxAggregate'] = ResolversParentTypes['LocationMaxAggregate']
-> = ResolversObject<{
-    address?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
-    id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
-    lat?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>
-    long?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>
-    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
-}>
-
-export type LocationMinAggregateResolvers<
-    ContextType = any,
-    ParentType extends ResolversParentTypes['LocationMinAggregate'] = ResolversParentTypes['LocationMinAggregate']
-> = ResolversObject<{
-    address?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
-    id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
-    lat?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>
-    long?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>
-    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
-}>
-
-export type LocationSumAggregateResolvers<
-    ContextType = any,
-    ParentType extends ResolversParentTypes['LocationSumAggregate'] = ResolversParentTypes['LocationSumAggregate']
-> = ResolversObject<{
-    lat?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>
-    long?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>
-    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
-}>
-
-export type MutationResolvers<
-    ContextType = any,
-    ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']
-> = ResolversObject<{
-    createEdgeProductShop?: Resolver<
-        ResolversTypes['EdgeProductShop'],
-        ParentType,
-        ContextType,
-        RequireFields<MutationCreateEdgeProductShopArgs, 'data'>
-    >
-    createListItem?: Resolver<
-        ResolversTypes['ListItem'],
-        ParentType,
-        ContextType,
-        RequireFields<MutationCreateListItemArgs, 'data'>
-    >
-    createLocation?: Resolver<
-        ResolversTypes['Location'],
-        ParentType,
-        ContextType,
-        RequireFields<MutationCreateLocationArgs, 'data'>
-    >
-    createManyEdgeProductShop?: Resolver<
-        ResolversTypes['AffectedRowsOutput'],
-        ParentType,
-        ContextType,
-        RequireFields<MutationCreateManyEdgeProductShopArgs, 'data'>
-    >
-    createManyListItem?: Resolver<
-        ResolversTypes['AffectedRowsOutput'],
-        ParentType,
-        ContextType,
-        RequireFields<MutationCreateManyListItemArgs, 'data'>
-    >
-    createManyLocation?: Resolver<
-        ResolversTypes['AffectedRowsOutput'],
-        ParentType,
-        ContextType,
-        RequireFields<MutationCreateManyLocationArgs, 'data'>
-    >
-    createManyProduct?: Resolver<
-        ResolversTypes['AffectedRowsOutput'],
-        ParentType,
-        ContextType,
-        RequireFields<MutationCreateManyProductArgs, 'data'>
-    >
-    createManyShop?: Resolver<
-        ResolversTypes['AffectedRowsOutput'],
-        ParentType,
-        ContextType,
-        RequireFields<MutationCreateManyShopArgs, 'data'>
-    >
-    createManyUser?: Resolver<
-        ResolversTypes['AffectedRowsOutput'],
-        ParentType,
-        ContextType,
-        RequireFields<MutationCreateManyUserArgs, 'data'>
-    >
-    createProduct?: Resolver<
-        ResolversTypes['Product'],
-        ParentType,
-        ContextType,
-        RequireFields<MutationCreateProductArgs, 'data'>
-    >
-    createShop?: Resolver<
-        ResolversTypes['Shop'],
-        ParentType,
-        ContextType,
-        RequireFields<MutationCreateShopArgs, 'data'>
-    >
-    createUser?: Resolver<
-        ResolversTypes['User'],
-        ParentType,
-        ContextType,
-        RequireFields<MutationCreateUserArgs, 'data'>
-    >
-    deleteEdgeProductShop?: Resolver<
-        Maybe<ResolversTypes['EdgeProductShop']>,
-        ParentType,
-        ContextType,
-        RequireFields<MutationDeleteEdgeProductShopArgs, 'where'>
-    >
-    deleteListItem?: Resolver<
-        Maybe<ResolversTypes['ListItem']>,
-        ParentType,
-        ContextType,
-        RequireFields<MutationDeleteListItemArgs, 'where'>
-    >
-    deleteLocation?: Resolver<
-        Maybe<ResolversTypes['Location']>,
-        ParentType,
-        ContextType,
-        RequireFields<MutationDeleteLocationArgs, 'where'>
-    >
-    deleteManyEdgeProductShop?: Resolver<
-        ResolversTypes['AffectedRowsOutput'],
-        ParentType,
-        ContextType,
-        RequireFields<MutationDeleteManyEdgeProductShopArgs, never>
-    >
-    deleteManyListItem?: Resolver<
-        ResolversTypes['AffectedRowsOutput'],
-        ParentType,
-        ContextType,
-        RequireFields<MutationDeleteManyListItemArgs, never>
-    >
-    deleteManyLocation?: Resolver<
-        ResolversTypes['AffectedRowsOutput'],
-        ParentType,
-        ContextType,
-        RequireFields<MutationDeleteManyLocationArgs, never>
-    >
-    deleteManyProduct?: Resolver<
-        ResolversTypes['AffectedRowsOutput'],
-        ParentType,
-        ContextType,
-        RequireFields<MutationDeleteManyProductArgs, never>
-    >
-    deleteManyShop?: Resolver<
-        ResolversTypes['AffectedRowsOutput'],
-        ParentType,
-        ContextType,
-        RequireFields<MutationDeleteManyShopArgs, never>
-    >
-    deleteManyUser?: Resolver<
-        ResolversTypes['AffectedRowsOutput'],
-        ParentType,
-        ContextType,
-        RequireFields<MutationDeleteManyUserArgs, never>
-    >
-    deleteProduct?: Resolver<
-        Maybe<ResolversTypes['Product']>,
-        ParentType,
-        ContextType,
-        RequireFields<MutationDeleteProductArgs, 'where'>
-    >
-    deleteShop?: Resolver<
-        Maybe<ResolversTypes['Shop']>,
-        ParentType,
-        ContextType,
-        RequireFields<MutationDeleteShopArgs, 'where'>
-    >
-    deleteUser?: Resolver<
-        Maybe<ResolversTypes['User']>,
-        ParentType,
-        ContextType,
-        RequireFields<MutationDeleteUserArgs, 'where'>
-    >
-    updateEdgeProductShop?: Resolver<
-        Maybe<ResolversTypes['EdgeProductShop']>,
-        ParentType,
-        ContextType,
-        RequireFields<MutationUpdateEdgeProductShopArgs, 'data' | 'where'>
-    >
-    updateListItem?: Resolver<
-        Maybe<ResolversTypes['ListItem']>,
-        ParentType,
-        ContextType,
-        RequireFields<MutationUpdateListItemArgs, 'data' | 'where'>
-    >
-    updateLocation?: Resolver<
-        Maybe<ResolversTypes['Location']>,
-        ParentType,
-        ContextType,
-        RequireFields<MutationUpdateLocationArgs, 'data' | 'where'>
-    >
-    updateManyEdgeProductShop?: Resolver<
-        ResolversTypes['AffectedRowsOutput'],
-        ParentType,
-        ContextType,
-        RequireFields<MutationUpdateManyEdgeProductShopArgs, 'data'>
-    >
-    updateManyListItem?: Resolver<
-        ResolversTypes['AffectedRowsOutput'],
-        ParentType,
-        ContextType,
-        RequireFields<MutationUpdateManyListItemArgs, 'data'>
-    >
-    updateManyLocation?: Resolver<
-        ResolversTypes['AffectedRowsOutput'],
-        ParentType,
-        ContextType,
-        RequireFields<MutationUpdateManyLocationArgs, 'data'>
-    >
-    updateManyProduct?: Resolver<
-        ResolversTypes['AffectedRowsOutput'],
-        ParentType,
-        ContextType,
-        RequireFields<MutationUpdateManyProductArgs, 'data'>
-    >
-    updateManyShop?: Resolver<
-        ResolversTypes['AffectedRowsOutput'],
-        ParentType,
-        ContextType,
-        RequireFields<MutationUpdateManyShopArgs, 'data'>
-    >
-    updateManyUser?: Resolver<
-        ResolversTypes['AffectedRowsOutput'],
-        ParentType,
-        ContextType,
-        RequireFields<MutationUpdateManyUserArgs, 'data'>
-    >
-    updateProduct?: Resolver<
-        Maybe<ResolversTypes['Product']>,
-        ParentType,
-        ContextType,
-        RequireFields<MutationUpdateProductArgs, 'data' | 'where'>
-    >
-    updateShop?: Resolver<
-        Maybe<ResolversTypes['Shop']>,
-        ParentType,
-        ContextType,
-        RequireFields<MutationUpdateShopArgs, 'data' | 'where'>
-    >
-    updateUser?: Resolver<
-        Maybe<ResolversTypes['User']>,
-        ParentType,
-        ContextType,
-        RequireFields<MutationUpdateUserArgs, 'data' | 'where'>
-    >
-    upsertEdgeProductShop?: Resolver<
-        ResolversTypes['EdgeProductShop'],
-        ParentType,
-        ContextType,
-        RequireFields<MutationUpsertEdgeProductShopArgs, 'create' | 'update' | 'where'>
-    >
-    upsertListItem?: Resolver<
-        ResolversTypes['ListItem'],
-        ParentType,
-        ContextType,
-        RequireFields<MutationUpsertListItemArgs, 'create' | 'update' | 'where'>
-    >
-    upsertLocation?: Resolver<
-        ResolversTypes['Location'],
-        ParentType,
-        ContextType,
-        RequireFields<MutationUpsertLocationArgs, 'create' | 'update' | 'where'>
-    >
-    upsertProduct?: Resolver<
-        ResolversTypes['Product'],
-        ParentType,
-        ContextType,
-        RequireFields<MutationUpsertProductArgs, 'create' | 'update' | 'where'>
-    >
-    upsertShop?: Resolver<
-        ResolversTypes['Shop'],
-        ParentType,
-        ContextType,
-        RequireFields<MutationUpsertShopArgs, 'create' | 'update' | 'where'>
-    >
-    upsertUser?: Resolver<
-        ResolversTypes['User'],
-        ParentType,
-        ContextType,
-        RequireFields<MutationUpsertUserArgs, 'create' | 'update' | 'where'>
-    >
-}>
-
-export type ProductResolvers<
-    ContextType = any,
-    ParentType extends ResolversParentTypes['Product'] = ResolversParentTypes['Product']
-> = ResolversObject<{
-    _count?: Resolver<Maybe<ResolversTypes['ProductCount']>, ParentType, ContextType>
-    createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>
-    createdBy?: Resolver<ResolversTypes['User'], ParentType, ContextType>
-    currency?: Resolver<ResolversTypes['Currency'], ParentType, ContextType>
-    id?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-    inListItem?: Resolver<
-        Array<ResolversTypes['ListItem']>,
-        ParentType,
-        ContextType,
-        RequireFields<ProductInListItemArgs, never>
-    >
-    inShops?: Resolver<
-        Array<ResolversTypes['EdgeProductShop']>,
-        ParentType,
-        ContextType,
-        RequireFields<ProductInShopsArgs, never>
-    >
-    name?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-    price?: Resolver<ResolversTypes['Float'], ParentType, ContextType>
-    updatedAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>
-    userId?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
-}>
-
-export type ProductAvgAggregateResolvers<
-    ContextType = any,
-    ParentType extends ResolversParentTypes['ProductAvgAggregate'] = ResolversParentTypes['ProductAvgAggregate']
-> = ResolversObject<{
-    price?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>
-    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
-}>
-
-export type ProductCountResolvers<
-    ContextType = any,
-    ParentType extends ResolversParentTypes['ProductCount'] = ResolversParentTypes['ProductCount']
-> = ResolversObject<{
-    inListItem?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-    inShops?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
-}>
-
-export type ProductCountAggregateResolvers<
-    ContextType = any,
-    ParentType extends ResolversParentTypes['ProductCountAggregate'] = ResolversParentTypes['ProductCountAggregate']
-> = ResolversObject<{
-    _all?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-    createdAt?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-    currency?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-    id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-    name?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-    price?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-    updatedAt?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-    userId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
-}>
-
-export type ProductGroupByResolvers<
-    ContextType = any,
-    ParentType extends ResolversParentTypes['ProductGroupBy'] = ResolversParentTypes['ProductGroupBy']
-> = ResolversObject<{
-    _avg?: Resolver<Maybe<ResolversTypes['ProductAvgAggregate']>, ParentType, ContextType>
-    _count?: Resolver<Maybe<ResolversTypes['ProductCountAggregate']>, ParentType, ContextType>
-    _max?: Resolver<Maybe<ResolversTypes['ProductMaxAggregate']>, ParentType, ContextType>
-    _min?: Resolver<Maybe<ResolversTypes['ProductMinAggregate']>, ParentType, ContextType>
-    _sum?: Resolver<Maybe<ResolversTypes['ProductSumAggregate']>, ParentType, ContextType>
-    createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>
-    currency?: Resolver<ResolversTypes['Currency'], ParentType, ContextType>
-    id?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-    name?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-    price?: Resolver<ResolversTypes['Float'], ParentType, ContextType>
-    updatedAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>
-    userId?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
-}>
-
-export type ProductMaxAggregateResolvers<
-    ContextType = any,
-    ParentType extends ResolversParentTypes['ProductMaxAggregate'] = ResolversParentTypes['ProductMaxAggregate']
-> = ResolversObject<{
-    createdAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>
-    currency?: Resolver<Maybe<ResolversTypes['Currency']>, ParentType, ContextType>
-    id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
-    name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
-    price?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>
-    updatedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>
-    userId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
-    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
-}>
-
-export type ProductMinAggregateResolvers<
-    ContextType = any,
-    ParentType extends ResolversParentTypes['ProductMinAggregate'] = ResolversParentTypes['ProductMinAggregate']
-> = ResolversObject<{
-    createdAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>
-    currency?: Resolver<Maybe<ResolversTypes['Currency']>, ParentType, ContextType>
-    id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
-    name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
-    price?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>
-    updatedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>
-    userId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
-    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
-}>
-
-export type ProductSumAggregateResolvers<
-    ContextType = any,
-    ParentType extends ResolversParentTypes['ProductSumAggregate'] = ResolversParentTypes['ProductSumAggregate']
-> = ResolversObject<{
-    price?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>
-    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
-}>
-
-export type QueryResolvers<
-    ContextType = any,
-    ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']
-> = ResolversObject<{
-    aggregateEdgeProductShop?: Resolver<
-        ResolversTypes['AggregateEdgeProductShop'],
-        ParentType,
-        ContextType,
-        RequireFields<QueryAggregateEdgeProductShopArgs, never>
-    >
-    aggregateListItem?: Resolver<
-        ResolversTypes['AggregateListItem'],
-        ParentType,
-        ContextType,
-        RequireFields<QueryAggregateListItemArgs, never>
-    >
-    aggregateLocation?: Resolver<
-        ResolversTypes['AggregateLocation'],
-        ParentType,
-        ContextType,
-        RequireFields<QueryAggregateLocationArgs, never>
-    >
-    aggregateProduct?: Resolver<
-        ResolversTypes['AggregateProduct'],
-        ParentType,
-        ContextType,
-        RequireFields<QueryAggregateProductArgs, never>
-    >
-    aggregateShop?: Resolver<
-        ResolversTypes['AggregateShop'],
-        ParentType,
-        ContextType,
-        RequireFields<QueryAggregateShopArgs, never>
-    >
-    aggregateUser?: Resolver<
-        ResolversTypes['AggregateUser'],
-        ParentType,
-        ContextType,
-        RequireFields<QueryAggregateUserArgs, never>
-    >
-    edgeProductShop?: Resolver<
-        Maybe<ResolversTypes['EdgeProductShop']>,
-        ParentType,
-        ContextType,
-        RequireFields<QueryEdgeProductShopArgs, 'where'>
-    >
-    edgeProductShops?: Resolver<
-        Array<ResolversTypes['EdgeProductShop']>,
-        ParentType,
-        ContextType,
-        RequireFields<QueryEdgeProductShopsArgs, never>
-    >
-    findFirstEdgeProductShop?: Resolver<
-        Maybe<ResolversTypes['EdgeProductShop']>,
-        ParentType,
-        ContextType,
-        RequireFields<QueryFindFirstEdgeProductShopArgs, never>
-    >
-    findFirstListItem?: Resolver<
-        Maybe<ResolversTypes['ListItem']>,
-        ParentType,
-        ContextType,
-        RequireFields<QueryFindFirstListItemArgs, never>
-    >
-    findFirstLocation?: Resolver<
-        Maybe<ResolversTypes['Location']>,
-        ParentType,
-        ContextType,
-        RequireFields<QueryFindFirstLocationArgs, never>
-    >
-    findFirstProduct?: Resolver<
-        Maybe<ResolversTypes['Product']>,
-        ParentType,
-        ContextType,
-        RequireFields<QueryFindFirstProductArgs, never>
-    >
-    findFirstShop?: Resolver<
-        Maybe<ResolversTypes['Shop']>,
-        ParentType,
-        ContextType,
-        RequireFields<QueryFindFirstShopArgs, never>
-    >
-    findFirstUser?: Resolver<
-        Maybe<ResolversTypes['User']>,
-        ParentType,
-        ContextType,
-        RequireFields<QueryFindFirstUserArgs, never>
-    >
-    groupByEdgeProductShop?: Resolver<
-        Array<ResolversTypes['EdgeProductShopGroupBy']>,
-        ParentType,
-        ContextType,
-        RequireFields<QueryGroupByEdgeProductShopArgs, 'by'>
-    >
-    groupByListItem?: Resolver<
-        Array<ResolversTypes['ListItemGroupBy']>,
-        ParentType,
-        ContextType,
-        RequireFields<QueryGroupByListItemArgs, 'by'>
-    >
-    groupByLocation?: Resolver<
-        Array<ResolversTypes['LocationGroupBy']>,
-        ParentType,
-        ContextType,
-        RequireFields<QueryGroupByLocationArgs, 'by'>
-    >
-    groupByProduct?: Resolver<
-        Array<ResolversTypes['ProductGroupBy']>,
-        ParentType,
-        ContextType,
-        RequireFields<QueryGroupByProductArgs, 'by'>
-    >
-    groupByShop?: Resolver<
-        Array<ResolversTypes['ShopGroupBy']>,
-        ParentType,
-        ContextType,
-        RequireFields<QueryGroupByShopArgs, 'by'>
-    >
-    groupByUser?: Resolver<
-        Array<ResolversTypes['UserGroupBy']>,
-        ParentType,
-        ContextType,
-        RequireFields<QueryGroupByUserArgs, 'by'>
-    >
-    listItem?: Resolver<
-        Maybe<ResolversTypes['ListItem']>,
-        ParentType,
-        ContextType,
-        RequireFields<QueryListItemArgs, 'where'>
-    >
-    listItems?: Resolver<
-        Array<ResolversTypes['ListItem']>,
-        ParentType,
-        ContextType,
-        RequireFields<QueryListItemsArgs, never>
-    >
-    location?: Resolver<
-        Maybe<ResolversTypes['Location']>,
-        ParentType,
-        ContextType,
-        RequireFields<QueryLocationArgs, 'where'>
-    >
-    locations?: Resolver<
-        Array<ResolversTypes['Location']>,
-        ParentType,
-        ContextType,
-        RequireFields<QueryLocationsArgs, never>
-    >
-    product?: Resolver<
-        Maybe<ResolversTypes['Product']>,
-        ParentType,
-        ContextType,
-        RequireFields<QueryProductArgs, 'where'>
-    >
-    products?: Resolver<
-        Array<ResolversTypes['Product']>,
-        ParentType,
-        ContextType,
-        RequireFields<QueryProductsArgs, never>
-    >
-    shop?: Resolver<
-        Maybe<ResolversTypes['Shop']>,
-        ParentType,
-        ContextType,
-        RequireFields<QueryShopArgs, 'where'>
-    >
-    shops?: Resolver<
-        Array<ResolversTypes['Shop']>,
-        ParentType,
-        ContextType,
-        RequireFields<QueryShopsArgs, never>
-    >
-    user?: Resolver<
-        Maybe<ResolversTypes['User']>,
-        ParentType,
-        ContextType,
-        RequireFields<QueryUserArgs, 'where'>
-    >
-    users?: Resolver<
-        Array<ResolversTypes['User']>,
-        ParentType,
-        ContextType,
-        RequireFields<QueryUsersArgs, never>
-    >
-}>
-
-export type ShopResolvers<
-    ContextType = any,
-    ParentType extends ResolversParentTypes['Shop'] = ResolversParentTypes['Shop']
-> = ResolversObject<{
-    _count?: Resolver<Maybe<ResolversTypes['ShopCount']>, ParentType, ContextType>
-    createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>
-    createdBy?: Resolver<ResolversTypes['User'], ParentType, ContextType>
-    hasProducts?: Resolver<
-        Array<ResolversTypes['EdgeProductShop']>,
-        ParentType,
-        ContextType,
-        RequireFields<ShopHasProductsArgs, never>
-    >
-    id?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-    location?: Resolver<Maybe<ResolversTypes['Location']>, ParentType, ContextType>
-    shopName?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-    updatedAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>
-    userId?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
-}>
-
-export type ShopCountResolvers<
-    ContextType = any,
-    ParentType extends ResolversParentTypes['ShopCount'] = ResolversParentTypes['ShopCount']
-> = ResolversObject<{
-    hasProducts?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
-}>
-
-export type ShopCountAggregateResolvers<
-    ContextType = any,
-    ParentType extends ResolversParentTypes['ShopCountAggregate'] = ResolversParentTypes['ShopCountAggregate']
-> = ResolversObject<{
-    _all?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-    createdAt?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-    id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-    shopName?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-    updatedAt?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-    userId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
-}>
-
-export type ShopGroupByResolvers<
-    ContextType = any,
-    ParentType extends ResolversParentTypes['ShopGroupBy'] = ResolversParentTypes['ShopGroupBy']
-> = ResolversObject<{
-    _count?: Resolver<Maybe<ResolversTypes['ShopCountAggregate']>, ParentType, ContextType>
-    _max?: Resolver<Maybe<ResolversTypes['ShopMaxAggregate']>, ParentType, ContextType>
-    _min?: Resolver<Maybe<ResolversTypes['ShopMinAggregate']>, ParentType, ContextType>
-    createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>
-    id?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-    shopName?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-    updatedAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>
-    userId?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
-}>
-
-export type ShopMaxAggregateResolvers<
-    ContextType = any,
-    ParentType extends ResolversParentTypes['ShopMaxAggregate'] = ResolversParentTypes['ShopMaxAggregate']
-> = ResolversObject<{
-    createdAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>
-    id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
-    shopName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
-    updatedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>
-    userId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
-    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
-}>
-
-export type ShopMinAggregateResolvers<
-    ContextType = any,
-    ParentType extends ResolversParentTypes['ShopMinAggregate'] = ResolversParentTypes['ShopMinAggregate']
-> = ResolversObject<{
-    createdAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>
-    id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
-    shopName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
-    updatedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>
-    userId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
-    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
-}>
-
-export type UserResolvers<
-    ContextType = any,
-    ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']
-> = ResolversObject<{
-    _count?: Resolver<Maybe<ResolversTypes['UserCount']>, ParentType, ContextType>
-    addedProductsToShops?: Resolver<
-        Array<ResolversTypes['EdgeProductShop']>,
-        ParentType,
-        ContextType,
-        RequireFields<UserAddedProductsToShopsArgs, never>
-    >
-    alias?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-    createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>
-    createdProdcuts?: Resolver<
-        Array<ResolversTypes['Product']>,
-        ParentType,
-        ContextType,
-        RequireFields<UserCreatedProdcutsArgs, never>
-    >
-    createdShops?: Resolver<
-        Array<ResolversTypes['Shop']>,
-        ParentType,
-        ContextType,
-        RequireFields<UserCreatedShopsArgs, never>
-    >
-    email?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-    id?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-    updatedAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>
-    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
-}>
-
-export type UserCountResolvers<
-    ContextType = any,
-    ParentType extends ResolversParentTypes['UserCount'] = ResolversParentTypes['UserCount']
-> = ResolversObject<{
-    addedProductsToShops?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-    createdProdcuts?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-    createdShops?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
-}>
-
-export type UserCountAggregateResolvers<
-    ContextType = any,
-    ParentType extends ResolversParentTypes['UserCountAggregate'] = ResolversParentTypes['UserCountAggregate']
-> = ResolversObject<{
-    _all?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-    alias?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-    createdAt?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-    email?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-    id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-    updatedAt?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
-}>
-
-export type UserGroupByResolvers<
-    ContextType = any,
-    ParentType extends ResolversParentTypes['UserGroupBy'] = ResolversParentTypes['UserGroupBy']
-> = ResolversObject<{
-    _count?: Resolver<Maybe<ResolversTypes['UserCountAggregate']>, ParentType, ContextType>
-    _max?: Resolver<Maybe<ResolversTypes['UserMaxAggregate']>, ParentType, ContextType>
-    _min?: Resolver<Maybe<ResolversTypes['UserMinAggregate']>, ParentType, ContextType>
-    alias?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-    createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>
-    email?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-    id?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-    updatedAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>
-    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
-}>
-
-export type UserMaxAggregateResolvers<
-    ContextType = any,
-    ParentType extends ResolversParentTypes['UserMaxAggregate'] = ResolversParentTypes['UserMaxAggregate']
-> = ResolversObject<{
-    alias?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
-    createdAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>
-    email?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
-    id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
-    updatedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>
-    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
-}>
-
-export type UserMinAggregateResolvers<
-    ContextType = any,
-    ParentType extends ResolversParentTypes['UserMinAggregate'] = ResolversParentTypes['UserMinAggregate']
-> = ResolversObject<{
-    alias?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
-    createdAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>
-    email?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
-    id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
-    updatedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>
-    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
-}>
-
-export type Resolvers<ContextType = any> = ResolversObject<{
-    AffectedRowsOutput?: AffectedRowsOutputResolvers<ContextType>
-    AggregateEdgeProductShop?: AggregateEdgeProductShopResolvers<ContextType>
-    AggregateListItem?: AggregateListItemResolvers<ContextType>
-    AggregateLocation?: AggregateLocationResolvers<ContextType>
-    AggregateProduct?: AggregateProductResolvers<ContextType>
-    AggregateShop?: AggregateShopResolvers<ContextType>
-    AggregateUser?: AggregateUserResolvers<ContextType>
-    DateTime?: GraphQLScalarType
-    EdgeProductShop?: EdgeProductShopResolvers<ContextType>
-    EdgeProductShopCountAggregate?: EdgeProductShopCountAggregateResolvers<ContextType>
-    EdgeProductShopGroupBy?: EdgeProductShopGroupByResolvers<ContextType>
-    EdgeProductShopMaxAggregate?: EdgeProductShopMaxAggregateResolvers<ContextType>
-    EdgeProductShopMinAggregate?: EdgeProductShopMinAggregateResolvers<ContextType>
-    ListItem?: ListItemResolvers<ContextType>
-    ListItemAvgAggregate?: ListItemAvgAggregateResolvers<ContextType>
-    ListItemCountAggregate?: ListItemCountAggregateResolvers<ContextType>
-    ListItemGroupBy?: ListItemGroupByResolvers<ContextType>
-    ListItemMaxAggregate?: ListItemMaxAggregateResolvers<ContextType>
-    ListItemMinAggregate?: ListItemMinAggregateResolvers<ContextType>
-    ListItemSumAggregate?: ListItemSumAggregateResolvers<ContextType>
-    Location?: LocationResolvers<ContextType>
-    LocationAvgAggregate?: LocationAvgAggregateResolvers<ContextType>
-    LocationCountAggregate?: LocationCountAggregateResolvers<ContextType>
-    LocationGroupBy?: LocationGroupByResolvers<ContextType>
-    LocationMaxAggregate?: LocationMaxAggregateResolvers<ContextType>
-    LocationMinAggregate?: LocationMinAggregateResolvers<ContextType>
-    LocationSumAggregate?: LocationSumAggregateResolvers<ContextType>
-    Mutation?: MutationResolvers<ContextType>
-    Product?: ProductResolvers<ContextType>
-    ProductAvgAggregate?: ProductAvgAggregateResolvers<ContextType>
-    ProductCount?: ProductCountResolvers<ContextType>
-    ProductCountAggregate?: ProductCountAggregateResolvers<ContextType>
-    ProductGroupBy?: ProductGroupByResolvers<ContextType>
-    ProductMaxAggregate?: ProductMaxAggregateResolvers<ContextType>
-    ProductMinAggregate?: ProductMinAggregateResolvers<ContextType>
-    ProductSumAggregate?: ProductSumAggregateResolvers<ContextType>
-    Query?: QueryResolvers<ContextType>
-    Shop?: ShopResolvers<ContextType>
-    ShopCount?: ShopCountResolvers<ContextType>
-    ShopCountAggregate?: ShopCountAggregateResolvers<ContextType>
-    ShopGroupBy?: ShopGroupByResolvers<ContextType>
-    ShopMaxAggregate?: ShopMaxAggregateResolvers<ContextType>
-    ShopMinAggregate?: ShopMinAggregateResolvers<ContextType>
-    User?: UserResolvers<ContextType>
-    UserCount?: UserCountResolvers<ContextType>
-    UserCountAggregate?: UserCountAggregateResolvers<ContextType>
-    UserGroupBy?: UserGroupByResolvers<ContextType>
-    UserMaxAggregate?: UserMaxAggregateResolvers<ContextType>
-    UserMinAggregate?: UserMinAggregateResolvers<ContextType>
-}>
 
 export type GetAllUsersQueryVariables = Exact<{ [key: string]: never }>
 
 export type GetAllUsersQuery = {
     __typename?: 'Query'
-    users: Array<{ __typename?: 'User'; id: string; alias: string; email: string }>
+    users: Array<{ __typename?: 'User'; id: string; alias: string; email: string; createdAt: any }>
 }
 
-export const GetAllUsersDocument = `
-    query getAllUsers {
-  users {
-    id
-    alias
-    email
-  }
+export const AddUserDocument = gql`
+    mutation addUser($alias: String!, $email: String!) {
+        createUser(data: { alias: $alias, email: $email }) {
+            id
+            alias
+            email
+            createdAt
+            updatedAt
+        }
+    }
+`
+export type AddUserMutationFn = Apollo.MutationFunction<AddUserMutation, AddUserMutationVariables>
+
+/**
+ * __useAddUserMutation__
+ *
+ * To run a mutation, you first call `useAddUserMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddUserMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addUserMutation, { data, loading, error }] = useAddUserMutation({
+ *   variables: {
+ *      alias: // value for 'alias'
+ *      email: // value for 'email'
+ *   },
+ * });
+ */
+export function useAddUserMutation(
+    baseOptions?: Apollo.MutationHookOptions<AddUserMutation, AddUserMutationVariables>
+) {
+    const options = { ...defaultOptions, ...baseOptions }
+    return Apollo.useMutation<AddUserMutation, AddUserMutationVariables>(AddUserDocument, options)
 }
-    `
-export const useGetAllUsersQuery = <TData = GetAllUsersQuery, TError = unknown>(
-    variables?: GetAllUsersQueryVariables,
-    options?: UseQueryOptions<GetAllUsersQuery, TError, TData>
-) =>
-    useQuery<GetAllUsersQuery, TError, TData>(
-        variables === undefined ? ['getAllUsers'] : ['getAllUsers', variables],
-        fetcher<GetAllUsersQuery, GetAllUsersQueryVariables>(GetAllUsersDocument, variables),
+export type AddUserMutationHookResult = ReturnType<typeof useAddUserMutation>
+export type AddUserMutationResult = Apollo.MutationResult<AddUserMutation>
+export type AddUserMutationOptions = Apollo.BaseMutationOptions<
+    AddUserMutation,
+    AddUserMutationVariables
+>
+export const GetAllUsersDocument = gql`
+    query getAllUsers {
+        users {
+            id
+            alias
+            email
+            createdAt
+        }
+    }
+`
+
+/**
+ * __useGetAllUsersQuery__
+ *
+ * To run a query within a React component, call `useGetAllUsersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllUsersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAllUsersQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetAllUsersQuery(
+    baseOptions?: Apollo.QueryHookOptions<GetAllUsersQuery, GetAllUsersQueryVariables>
+) {
+    const options = { ...defaultOptions, ...baseOptions }
+    return Apollo.useQuery<GetAllUsersQuery, GetAllUsersQueryVariables>(
+        GetAllUsersDocument,
         options
     )
+}
+export function useGetAllUsersLazyQuery(
+    baseOptions?: Apollo.LazyQueryHookOptions<GetAllUsersQuery, GetAllUsersQueryVariables>
+) {
+    const options = { ...defaultOptions, ...baseOptions }
+    return Apollo.useLazyQuery<GetAllUsersQuery, GetAllUsersQueryVariables>(
+        GetAllUsersDocument,
+        options
+    )
+}
+export type GetAllUsersQueryHookResult = ReturnType<typeof useGetAllUsersQuery>
+export type GetAllUsersLazyQueryHookResult = ReturnType<typeof useGetAllUsersLazyQuery>
+export type GetAllUsersQueryResult = Apollo.QueryResult<GetAllUsersQuery, GetAllUsersQueryVariables>
+export function refetchGetAllUsersQuery(variables?: GetAllUsersQueryVariables) {
+    return { query: GetAllUsersDocument, variables }
+}

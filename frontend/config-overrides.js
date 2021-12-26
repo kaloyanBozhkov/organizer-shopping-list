@@ -2,13 +2,12 @@ const {
         override,
         addWebpackModuleRule,
         removeModuleScopePlugin,
-        addWebpackAlias,
         babelInclude,
+        addWebpackPlugin,
     } = require('customize-cra'),
     path = require('path')
 
 module.exports = override(
-    // embedIndexStartFile,
     addWebpackModuleRule({
         test: /\.s[ac]ss$/i,
         use: [
@@ -39,14 +38,21 @@ module.exports = override(
     }),
     addWebpackModuleRule({
         test: /\.svg$/,
-        use: {
-            loader: 'svg-url-loader',
-            options: {
-                // make loader to behave like url-loader, for all svg files
-                encoding: 'base64',
-                publicPath: '../..',
+        use: [
+            {
+                // allow importing as component
+                loader: '@svgr/webpack',
             },
-        },
+            {
+                // allow importing as url for src
+                loader: 'svg-url-loader',
+                options: {
+                    // make loader to behave like url-loader, for all svg files
+                    encoding: 'base64',
+                    publicPath: '../..',
+                },
+            },
+        ],
     }),
     // circumvent limitation to import from only within the src folder
     removeModuleScopePlugin(),

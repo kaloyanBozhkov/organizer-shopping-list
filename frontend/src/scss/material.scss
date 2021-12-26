@@ -1,0 +1,41 @@
+/* stylelint-disable no-descending-specificity */
+@import "scss/variables.scss";
+
+.MuiFormControl-root.MuiTextField-root {
+    > label.MuiFormLabel-root:not(.Mui-error),
+    > p.MuiFormHelperText-root:not(.Mui-error),
+    > .MuiInputBase-root > input {
+        color: $text;
+    }
+
+    > p.MuiFormHelperText-root {
+        font-size: 1.4rem;
+    }
+
+    > label.MuiFormLabel-root {
+        font-size: 1.7rem;
+
+        &.Mui-focused:not(.Mui-error) {
+            color: $green;
+        }
+    }
+
+    > button.MuiButtonBase-root {
+        font-size: 1.8rem;
+    }
+}
+
+.MuiButton-containedPrimary {
+    background-color: $green;
+    color: $purple;
+    &:hover {
+        background-color: darken($green, 10%);
+    }
+}
+
+.MuiButton-containedPrimary,
+.MuiButton-containedSecondary {
+    border-radius: 2rem;
+    font-size: 1.8rem;
+    padding: 0.5rem 4rem;
+}

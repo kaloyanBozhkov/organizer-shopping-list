@@ -4,8 +4,6 @@ import { ListItem } from 'types/graphQL.generated'
 
 export type Actions = {
     onToggleLoginProcess: () => void
-    onLogin: () => void
-    onLogout: () => void
     onAddShoppingItemToCart: (id: ListItem['id']) => void
     onRemoveShoppingItemFromCart: (id: ListItem['id']) => void
     onMarkPurchased: (id: ListItem['id']) => void

@@ -10,11 +10,11 @@
         width: 85%;
     }
 
-    @include mediaQuery(tablet-portrait) {
+    @include mediaQuery(tabletSmall) {
         width: 75%;
     }
 
-    @include mediaQuery(tablet-landscape) {
+    @include mediaQuery(tabletBig) {
         width: 65%;
     }
 
@@ -44,7 +44,7 @@
     // for desktop show the scrollbar but make it thin!
     &::-webkit-scrollbar {
         // for mobile do not show the scroll bar, user can scroll without it
-        @include breakpoint(tablet-landscape) {
+        @include breakpoint(tabletBig) {
             display: none;
         }
 
@@ -85,4 +85,41 @@
             @include animate($keyframes, $animationSpeed, $i * $delayMultiplier, forwards);
         }
     }
+}
+
+@mixin genericFormFormat($formId) {
+    form[form-id="#{$formId}"] {
+        > [data-id="#{$formId}-fieldContainer"] {
+            gap: 4rem;
+
+            @include breakpoint(tabletSmall, landscape) {
+                gap: 2rem;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    }
+}
+
+@mixin genericPaperFormWrapper() {
+    background-color: $paperBg;
+    border-color: $paperBorder;
+    padding: $padding_0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+    width: 100%;
+    height: 100%;
+
+    @include breakpoint(tabletSmall) {
+        height: auto;
+    }
+
+    @include genericFormFormat(registerForm);
+
+    @include animate(popIn, 800ms);
+
+    animation-timing-function: $cubicBezier_0;
 }

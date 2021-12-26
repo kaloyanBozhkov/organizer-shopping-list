@@ -3,5 +3,6 @@ query getAllUsers {
     id
     alias
     email
+    createdAt
   }
 }

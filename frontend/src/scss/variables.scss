@@ -8,8 +8,35 @@ $blue: #26547c;
 $light: #84a9c0;
 $yellow: #fc0;
 $red: #ef476f;
-$green: #06d6a0;
+
+$green: #05e6c4;
+$purple: #2d0b59;
 $white: #fffcf9;
 $black: #000;
 
+$text: #cdc5df;
+
 $spacingMain: 3rem;
+
+$paperBg: #341662;
+$paperBorder: #4c249f;
+
+$padding_0: 3rem;
+
+$cubicBezier_0: cubic-bezier(0, 0.71, 0.11, 0.99);
+
+$uniswap-radial-gradient: linear-gradient(var(--color-bg-card), var(--color-bg-card)),
+    radial-gradient(circle at top left, #feccd2 40%, rgba(240, 47, 198, 0.9));
+$flashyGreen: linear-gradient(
+    40deg,
+    #ff9304,
+    #ff04ea 10%,
+    #9b4beb 20%,
+    #0e8dd6 30%,
+    #0bc6df 40%,
+    #07d464 50%,
+    #dfd105 60%,
+    #ff04ab 78%,
+    #8933eb 90%,
+    #3b89ff
+);

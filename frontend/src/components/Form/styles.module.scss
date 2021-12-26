@@ -1,0 +1,27 @@
+@import "scss/breakpoints.scss";
+
+.form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    gap: 4rem;
+
+    > div:first-child {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    > button {
+        align-self: center;
+        margin-top: 2rem;
+    }
+
+    [form-field] {
+        &:not(:last-child) {
+            margin-bottom: 2rem;
+        }
+    }
+}

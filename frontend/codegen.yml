@@ -8,19 +8,15 @@ documents:
 generates:
     ./src/types/graphQL.generated.ts:
         config:
+            withHooks: true
+            withRefetchFn: true
             useIndexSignature: true
             namingConvention:
                 - change-case-all#pascalCase
-            fetcher: 
-                endpoint: ${REACT_APP_ENDPOINT_URL}/graphql
-                fetchParams: fetchParams
         plugins:
-            - add:
-                content: "import { fetchParams } from 'helpers/fetchParams'"
             - typescript
-            - typescript-resolvers
             - typescript-operations
-            - typescript-react-query
+            - typescript-react-apollo
 hooks:
     afterAllFileWrite:
         - prettier --write

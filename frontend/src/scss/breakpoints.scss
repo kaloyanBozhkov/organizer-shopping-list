@@ -1,29 +1,52 @@
 /*
 $breakpoint argument choices:
 - mobile: 0-600px
-- tablet-portrait: 600-900px
-- tablet-landscape: 900-1200px
+- tabletSmall: 600-900px
+- tabletBig: 900-1200px
 - not used: 1200-1800px normal styles
 - big-desktop: 1800px+ 
 */
 
 // all screen sizes up till the selected one
-@mixin breakpoint($breakpoint) {
-    // Desktop design down
+@mixin breakpoint($breakpoint, $orientation: portrait) {
     @if $breakpoint == mobile {
-        @media (max-width: 600px) {
-            @content;
+        @if $orientation == portrait {
+            @media (max-width: 599px) and (orientation: $orientation) {
+                @content;
+            }
+        } @else {
+            @media (max-height: 599px) and (orientation: $orientation) {
+                @content;
+            }
         }
     }
 
-    @if $breakpoint == tablet-portrait {
-        @media (max-width: 900px) {
-            @content;
+    @if $breakpoint == tabletSmall {
+        @if $orientation == portrait {
+            @media (min-width: 600px) and (orientation: $orientation) {
+                @content;
+            }
+        } @else {
+            @media (min-height: 600px) and (orientation: $orientation) {
+                @content;
+            }
         }
     }
 
-    @if $breakpoint == tablet-landscape {
-        @media (max-width: 1200px) {
+    @if $breakpoint == tabletBig {
+        @if $orientation == portrait {
+            @media (min-width: 900px) and (orientation: $orientation) {
+                @content;
+            }
+        } @else {
+            @media (min-height: 900px) and (orientation: $orientation) {
+                @content;
+            }
+        }
+    }
+
+    @if $breakpoint == desktop {
+        @media (min-width: 1200px) {
             @content;
         }
     }
@@ -44,13 +67,13 @@ $breakpoint argument choices:
         }
     }
 
-    @if $device == tablet-portrait {
+    @if $device == tabletSmall {
         @media (min-width: 601px) and (max-width: 900px) {
             @content;
         }
     }
 
-    @if $device == tablet-landscape {
+    @if $device == tabletBig {
         @media (min-width: 901px) and (max-width: 1200px) {
             @content;
         }

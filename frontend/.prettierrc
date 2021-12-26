@@ -26,13 +26,14 @@
         "^pages/(.*)$",
         "^templates/(.*)$",
         "^components/(.*)$",
-        "^@mui/(.*)$",
+        "^@(.*)$",
         "^services/(.*)$",
         "^helpers/(.*)$",
-        "^[../]",
-        "^[./]",
+        "^constants/(.*)$",
+        "^(../)",
+        "^(./)(?!styles.module)",
         ".scss$",
-        ".module.scss$"
+        "./styles.module.scss"
     ],
     "importOrderSeparation": true,
     "importOrderSortSpecifiers": true

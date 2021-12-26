@@ -1,56 +1,60 @@
 import React from 'react'
 import { createRoot } from 'react-dom'
-import { QueryClient, QueryClientProvider } from 'react-query'
-import { ReactQueryDevtools } from 'react-query/devtools'
+
+import GlobalContext, { defaultGlobal } from 'context/Global.context'
 
 import ErrorBoundary from 'components/Errors/ErrorBoundary'
 
-import { StyledEngineProvider, ThemeProvider, createTheme } from '@mui/material'
+import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client'
+import { StylesProvider } from '@material-ui/core/styles'
 
-import MainApp from './Main.app'
+import AccessAreaApp from './AccessArea.app'
 
 import 'scss/general.scss'
+import 'scss/material.scss'
 
 const rootElement = document.getElementById('root')
 
 if (!rootElement) throw Error('No #root element found on page!')
-
+console.warn(process.env)
 const root = createRoot(rootElement),
-    queryClient = new QueryClient(),
-    theme = createTheme()
+    apolloClient = new ApolloClient({
+        uri: process.env.REACT_APP_ENDPOINT_URL,
+        cache: new InMemoryCache(),
+    })
 
-type Applications = 'app' | 'admin'
+type Applications = 'app' | 'admin' | 'accessArea'
 
-export const renderApplication = (what: Applications) => {
+export type RenderApplicationType = typeof renderApplication
+
+const renderApplication = (what: Applications) => {
     let content
 
     switch (what) {
+        case 'accessArea':
+            content = <AccessAreaApp renderApplication={renderApplication} />
+            break
         case 'admin':
             content = null
             break
         default:
-            content = <MainApp />
+            content = null
     }
 
     root.render(
         <React.StrictMode>
             <ErrorBoundary>
-                {/* 
-                    Most CSS-in-JS solutions inject their styles at the bottom of the HTML <head>, which gives MUI precedence over your custom styles.
-                    To remove the need for !important, you need to change the CSS injection order 
-                */}
-                <StyledEngineProvider injectFirst>
-                    <ThemeProvider theme={theme}>
-                        <QueryClientProvider client={queryClient}>
+                <StylesProvider injectFirst>
+                    <ApolloProvider client={apolloClient}>
+                        <GlobalContext.Provider value={defaultGlobal}>
                             {content}
-                            <ReactQueryDevtools initialIsOpen={false} />
-                        </QueryClientProvider>
-                    </ThemeProvider>
-                </StyledEngineProvider>
+                        </GlobalContext.Provider>
+                    </ApolloProvider>
+                </StylesProvider>
             </ErrorBoundary>
         </React.StrictMode>
     )
 }
 
-// rendr main app
-renderApplication('app')
+// rendr main app or access area
+renderApplication(defaultGlobal.user ? 'app' : 'accessArea')

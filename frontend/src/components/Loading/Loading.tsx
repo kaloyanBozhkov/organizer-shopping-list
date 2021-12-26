@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Box, CircularProgress } from '@mui/material'
+import { Box, CircularProgress } from '@material-ui/core'
 
 import styles from './styles.module.scss'
 

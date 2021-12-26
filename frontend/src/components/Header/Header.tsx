@@ -1,21 +1,21 @@
 import React, { useContext } from 'react'
 
 import ActionsContext from 'context/Actions.context'
-import StoreContext from 'context/Store.context'
+import GlobalContext from 'context/Global.context'
 
-import { Button } from '@mui/material'
+import { Button } from '@material-ui/core'
 
 import styles from './styles.module.scss'
 
 const Header = () => {
-    const { onToggleLoginProcess, onLogout } = useContext(ActionsContext),
-        { user } = useContext(StoreContext)
+    const { onToggleLoginProcess } = useContext(ActionsContext),
+        { user } = useContext(GlobalContext)
 
     return (
         <div className={styles.header}>
             <h1>ShoppingList</h1>
             {user ? (
-                <Button onClick={onLogout} variant="contained" className={styles.logoutBtn}>
+                <Button onClick={() => alert('')} variant="contained" className={styles.logoutBtn}>
                     Logout
                 </Button>
             ) : (

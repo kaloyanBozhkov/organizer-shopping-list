@@ -5,14 +5,16 @@
   "scripts": {
     "postinstall": "npm run i:both",
     "i:both": "run-p i:fe i:be",
-    "gen:fe:watch": "cd frontend && npm run generateGraphQLHooks:watch",
-    "i:fe": "cd frontend && npm i",
+    "gen:fe:watch": "wait-on http://localhost:4000 && wait-on http://localhost:3000 && cd frontend && npm run generateGraphQLHooks:watch",
+    "i:fe": "wait-on http://localhost:4000 && cd frontend && npm i && npm start",
     "i:be": "cd backend && npm i",
     "start:fe": "cd frontend && npm run start",
     "start:be": "cd backend && npm run start:dev",
-    "start:both": "run-p start:be  start:fe gen:fe:watch"
+    "start:both": "run-p start:be start:fe gen:fe:watch",
+    "install:start:both": "npm run i:be && run-p start:be i:fe gen:fe:watch"
   },
   "dependencies": {
-    "npm-run-all": "^4.1.5"
+    "npm-run-all": "^4.1.5",
+    "wait-on": "^6.0.0"
   }
 }

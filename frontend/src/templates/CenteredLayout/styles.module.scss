@@ -1,0 +1,29 @@
+@import "scss/variables.scss";
+@import "scss/breakpoints";
+
+.centeredLayout {
+    height: 100%;
+    width: 100%;
+    background-color: $purple;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    main {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+
+        @include breakpoint(tabletSmall) {
+            width: 80%;
+            height: 80%;
+        }
+
+        @include breakpoint(desktop) {
+            width: 50%;
+            height: 50%;
+        }
+    }
+}
