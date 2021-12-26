@@ -67,18 +67,18 @@
         "test": "react-scripts test",
         "eject": "react-scripts eject",
         "eslint_check": "eslint 'src/**/*.{js,*.js,ts,*.ts,tsx,*.tsx}'",
-        "stylelint_check": "stylelint 'src/**/*.{scss,*.scss,css,*.css}'",
-        "prettier_check": "prettier --check 'src/**/*.{js,*.js,ts,*.ts,tsx,*.tsx,scss,*.scss,css,*.css,json}'",
+        "stylelint_check": "stylelint 'src/**/*.{scss,*.scss,css,*.css,*.scss.d.ts,.scss.d.ts}'",
+        "prettier_check": "prettier --check 'src/**/*.{js,*.js,ts,*.ts,tsx,*.tsx,scss,*.scss,css,*.css,json,*.scss.d.ts,.scss.d.ts}'",
         "check_all": "npm run prettier_check && npm run eslint_check && npm run stylelint_check",
         "eslint_fix": "eslint 'src/**/*.{js,*.js,ts,*.ts,tsx,*.tsx}' --fix",
-        "stylelint_fix": "stylelint 'src/**/*.{scss,*.scss,css,*.css}' --fix",
-        "prettier_fix": "prettier --write 'src/**/*.{js,*.js,ts,*.ts,tsx,*.tsx,scss,*.scss,css,*.css,json}'",
+        "stylelint_fix": "stylelint 'src/**/*.{scss,*.scss,css,*.css,*.scss.d.ts,.scss.d.ts}}' --fix",
+        "prettier_fix": "prettier --write 'src/**/*.{js,*.js,ts,*.ts,tsx,*.tsx,scss,*.scss,css,*.css,json,*.scss.d.ts,.scss.d.ts}'",
         "fix_all": "npm run prettier_fix && npm run eslint_fix && npm run stylelint_fix",
         "generateGraphQLHooks": "graphql-codegen --require dotenv/config --config codegen.yml",
         "generateGraphQLHooks:watch": "graphql-codegen --require dotenv/config --config codegen.yml --watch"
     },
     "lint-staged": {
-        "src/**/*.{js,*.js,ts,*.ts,tsx,*.tsx,json}": [
+        "src/**/*.{js,*.js,ts,*.ts,tsx,*.tsx,json,*.scss.d.ts,.scss.d.ts}": [
             "prettier --write",
             "eslint --fix"
         ],
