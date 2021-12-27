@@ -2,6 +2,7 @@
 // Please do not change this file!
 interface CssExports {
     opacityIn: string
+    opacityInDelayed: string
     passwordResetFormWrapper: string
     popIn: string
     sideActions: string

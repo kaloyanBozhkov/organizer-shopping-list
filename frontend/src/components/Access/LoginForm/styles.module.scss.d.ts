@@ -3,6 +3,7 @@
 interface CssExports {
     loginFormWrapper: string
     opacityIn: string
+    opacityInDelayed: string
     popIn: string
     slideInBottomWithOpacity: string
     slideInRight: string

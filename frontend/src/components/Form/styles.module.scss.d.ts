@@ -3,6 +3,7 @@
 interface CssExports {
     form: string
     opacityIn: string
+    opacityInDelayed: string
     popIn: string
     slideInBottomWithOpacity: string
     slideInRight: string

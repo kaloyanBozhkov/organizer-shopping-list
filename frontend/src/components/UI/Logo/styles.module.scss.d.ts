@@ -4,6 +4,7 @@ interface CssExports {
     dashArray: string
     logo: string
     opacityIn: string
+    opacityInDelayed: string
     popIn: string
     slideInBottomWithOpacity: string
     slideInRight: string

@@ -1,40 +1,112 @@
 @import "scss/variables.scss";
 @import "scss/keyframes.scss";
 @import "scss/mixins.scss";
+@import "scss/breakpoints.scss";
 
 .header {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    transition: 400ms all linear;
     width: 100%;
     height: 100%;
-    background-color: transparent;
+    padding: 3rem;
+    box-sizing: border-box;
+
+    &[data-open="true"] {
+        transform: translateX(100%);
+        &::before {
+            right: -1px;
+        }
+    }
+
+    @include breakpoint(mobile, landscape) {
+        width: 30rem;
+        left: -30rem;
+        &[data-open="true"] {
+            transform: translateX(30rem);
+        }
+    }
+
+    &::before {
+        content: "";
+        width: 1px;
+        height: 100%;
+        background-color: $green;
+        position: absolute;
+        top: 0;
+        right: 1px;
+    }
+
+    background-color: $purple;
     display: flex;
-    flex-direction: row;
-    align-items: flex-start;
+    flex-direction: column;
+    align-items: center;
     justify-content: space-between;
     margin: 0;
 
-    h1 {
-        color: $black;
-        font-size: 10rem;
-    }
+    .actions {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 1.5rem;
+        width: 100%;
+        padding-top: 3rem;
+        flex: 1;
 
-    .loginBtn {
-        background-color: darken($yellow, 15%);
-        &:hover {
-            background-color: darken($yellow, 25%);
+        > button {
+            width: 100%;
         }
 
-        opacity: 0;
-        @include animate(opacityIn, 1s, 600ms);
-    }
+        .logoutBtn {
+            position: relative;
+            transition: 800ms all $cubicBezier_0;
 
-    .logoutBtn {
-        background-color: lighten($red, 5%);
-        &:hover {
-            background-color: lighten($red, 15%);
+            &:hover {
+                top: -3px;
+            }
         }
     }
 
-    @include animate(slideInRight, 600ms);
+    @mixin noSideMenu {
+        position: relative;
+        top: 0;
+        left: 0;
+        transition: unset;
+        background-color: transparent;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        border-right: 0;
+        padding: 0;
 
-    animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        @include animate(slideInRight, 600ms);
+
+        &::before {
+            display: none;
+        }
+
+        .actions {
+            width: auto;
+            flex: unset;
+            padding-top: 0;
+
+            > button {
+                &:first-child {
+                    @include animate(opacityInDelayed, 2.5s, unset, forwards, $cubicBezier_0);
+                }
+                &:last-child {
+                    @include animate(opacityInDelayed, 3.5s, unset, forwards, $cubicBezier_0);
+                }
+            }
+        }
+    }
+
+    @include breakpoint(tabletSmall, portrait) {
+        @include noSideMenu();
+    }
+
+    @include breakpoint(tabletSmall, landscape) {
+        @include noSideMenu();
+    }
 }

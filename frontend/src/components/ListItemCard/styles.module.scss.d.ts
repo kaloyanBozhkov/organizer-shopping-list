@@ -4,6 +4,7 @@ interface CssExports {
     button: string
     lisItemCard: string
     opacityIn: string
+    opacityInDelayed: string
     popIn: string
     price: string
     quantity: string

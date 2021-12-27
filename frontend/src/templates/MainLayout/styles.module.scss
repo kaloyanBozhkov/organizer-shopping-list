@@ -1,4 +1,5 @@
 @import "scss/variables.scss";
+@import "scss/breakpoints.scss";
 
 .mainLayout {
     width: 100%;
@@ -7,7 +8,16 @@
     flex-direction: column;
 
     header {
-        height: auto;
+        height: 100%;
+        width: 100%;
+
+        @include breakpoint(tabletSmall, landscape) {
+            height: auto;
+        }
+
+        @include breakpoint(tabletSmall, portrait) {
+            height: auto;
+        }
     }
 
     main {

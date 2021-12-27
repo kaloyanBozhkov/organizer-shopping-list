@@ -48,13 +48,27 @@
     }
 }
 
+.MuiButton-outlinedPrimary {
+    border-color: $green;
+    color: $green;
+    background-color: $purple;
+    &:hover {
+        font-weight: bold;
+        color: $purple;
+        background-color: $green;
+    }
+}
+
 .MuiButton-containedPrimary,
-.MuiButton-containedSecondary {
+.MuiButton-containedSecondary,
+.MuiButton-outlinedPrimary {
     border-radius: 2rem;
     font-size: 1.8rem;
+    height: 3.5rem;
     padding: 0.5rem 4rem;
 }
 
 .MuiCircularProgress-colorPrimary {
     color: $green;
+    border-color: $green;
 }
