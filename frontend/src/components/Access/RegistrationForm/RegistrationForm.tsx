@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 
 import AccessAreaContext from 'context/AccessArea.context'
 
+import useGraphQLErrorHandler from 'hooks/useGraphQLErrorHandler'
+
 import Form from 'components/Form/Form'
 import Logo from 'components/UI/Logo/Logo'
 
@@ -14,23 +16,30 @@ import styles from './styles.module.scss'
 
 const RegistrationForm = () => {
     const { addUserMutation } = useContext(AccessAreaContext),
-        [addUser, { loading, error }] = addUserMutation
+        [addUser, { loading, error, data }] = addUserMutation,
+        [errorMsg, clearErrorMsg] = useGraphQLErrorHandler({
+            prop: 'user',
+            errorMsg: 'Oops! The provided credentials may already have been saved before :(',
+            data,
+            error,
+            loading,
+        })
 
     return (
         <Paper variant="outlined" className={styles.registerFormWrapper}>
             <Logo />
-            {error && <p>Oops! Could not create your account :(</p>}
             <Form
                 formId="registerForm"
                 definitions={REGISTER_FORM_DEFINITIONS}
                 submitLabel="Register"
+                errorMsg={errorMsg}
+                onFormStateChanged={clearErrorMsg}
                 onSubmit={(form) => {
                     addUser({
                         variables: {
                             alias: form.alias!.value!,
                             email: form.email!.value!,
                         },
-                        notifyOnNetworkStatusChange: true,
                     })
                 }}
                 isSubmitPending={loading}

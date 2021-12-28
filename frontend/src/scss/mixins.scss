@@ -153,3 +153,11 @@
 
     animation-timing-function: $cubicBezier_0;
 }
+
+@mixin madeByMixin {
+    &::after {
+        content: "Made with ❤ by Kaloyan Bozhkov";
+        position: absolute;
+        color: $text;
+    }
+}

@@ -42,6 +42,11 @@
 
         &[disabled] {
             background-color: $green;
+
+            &:hover {
+                background-color: $green;
+            }
+
             svg {
                 transform: scale(0.5);
                 circle {

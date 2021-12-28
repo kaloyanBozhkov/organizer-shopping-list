@@ -7,7 +7,7 @@ type GraphQLErrorHandlerProps = {
     errorMsg: string
     error?: ApolloError
     loading: boolean
-    data: undefined | Record<string, null | unknown>
+    data: undefined | Record<string, null | unknown> | null
 }
 
 const useGraphQLErrorHandler = ({
@@ -18,11 +18,11 @@ const useGraphQLErrorHandler = ({
     data,
 }: GraphQLErrorHandlerProps): [string | undefined, (() => void) | undefined] => {
     const [errMsg, setErrMsg] = useState<undefined | string>()
-    // eslint-disable-next-line
-    console.log('inc', loading)
+
     useEffect(() => {
         setErrMsg(
-            (error && 'Oops! There seems to have been an issue server-side :(') ||
+            ((error || !!data?.errors) &&
+                'Oops! There seems to have been an issue server-side :(') ||
                 (!loading && data?.[prop] === null && !error && errorMsg) ||
                 undefined
         )

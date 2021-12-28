@@ -6,6 +6,19 @@
     height: 100%;
     display: flex;
     flex-direction: column;
+    padding: 0 0;
+
+    @include breakpoint(tabletSmall) {
+        padding: 0 3.5rem;
+    }
+
+    @include breakpoint(tabletSmall, landscape) {
+        padding: 0 8rem;
+    }
+
+    @include breakpoint(desktop) {
+        padding: 0 15rem;
+    }
 
     header {
         height: 100%;

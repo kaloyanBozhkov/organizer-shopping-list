@@ -3,28 +3,74 @@
 @import "scss/mixins.scss";
 @import "scss/breakpoints.scss";
 
+@mixin noSideMenu {
+    position: relative;
+    top: 0;
+    left: 0;
+    transition: unset;
+    background-color: transparent;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    border-right: 0;
+    padding: 0;
+
+    @include animate(slideInRight, 600ms);
+
+    &::before,
+    &::after {
+        display: none;
+    }
+
+    .actions {
+        width: auto;
+        flex: unset;
+        padding-top: 0;
+
+        > button {
+            &:first-child {
+                @include animate(opacityInDelayed, 2.5s, unset, forwards, $cubicBezier_0);
+            }
+            &:last-child {
+                @include animate(opacityInDelayed, 3.5s, unset, forwards, $cubicBezier_0);
+            }
+        }
+    }
+
+    // logo
+    > .logo {
+        position: initial;
+        top: 0;
+        left: 0;
+        height: 6rem;
+    }
+
+    > .headerMobileBtn {
+        display: none;
+    }
+}
+
+@mixin logoMobile {
+    height: 4rem;
+    left: 1.5rem;
+    z-index: 0;
+}
+
 .header {
     position: fixed;
     top: 0;
     left: -100%;
-    transition: 400ms all linear;
+    transition: 300ms all linear;
     width: 100%;
     height: 100%;
     padding: 3rem;
     box-sizing: border-box;
+    z-index: zindexmax;
 
     &[data-open="true"] {
         transform: translateX(100%);
         &::before {
             right: -1px;
-        }
-    }
-
-    @include breakpoint(mobile, landscape) {
-        width: 30rem;
-        left: -30rem;
-        &[data-open="true"] {
-            transform: translateX(30rem);
         }
     }
 
@@ -38,12 +84,37 @@
         right: 1px;
     }
 
+    @include madeByMixin();
+    &::after {
+        bottom: 0.5rem;
+        font-size: 0.8rem;
+    }
+
     background-color: $purple;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
     margin: 0;
+
+    .headerMobileBtn {
+        position: fixed;
+        top: 1rem;
+        left: 2rem;
+        z-index: 1;
+
+        svg {
+            color: $text;
+            width: 5rem;
+            height: 5rem;
+        }
+    }
+
+    > .logo {
+        position: relative;
+        top: -0.5rem;
+        @include logoMobile;
+    }
 
     .actions {
         display: flex;
@@ -68,45 +139,69 @@
         }
     }
 
-    @mixin noSideMenu {
-        position: relative;
-        top: 0;
-        left: 0;
-        transition: unset;
-        background-color: transparent;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-        border-right: 0;
-        padding: 0;
+    @media all and (max-width: 350px) {
+        padding-top: 8rem;
+        > .logo {
+            position: initial;
+            top: 0;
+            left: 0;
+            height: 6rem;
+        }
+    }
 
-        @include animate(slideInRight, 600ms);
+    @include breakpoint(mobile, landscape) {
+        width: 35rem;
+        left: -35rem;
 
-        &::before {
-            display: none;
+        &[data-open="true"] {
+            transform: translateX(35rem);
         }
 
+        > .logo {
+            left: 2.5rem;
+        }
+    }
+}
+
+.mobileLogo {
+    position: fixed;
+    @include logoMobile;
+
+    top: 2.5rem;
+
+    @include breakpoint(mobile, landscape) {
+        left: 5rem;
+    }
+}
+
+@include breakpoint(tabletSmall, portrait) {
+    .header {
+        @include noSideMenu;
+    }
+
+    .mobileLogo {
+        display: none;
+    }
+}
+
+@include breakpoint(tabletSmall, landscape) {
+    .header {
+        @include noSideMenu;
+    }
+
+    .mobileLogo {
+        display: none;
+    }
+}
+
+@include breakpoint(desktop) {
+    .header {
         .actions {
-            width: auto;
-            flex: unset;
-            padding-top: 0;
-
-            > button {
-                &:first-child {
-                    @include animate(opacityInDelayed, 2.5s, unset, forwards, $cubicBezier_0);
-                }
-                &:last-child {
-                    @include animate(opacityInDelayed, 3.5s, unset, forwards, $cubicBezier_0);
-                }
-            }
+            flex-direction: row;
         }
     }
 
-    @include breakpoint(tabletSmall, portrait) {
-        @include noSideMenu();
-    }
-
-    @include breakpoint(tabletSmall, landscape) {
-        @include noSideMenu();
+    .mobileLogo {
+        display: none;
     }
 }

@@ -1,13 +1,15 @@
 import { ApolloServer } from 'apollo-server-express'
+import bodyParser from 'body-parser'
 import cors from 'cors'
 import express from 'express'
-import expressPlayground from 'graphql-playground-middleware-express'
 import { buildSchema } from 'type-graphql'
 
 import 'reflect-metadata'
 
 import { resolvers } from '@generated/type-graphql'
 import { PrismaClient } from '@prisma/client'
+
+import attachOperationSideEffectsToResponse from './operationSideEffects/index'
 
 const prisma = new PrismaClient(),
     setupAndRunServer = async () => {
@@ -21,11 +23,11 @@ const prisma = new PrismaClient(),
         app.use(
             cors({
                 origin: '*',
-                optionsSuccessStatus: 200,
             })
         )
+        app.use(bodyParser.json())
 
-        app.get('/playground', expressPlayground({ endpoint: '/graphql' }))
+        app.use(attachOperationSideEffectsToResponse)
 
         app.get('/', (req, res) => res.end('Welcome to API'))
 
@@ -45,7 +47,11 @@ const prisma = new PrismaClient(),
 
         await server.start()
 
-        server.applyMiddleware({ app })
+        server.applyMiddleware({
+            app,
+            // disable apollo cors to use app's cors midleware usage
+            cors: false,
+        })
     }
 
 setupAndRunServer()

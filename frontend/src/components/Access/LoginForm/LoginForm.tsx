@@ -4,7 +4,7 @@ import { setLoggedInUser } from 'reactives/User.reactives'
 
 import { useGetUserLoginLazyQuery } from 'types/graphQL.generated'
 
-import useGraphQLErrorHandler from 'hooks/seGraphQLErrorHandler'
+import useGraphQLErrorHandler from 'hooks/useGraphQLErrorHandler'
 
 import Form from 'components/Form/Form'
 import Logo from 'components/UI/Logo/Logo'

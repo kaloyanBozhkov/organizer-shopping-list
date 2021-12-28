@@ -3,7 +3,10 @@
 interface CssExports {
     actions: string
     header: string
+    headerMobileBtn: string
+    logo: string
     logoutBtn: string
+    mobileLogo: string
     opacityIn: string
     opacityInDelayed: string
     popIn: string

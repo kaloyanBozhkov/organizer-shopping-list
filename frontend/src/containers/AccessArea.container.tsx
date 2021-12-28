@@ -1,6 +1,6 @@
 import React from 'react'
 import { Navigate } from 'react-router-dom'
-import { userVar } from 'reactives/User.reactives'
+import { setLoggedInUser, userVar } from 'reactives/User.reactives'
 
 import { useAddUserMutation } from 'types/graphQL.generated'
 
@@ -13,8 +13,12 @@ import { useReactiveVar } from '@apollo/client'
 const AccessAreaContainer = () => {
     const user = useReactiveVar(userVar),
         addUserMutation = useAddUserMutation({
-            onCompleted: (user) => console.warn(user),
-            onError: (err) => console.error('da err', err),
+            onCompleted: ({ createUser }) => {
+                setLoggedInUser(createUser)
+            },
+            onError(error) {
+                console.error('AccessAreaContainer', error)
+            },
         })
 
     return user ? (

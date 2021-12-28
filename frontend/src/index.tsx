@@ -1,3 +1,5 @@
+import { errorLink } from 'graphql/apollo.links'
+
 import React from 'react'
 import { createRoot } from 'react-dom'
 import { BrowserRouter } from 'react-router-dom'
@@ -6,7 +8,7 @@ import IndexRouter from 'routing/IndexRouter'
 
 import ErrorBoundary from 'components/Errors/ErrorBoundary'
 
-import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client'
+import { ApolloClient, ApolloProvider, HttpLink, InMemoryCache, from } from '@apollo/client'
 import { StylesProvider } from '@material-ui/core/styles'
 
 import 'scss/general.scss'
@@ -16,10 +18,17 @@ const rootElement = document.getElementById('root')
 
 if (!rootElement) throw Error('No #root element found on page!')
 
+export const cache = new InMemoryCache()
+
 const root = createRoot(rootElement),
-    apolloClient = new ApolloClient({
+    httpLink = new HttpLink({
         uri: `${process.env.REACT_APP_ENDPOINT_URL}/graphql`,
-        cache: new InMemoryCache(),
+        credentials: 'same-origin',
+    }),
+    apolloClient = new ApolloClient({
+        cache,
+        link: from([errorLink, httpLink]),
+        connectToDevTools: true,
     })
 
 root.render(
