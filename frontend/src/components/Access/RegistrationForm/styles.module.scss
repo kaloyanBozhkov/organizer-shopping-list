@@ -2,4 +2,6 @@
 
 .registerFormWrapper {
     @include genericPaperFormWrapper(registerForm);
+
+    position: relative;
 }

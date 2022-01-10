@@ -1,10 +1,10 @@
-import React, { Suspense, useContext } from 'react'
+import React, { useContext } from 'react'
+import { Outlet } from 'react-router-dom'
 
 import StoreContext from 'context/Store.context'
 
 import MainLayout from 'templates/MainLayout/Main.layout'
 
-import Cart from 'components/Cart/Cart'
 import LoginDialog from 'components/Dialogs/Login.dialog'
 import Header from 'components/Header/Header'
 
@@ -13,9 +13,7 @@ const MainPage = () => {
 
     return (
         <MainLayout header={<Header />} dialog={activeDialog ? <LoginDialog /> : null}>
-            <Suspense fallback={<p>Loading</p>}>
-                <Cart />
-            </Suspense>
+            <Outlet />
         </MainLayout>
     )
 }

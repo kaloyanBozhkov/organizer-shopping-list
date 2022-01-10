@@ -1,0 +1,142 @@
+@import "scss/mixins";
+
+@keyframes translateYArrowsMobile {
+    from {
+        transform: translateY(5rem);
+    }
+
+    to {
+        transform: translateY(-4rem);
+    }
+}
+
+@keyframes translateYTextMobile {
+    from {
+        transform: translateY(5rem);
+    }
+
+    to {
+        transform: translateY(-5rem);
+    }
+}
+
+@mixin animateLinkArrowTextForMobile {
+    div {
+        svg {
+            &:first-child {
+                @include animate(translateYArrowsMobile, 100ms, 2s);
+            }
+            &:last-child {
+                @include animate(translateYArrowsMobile, 400ms, 2100ms);
+            }
+        }
+    }
+    p {
+        @include animate(translateYTextMobile, 300ms, 2300ms);
+    }
+}
+
+.link {
+    width: 20rem;
+    height: 20rem;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
+    bottom: -10rem;
+    z-index: 5;
+    text-align: center;
+    text-decoration: none;
+    transition: transform 400ms;
+    opacity: 0;
+    @include animate(opacityIn, 400ms, 2s, forwards, linear);
+
+    div {
+        position: relative;
+        height: 5rem;
+        svg {
+            width: 5rem;
+            height: 5rem;
+            position: absolute;
+            left: 0;
+            right: 0;
+            margin: auto;
+            transform: translateY(5rem);
+
+            &:first-child {
+                transition: transform 100ms;
+            }
+
+            &:last-child {
+                top: 1rem;
+                transition: transform 400ms;
+            }
+        }
+    }
+
+    p {
+        line-height: 2.5rem;
+        font-size: 2rem;
+        transition: transform 300ms;
+        transform: translateY(5rem);
+        transition-delay: 0s;
+
+        b {
+            line-height: 3rem;
+            margin-top: 2rem;
+        }
+    }
+
+    @include breakpoint(mobile, portrait) {
+        @include animateLinkArrowTextForMobile;
+
+        transform: scale(0.5);
+    }
+
+    @include breakpoint(tabletSmall, portrait) {
+        @include animateLinkArrowTextForMobile;
+
+        transform: scale(0.75);
+    }
+
+    @include breakpoint(tabletSmall, landscape) {
+        @include animateLinkArrowTextForMobile;
+
+        transform: scale(0.75);
+    }
+
+    @include breakpoint(tabletBig, portrait) {
+        transform: scale(1);
+    }
+
+    @include breakpoint(tabletBig, landscape) {
+        transform: scale(1);
+    }
+
+    @include breakpoint(desktop, landscape) {
+        div {
+            svg {
+                &:first-child,
+                &:last-child {
+                    animation: unset;
+                }
+            }
+        }
+
+        p {
+            animation: unset;
+        }
+    }
+
+    &:hover {
+        div {
+            svg {
+                transform: translateY(-4rem);
+            }
+        }
+        p {
+            transform: translateY(-5rem);
+            transition-delay: 100ms;
+        }
+    }
+}

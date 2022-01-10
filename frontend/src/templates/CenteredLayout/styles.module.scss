@@ -16,9 +16,14 @@
         width: 100%;
         height: 100%;
 
-        @include breakpoint(tabletSmall) {
+        @include breakpoint(tabletSmall, portrait) {
             width: 80%;
             height: 80%;
+        }
+
+        @include breakpoint(tabletSmall, landscape) {
+            width: 70%;
+            height: 70%;
         }
 
         @include breakpoint(desktop) {

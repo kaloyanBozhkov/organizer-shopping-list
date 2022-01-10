@@ -1,1 +1,1 @@
-export type unused = number
+export type ResponseError = { error?: string | boolean }

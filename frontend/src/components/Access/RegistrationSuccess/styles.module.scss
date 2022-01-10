@@ -1,0 +1,58 @@
+@import "scss/mixins.scss";
+@import "scss/variables.scss";
+@import "scss/keyframes.scss";
+
+.registrationSuccessWrapper {
+    padding: 6.5rem;
+    @include genericPaperFormWrapperOutletText;
+
+    > p b {
+        display: inline-block;
+    }
+
+    a {
+        p,
+        p b {
+            margin-top: 1rem;
+        }
+    }
+
+    .logo {
+        margin: auto;
+    }
+
+    @include mediaQuery(mobile) {
+        padding: 4rem;
+    }
+
+    @include breakpoint(mobile, landscape) {
+        padding: 2rem 5rem;
+        p {
+            margin-top: 2rem;
+        }
+
+        p,
+        p b {
+            font-size: 2rem;
+            line-height: 3.2rem;
+        }
+
+        a {
+            &:hover {
+                background-color: $paperBg;
+            }
+        }
+    }
+
+    @media (max-width: 400px) {
+        p {
+            margin-top: 2rem;
+        }
+
+        p,
+        p b {
+            font-size: 2.4rem;
+            line-height: 3.4rem;
+        }
+    }
+}

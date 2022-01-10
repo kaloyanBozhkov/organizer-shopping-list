@@ -1,0 +1,36 @@
+@import "scss/mixins.scss";
+@import "scss/variables.scss";
+
+.passwordResetSuccessWrapper {
+    padding: 3.5rem;
+    @include genericPaperFormWrapperOutletText;
+
+    .logo {
+        width: 30rem;
+        margin: 0 auto;
+    }
+
+    p {
+        margin-top: 1rem;
+    }
+
+    @include breakpoint(tabletSmall) {
+        padding: 3.5rem 6.5rem;
+
+        p {
+            margin-top: 1rem;
+        }
+    }
+
+    @include breakpoint(tabletBig) {
+        padding: 3.5rem 6.5rem;
+
+        p {
+            margin-top: 3rem;
+        }
+    }
+
+    @include breakpoint(desktop) {
+        padding: 6.5rem;
+    }
+}

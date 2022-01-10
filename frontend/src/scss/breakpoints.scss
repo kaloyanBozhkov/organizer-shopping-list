@@ -1,13 +1,3 @@
-/*
-$breakpoint argument choices:
-- mobile: 0-600px
-- tabletSmall: 600-900px
-- tabletBig: 900-1200px
-- not used: 1200-1800px normal styles
-- big-desktop: 1800px+ 
-*/
-
-// all screen sizes up till the selected one
 @mixin breakpoint($breakpoint, $orientation: portrait) {
     @if $breakpoint == mobile {
         @if $orientation == portrait {

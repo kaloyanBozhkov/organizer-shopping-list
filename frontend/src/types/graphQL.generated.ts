@@ -64,6 +64,13 @@ export type AggregateShop = {
     _min?: Maybe<ShopMinAggregate>
 }
 
+export type AggregateToken = {
+    __typename?: 'AggregateToken'
+    _count?: Maybe<TokenCountAggregate>
+    _max?: Maybe<TokenMaxAggregate>
+    _min?: Maybe<TokenMinAggregate>
+}
+
 export type AggregateUser = {
     __typename?: 'AggregateUser'
     _count?: Maybe<UserCountAggregate>
@@ -559,6 +566,27 @@ export type EnumCurrencyWithAggregatesFilter = {
     in?: InputMaybe<Array<Currency>>
     not?: InputMaybe<NestedEnumCurrencyWithAggregatesFilter>
     notIn?: InputMaybe<Array<Currency>>
+}
+
+export type EnumTokenTypeFieldUpdateOperationsInput = {
+    set?: InputMaybe<TokenType>
+}
+
+export type EnumTokenTypeFilter = {
+    equals?: InputMaybe<TokenType>
+    in?: InputMaybe<Array<TokenType>>
+    not?: InputMaybe<NestedEnumTokenTypeFilter>
+    notIn?: InputMaybe<Array<TokenType>>
+}
+
+export type EnumTokenTypeWithAggregatesFilter = {
+    _count?: InputMaybe<NestedIntFilter>
+    _max?: InputMaybe<NestedEnumTokenTypeFilter>
+    _min?: InputMaybe<NestedEnumTokenTypeFilter>
+    equals?: InputMaybe<TokenType>
+    in?: InputMaybe<Array<TokenType>>
+    not?: InputMaybe<NestedEnumTokenTypeWithAggregatesFilter>
+    notIn?: InputMaybe<Array<TokenType>>
 }
 
 export type FloatFieldUpdateOperationsInput = {
@@ -1128,9 +1156,11 @@ export type Mutation = {
     createManyLocation: AffectedRowsOutput
     createManyProduct: AffectedRowsOutput
     createManyShop: AffectedRowsOutput
+    createManyToken: AffectedRowsOutput
     createManyUser: AffectedRowsOutput
     createProduct: Product
     createShop: Shop
+    createToken: Token
     createUser: User
     deleteEdgeProductShop?: Maybe<EdgeProductShop>
     deleteListItem?: Maybe<ListItem>
@@ -1140,9 +1170,11 @@ export type Mutation = {
     deleteManyLocation: AffectedRowsOutput
     deleteManyProduct: AffectedRowsOutput
     deleteManyShop: AffectedRowsOutput
+    deleteManyToken: AffectedRowsOutput
     deleteManyUser: AffectedRowsOutput
     deleteProduct?: Maybe<Product>
     deleteShop?: Maybe<Shop>
+    deleteToken?: Maybe<Token>
     deleteUser?: Maybe<User>
     updateEdgeProductShop?: Maybe<EdgeProductShop>
     updateListItem?: Maybe<ListItem>
@@ -1152,15 +1184,18 @@ export type Mutation = {
     updateManyLocation: AffectedRowsOutput
     updateManyProduct: AffectedRowsOutput
     updateManyShop: AffectedRowsOutput
+    updateManyToken: AffectedRowsOutput
     updateManyUser: AffectedRowsOutput
     updateProduct?: Maybe<Product>
     updateShop?: Maybe<Shop>
+    updateToken?: Maybe<Token>
     updateUser?: Maybe<User>
     upsertEdgeProductShop: EdgeProductShop
     upsertListItem: ListItem
     upsertLocation: Location
     upsertProduct: Product
     upsertShop: Shop
+    upsertToken: Token
     upsertUser: User
 }
 
@@ -1201,6 +1236,11 @@ export type MutationCreateManyShopArgs = {
     skipDuplicates?: InputMaybe<Scalars['Boolean']>
 }
 
+export type MutationCreateManyTokenArgs = {
+    data: Array<TokenCreateManyInput>
+    skipDuplicates?: InputMaybe<Scalars['Boolean']>
+}
+
 export type MutationCreateManyUserArgs = {
     data: Array<UserCreateManyInput>
     skipDuplicates?: InputMaybe<Scalars['Boolean']>
@@ -1212,6 +1252,10 @@ export type MutationCreateProductArgs = {
 
 export type MutationCreateShopArgs = {
     data: ShopCreateInput
+}
+
+export type MutationCreateTokenArgs = {
+    data: TokenCreateInput
 }
 
 export type MutationCreateUserArgs = {
@@ -1250,6 +1294,10 @@ export type MutationDeleteManyShopArgs = {
     where?: InputMaybe<ShopWhereInput>
 }
 
+export type MutationDeleteManyTokenArgs = {
+    where?: InputMaybe<TokenWhereInput>
+}
+
 export type MutationDeleteManyUserArgs = {
     where?: InputMaybe<UserWhereInput>
 }
@@ -1260,6 +1308,10 @@ export type MutationDeleteProductArgs = {
 
 export type MutationDeleteShopArgs = {
     where: ShopWhereUniqueInput
+}
+
+export type MutationDeleteTokenArgs = {
+    where: TokenWhereUniqueInput
 }
 
 export type MutationDeleteUserArgs = {
@@ -1306,6 +1358,11 @@ export type MutationUpdateManyShopArgs = {
     where?: InputMaybe<ShopWhereInput>
 }
 
+export type MutationUpdateManyTokenArgs = {
+    data: TokenUpdateManyMutationInput
+    where?: InputMaybe<TokenWhereInput>
+}
+
 export type MutationUpdateManyUserArgs = {
     data: UserUpdateManyMutationInput
     where?: InputMaybe<UserWhereInput>
@@ -1319,6 +1376,11 @@ export type MutationUpdateProductArgs = {
 export type MutationUpdateShopArgs = {
     data: ShopUpdateInput
     where: ShopWhereUniqueInput
+}
+
+export type MutationUpdateTokenArgs = {
+    data: TokenUpdateInput
+    where: TokenWhereUniqueInput
 }
 
 export type MutationUpdateUserArgs = {
@@ -1354,6 +1416,12 @@ export type MutationUpsertShopArgs = {
     create: ShopCreateInput
     update: ShopUpdateInput
     where: ShopWhereUniqueInput
+}
+
+export type MutationUpsertTokenArgs = {
+    create: TokenCreateInput
+    update: TokenUpdateInput
+    where: TokenWhereUniqueInput
 }
 
 export type MutationUpsertUserArgs = {
@@ -1417,6 +1485,23 @@ export type NestedEnumCurrencyWithAggregatesFilter = {
     notIn?: InputMaybe<Array<Currency>>
 }
 
+export type NestedEnumTokenTypeFilter = {
+    equals?: InputMaybe<TokenType>
+    in?: InputMaybe<Array<TokenType>>
+    not?: InputMaybe<NestedEnumTokenTypeFilter>
+    notIn?: InputMaybe<Array<TokenType>>
+}
+
+export type NestedEnumTokenTypeWithAggregatesFilter = {
+    _count?: InputMaybe<NestedIntFilter>
+    _max?: InputMaybe<NestedEnumTokenTypeFilter>
+    _min?: InputMaybe<NestedEnumTokenTypeFilter>
+    equals?: InputMaybe<TokenType>
+    in?: InputMaybe<Array<TokenType>>
+    not?: InputMaybe<NestedEnumTokenTypeWithAggregatesFilter>
+    notIn?: InputMaybe<Array<TokenType>>
+}
+
 export type NestedFloatFilter = {
     equals?: InputMaybe<Scalars['Float']>
     gt?: InputMaybe<Scalars['Float']>
@@ -1455,6 +1540,17 @@ export type NestedIntFilter = {
     notIn?: InputMaybe<Array<Scalars['Int']>>
 }
 
+export type NestedIntNullableFilter = {
+    equals?: InputMaybe<Scalars['Int']>
+    gt?: InputMaybe<Scalars['Int']>
+    gte?: InputMaybe<Scalars['Int']>
+    in?: InputMaybe<Array<Scalars['Int']>>
+    lt?: InputMaybe<Scalars['Int']>
+    lte?: InputMaybe<Scalars['Int']>
+    not?: InputMaybe<NestedIntNullableFilter>
+    notIn?: InputMaybe<Array<Scalars['Int']>>
+}
+
 export type NestedIntWithAggregatesFilter = {
     _avg?: InputMaybe<NestedFloatFilter>
     _count?: InputMaybe<NestedIntFilter>
@@ -1485,6 +1581,37 @@ export type NestedStringFilter = {
     startsWith?: InputMaybe<Scalars['String']>
 }
 
+export type NestedStringNullableFilter = {
+    contains?: InputMaybe<Scalars['String']>
+    endsWith?: InputMaybe<Scalars['String']>
+    equals?: InputMaybe<Scalars['String']>
+    gt?: InputMaybe<Scalars['String']>
+    gte?: InputMaybe<Scalars['String']>
+    in?: InputMaybe<Array<Scalars['String']>>
+    lt?: InputMaybe<Scalars['String']>
+    lte?: InputMaybe<Scalars['String']>
+    not?: InputMaybe<NestedStringNullableFilter>
+    notIn?: InputMaybe<Array<Scalars['String']>>
+    startsWith?: InputMaybe<Scalars['String']>
+}
+
+export type NestedStringNullableWithAggregatesFilter = {
+    _count?: InputMaybe<NestedIntNullableFilter>
+    _max?: InputMaybe<NestedStringNullableFilter>
+    _min?: InputMaybe<NestedStringNullableFilter>
+    contains?: InputMaybe<Scalars['String']>
+    endsWith?: InputMaybe<Scalars['String']>
+    equals?: InputMaybe<Scalars['String']>
+    gt?: InputMaybe<Scalars['String']>
+    gte?: InputMaybe<Scalars['String']>
+    in?: InputMaybe<Array<Scalars['String']>>
+    lt?: InputMaybe<Scalars['String']>
+    lte?: InputMaybe<Scalars['String']>
+    not?: InputMaybe<NestedStringNullableWithAggregatesFilter>
+    notIn?: InputMaybe<Array<Scalars['String']>>
+    startsWith?: InputMaybe<Scalars['String']>
+}
+
 export type NestedStringWithAggregatesFilter = {
     _count?: InputMaybe<NestedIntFilter>
     _max?: InputMaybe<NestedStringFilter>
@@ -1500,6 +1627,10 @@ export type NestedStringWithAggregatesFilter = {
     not?: InputMaybe<NestedStringWithAggregatesFilter>
     notIn?: InputMaybe<Array<Scalars['String']>>
     startsWith?: InputMaybe<Scalars['String']>
+}
+
+export type NullableStringFieldUpdateOperationsInput = {
+    set?: InputMaybe<Scalars['String']>
 }
 
 export type Product = {
@@ -1958,6 +2089,7 @@ export type Query = {
     aggregateLocation: AggregateLocation
     aggregateProduct: AggregateProduct
     aggregateShop: AggregateShop
+    aggregateToken: AggregateToken
     aggregateUser: AggregateUser
     edgeProductShop?: Maybe<EdgeProductShop>
     edgeProductShops: Array<EdgeProductShop>
@@ -1966,12 +2098,14 @@ export type Query = {
     findFirstLocation?: Maybe<Location>
     findFirstProduct?: Maybe<Product>
     findFirstShop?: Maybe<Shop>
+    findFirstToken?: Maybe<Token>
     findFirstUser?: Maybe<User>
     groupByEdgeProductShop: Array<EdgeProductShopGroupBy>
     groupByListItem: Array<ListItemGroupBy>
     groupByLocation: Array<LocationGroupBy>
     groupByProduct: Array<ProductGroupBy>
     groupByShop: Array<ShopGroupBy>
+    groupByToken: Array<TokenGroupBy>
     groupByUser: Array<UserGroupBy>
     listItem?: Maybe<ListItem>
     listItems: Array<ListItem>
@@ -1981,6 +2115,8 @@ export type Query = {
     products: Array<Product>
     shop?: Maybe<Shop>
     shops: Array<Shop>
+    token?: Maybe<Token>
+    tokens: Array<Token>
     user?: Maybe<User>
     users: Array<User>
 }
@@ -2023,6 +2159,14 @@ export type QueryAggregateShopArgs = {
     skip?: InputMaybe<Scalars['Int']>
     take?: InputMaybe<Scalars['Int']>
     where?: InputMaybe<ShopWhereInput>
+}
+
+export type QueryAggregateTokenArgs = {
+    cursor?: InputMaybe<TokenWhereUniqueInput>
+    orderBy?: InputMaybe<Array<TokenOrderByWithRelationInput>>
+    skip?: InputMaybe<Scalars['Int']>
+    take?: InputMaybe<Scalars['Int']>
+    where?: InputMaybe<TokenWhereInput>
 }
 
 export type QueryAggregateUserArgs = {
@@ -2091,6 +2235,15 @@ export type QueryFindFirstShopArgs = {
     where?: InputMaybe<ShopWhereInput>
 }
 
+export type QueryFindFirstTokenArgs = {
+    cursor?: InputMaybe<TokenWhereUniqueInput>
+    distinct?: InputMaybe<Array<TokenScalarFieldEnum>>
+    orderBy?: InputMaybe<Array<TokenOrderByWithRelationInput>>
+    skip?: InputMaybe<Scalars['Int']>
+    take?: InputMaybe<Scalars['Int']>
+    where?: InputMaybe<TokenWhereInput>
+}
+
 export type QueryFindFirstUserArgs = {
     cursor?: InputMaybe<UserWhereUniqueInput>
     distinct?: InputMaybe<Array<UserScalarFieldEnum>>
@@ -2143,6 +2296,15 @@ export type QueryGroupByShopArgs = {
     skip?: InputMaybe<Scalars['Int']>
     take?: InputMaybe<Scalars['Int']>
     where?: InputMaybe<ShopWhereInput>
+}
+
+export type QueryGroupByTokenArgs = {
+    by: Array<TokenScalarFieldEnum>
+    having?: InputMaybe<TokenScalarWhereWithAggregatesInput>
+    orderBy?: InputMaybe<Array<TokenOrderByWithAggregationInput>>
+    skip?: InputMaybe<Scalars['Int']>
+    take?: InputMaybe<Scalars['Int']>
+    where?: InputMaybe<TokenWhereInput>
 }
 
 export type QueryGroupByUserArgs = {
@@ -2204,6 +2366,19 @@ export type QueryShopsArgs = {
     skip?: InputMaybe<Scalars['Int']>
     take?: InputMaybe<Scalars['Int']>
     where?: InputMaybe<ShopWhereInput>
+}
+
+export type QueryTokenArgs = {
+    where: TokenWhereUniqueInput
+}
+
+export type QueryTokensArgs = {
+    cursor?: InputMaybe<TokenWhereUniqueInput>
+    distinct?: InputMaybe<Array<TokenScalarFieldEnum>>
+    orderBy?: InputMaybe<Array<TokenOrderByWithRelationInput>>
+    skip?: InputMaybe<Scalars['Int']>
+    take?: InputMaybe<Scalars['Int']>
+    where?: InputMaybe<TokenWhereInput>
 }
 
 export type QueryUserArgs = {
@@ -2609,6 +2784,37 @@ export type StringFilter = {
     startsWith?: InputMaybe<Scalars['String']>
 }
 
+export type StringNullableFilter = {
+    contains?: InputMaybe<Scalars['String']>
+    endsWith?: InputMaybe<Scalars['String']>
+    equals?: InputMaybe<Scalars['String']>
+    gt?: InputMaybe<Scalars['String']>
+    gte?: InputMaybe<Scalars['String']>
+    in?: InputMaybe<Array<Scalars['String']>>
+    lt?: InputMaybe<Scalars['String']>
+    lte?: InputMaybe<Scalars['String']>
+    not?: InputMaybe<NestedStringNullableFilter>
+    notIn?: InputMaybe<Array<Scalars['String']>>
+    startsWith?: InputMaybe<Scalars['String']>
+}
+
+export type StringNullableWithAggregatesFilter = {
+    _count?: InputMaybe<NestedIntNullableFilter>
+    _max?: InputMaybe<NestedStringNullableFilter>
+    _min?: InputMaybe<NestedStringNullableFilter>
+    contains?: InputMaybe<Scalars['String']>
+    endsWith?: InputMaybe<Scalars['String']>
+    equals?: InputMaybe<Scalars['String']>
+    gt?: InputMaybe<Scalars['String']>
+    gte?: InputMaybe<Scalars['String']>
+    in?: InputMaybe<Array<Scalars['String']>>
+    lt?: InputMaybe<Scalars['String']>
+    lte?: InputMaybe<Scalars['String']>
+    not?: InputMaybe<NestedStringNullableWithAggregatesFilter>
+    notIn?: InputMaybe<Array<Scalars['String']>>
+    startsWith?: InputMaybe<Scalars['String']>
+}
+
 export type StringWithAggregatesFilter = {
     _count?: InputMaybe<NestedIntFilter>
     _max?: InputMaybe<NestedStringFilter>
@@ -2626,8 +2832,327 @@ export type StringWithAggregatesFilter = {
     startsWith?: InputMaybe<Scalars['String']>
 }
 
+export type Token = {
+    __typename?: 'Token'
+    createdAt: Scalars['DateTime']
+    emailToken?: Maybe<Scalars['String']>
+    expiration: Scalars['DateTime']
+    id: Scalars['String']
+    type: TokenType
+    updatedAt: Scalars['DateTime']
+    user: User
+    userId: Scalars['String']
+    valid: Scalars['Boolean']
+}
+
+export type TokenCountAggregate = {
+    __typename?: 'TokenCountAggregate'
+    _all: Scalars['Int']
+    createdAt: Scalars['Int']
+    emailToken: Scalars['Int']
+    expiration: Scalars['Int']
+    id: Scalars['Int']
+    type: Scalars['Int']
+    updatedAt: Scalars['Int']
+    userId: Scalars['Int']
+    valid: Scalars['Int']
+}
+
+export type TokenCountOrderByAggregateInput = {
+    createdAt?: InputMaybe<SortOrder>
+    emailToken?: InputMaybe<SortOrder>
+    expiration?: InputMaybe<SortOrder>
+    id?: InputMaybe<SortOrder>
+    type?: InputMaybe<SortOrder>
+    updatedAt?: InputMaybe<SortOrder>
+    userId?: InputMaybe<SortOrder>
+    valid?: InputMaybe<SortOrder>
+}
+
+export type TokenCreateInput = {
+    createdAt?: InputMaybe<Scalars['DateTime']>
+    emailToken?: InputMaybe<Scalars['String']>
+    expiration: Scalars['DateTime']
+    id?: InputMaybe<Scalars['String']>
+    type: TokenType
+    updatedAt?: InputMaybe<Scalars['DateTime']>
+    user: UserCreateNestedOneWithoutTokenInput
+    valid?: InputMaybe<Scalars['Boolean']>
+}
+
+export type TokenCreateManyInput = {
+    createdAt?: InputMaybe<Scalars['DateTime']>
+    emailToken?: InputMaybe<Scalars['String']>
+    expiration: Scalars['DateTime']
+    id?: InputMaybe<Scalars['String']>
+    type: TokenType
+    updatedAt?: InputMaybe<Scalars['DateTime']>
+    userId: Scalars['String']
+    valid?: InputMaybe<Scalars['Boolean']>
+}
+
+export type TokenCreateManyUserInput = {
+    createdAt?: InputMaybe<Scalars['DateTime']>
+    emailToken?: InputMaybe<Scalars['String']>
+    expiration: Scalars['DateTime']
+    id?: InputMaybe<Scalars['String']>
+    type: TokenType
+    updatedAt?: InputMaybe<Scalars['DateTime']>
+    valid?: InputMaybe<Scalars['Boolean']>
+}
+
+export type TokenCreateManyUserInputEnvelope = {
+    data: Array<TokenCreateManyUserInput>
+    skipDuplicates?: InputMaybe<Scalars['Boolean']>
+}
+
+export type TokenCreateNestedManyWithoutUserInput = {
+    connect?: InputMaybe<Array<TokenWhereUniqueInput>>
+    connectOrCreate?: InputMaybe<Array<TokenCreateOrConnectWithoutUserInput>>
+    create?: InputMaybe<Array<TokenCreateWithoutUserInput>>
+    createMany?: InputMaybe<TokenCreateManyUserInputEnvelope>
+}
+
+export type TokenCreateOrConnectWithoutUserInput = {
+    create: TokenCreateWithoutUserInput
+    where: TokenWhereUniqueInput
+}
+
+export type TokenCreateWithoutUserInput = {
+    createdAt?: InputMaybe<Scalars['DateTime']>
+    emailToken?: InputMaybe<Scalars['String']>
+    expiration: Scalars['DateTime']
+    id?: InputMaybe<Scalars['String']>
+    type: TokenType
+    updatedAt?: InputMaybe<Scalars['DateTime']>
+    valid?: InputMaybe<Scalars['Boolean']>
+}
+
+export type TokenGroupBy = {
+    __typename?: 'TokenGroupBy'
+    _count?: Maybe<TokenCountAggregate>
+    _max?: Maybe<TokenMaxAggregate>
+    _min?: Maybe<TokenMinAggregate>
+    createdAt: Scalars['DateTime']
+    emailToken?: Maybe<Scalars['String']>
+    expiration: Scalars['DateTime']
+    id: Scalars['String']
+    type: TokenType
+    updatedAt: Scalars['DateTime']
+    userId: Scalars['String']
+    valid: Scalars['Boolean']
+}
+
+export type TokenListRelationFilter = {
+    every?: InputMaybe<TokenWhereInput>
+    none?: InputMaybe<TokenWhereInput>
+    some?: InputMaybe<TokenWhereInput>
+}
+
+export type TokenMaxAggregate = {
+    __typename?: 'TokenMaxAggregate'
+    createdAt?: Maybe<Scalars['DateTime']>
+    emailToken?: Maybe<Scalars['String']>
+    expiration?: Maybe<Scalars['DateTime']>
+    id?: Maybe<Scalars['String']>
+    type?: Maybe<TokenType>
+    updatedAt?: Maybe<Scalars['DateTime']>
+    userId?: Maybe<Scalars['String']>
+    valid?: Maybe<Scalars['Boolean']>
+}
+
+export type TokenMaxOrderByAggregateInput = {
+    createdAt?: InputMaybe<SortOrder>
+    emailToken?: InputMaybe<SortOrder>
+    expiration?: InputMaybe<SortOrder>
+    id?: InputMaybe<SortOrder>
+    type?: InputMaybe<SortOrder>
+    updatedAt?: InputMaybe<SortOrder>
+    userId?: InputMaybe<SortOrder>
+    valid?: InputMaybe<SortOrder>
+}
+
+export type TokenMinAggregate = {
+    __typename?: 'TokenMinAggregate'
+    createdAt?: Maybe<Scalars['DateTime']>
+    emailToken?: Maybe<Scalars['String']>
+    expiration?: Maybe<Scalars['DateTime']>
+    id?: Maybe<Scalars['String']>
+    type?: Maybe<TokenType>
+    updatedAt?: Maybe<Scalars['DateTime']>
+    userId?: Maybe<Scalars['String']>
+    valid?: Maybe<Scalars['Boolean']>
+}
+
+export type TokenMinOrderByAggregateInput = {
+    createdAt?: InputMaybe<SortOrder>
+    emailToken?: InputMaybe<SortOrder>
+    expiration?: InputMaybe<SortOrder>
+    id?: InputMaybe<SortOrder>
+    type?: InputMaybe<SortOrder>
+    updatedAt?: InputMaybe<SortOrder>
+    userId?: InputMaybe<SortOrder>
+    valid?: InputMaybe<SortOrder>
+}
+
+export type TokenOrderByRelationAggregateInput = {
+    _count?: InputMaybe<SortOrder>
+}
+
+export type TokenOrderByWithAggregationInput = {
+    _count?: InputMaybe<TokenCountOrderByAggregateInput>
+    _max?: InputMaybe<TokenMaxOrderByAggregateInput>
+    _min?: InputMaybe<TokenMinOrderByAggregateInput>
+    createdAt?: InputMaybe<SortOrder>
+    emailToken?: InputMaybe<SortOrder>
+    expiration?: InputMaybe<SortOrder>
+    id?: InputMaybe<SortOrder>
+    type?: InputMaybe<SortOrder>
+    updatedAt?: InputMaybe<SortOrder>
+    userId?: InputMaybe<SortOrder>
+    valid?: InputMaybe<SortOrder>
+}
+
+export type TokenOrderByWithRelationInput = {
+    createdAt?: InputMaybe<SortOrder>
+    emailToken?: InputMaybe<SortOrder>
+    expiration?: InputMaybe<SortOrder>
+    id?: InputMaybe<SortOrder>
+    type?: InputMaybe<SortOrder>
+    updatedAt?: InputMaybe<SortOrder>
+    user?: InputMaybe<UserOrderByWithRelationInput>
+    userId?: InputMaybe<SortOrder>
+    valid?: InputMaybe<SortOrder>
+}
+
+export enum TokenScalarFieldEnum {
+    CreatedAt = 'createdAt',
+    EmailToken = 'emailToken',
+    Expiration = 'expiration',
+    Id = 'id',
+    Type = 'type',
+    UpdatedAt = 'updatedAt',
+    UserId = 'userId',
+    Valid = 'valid',
+}
+
+export type TokenScalarWhereInput = {
+    AND?: InputMaybe<Array<TokenScalarWhereInput>>
+    NOT?: InputMaybe<Array<TokenScalarWhereInput>>
+    OR?: InputMaybe<Array<TokenScalarWhereInput>>
+    createdAt?: InputMaybe<DateTimeFilter>
+    emailToken?: InputMaybe<StringNullableFilter>
+    expiration?: InputMaybe<DateTimeFilter>
+    id?: InputMaybe<StringFilter>
+    type?: InputMaybe<EnumTokenTypeFilter>
+    updatedAt?: InputMaybe<DateTimeFilter>
+    userId?: InputMaybe<StringFilter>
+    valid?: InputMaybe<BoolFilter>
+}
+
+export type TokenScalarWhereWithAggregatesInput = {
+    AND?: InputMaybe<Array<TokenScalarWhereWithAggregatesInput>>
+    NOT?: InputMaybe<Array<TokenScalarWhereWithAggregatesInput>>
+    OR?: InputMaybe<Array<TokenScalarWhereWithAggregatesInput>>
+    createdAt?: InputMaybe<DateTimeWithAggregatesFilter>
+    emailToken?: InputMaybe<StringNullableWithAggregatesFilter>
+    expiration?: InputMaybe<DateTimeWithAggregatesFilter>
+    id?: InputMaybe<StringWithAggregatesFilter>
+    type?: InputMaybe<EnumTokenTypeWithAggregatesFilter>
+    updatedAt?: InputMaybe<DateTimeWithAggregatesFilter>
+    userId?: InputMaybe<StringWithAggregatesFilter>
+    valid?: InputMaybe<BoolWithAggregatesFilter>
+}
+
+export enum TokenType {
+    Api = 'API',
+    Email = 'EMAIL',
+}
+
+export type TokenUpdateInput = {
+    createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>
+    emailToken?: InputMaybe<NullableStringFieldUpdateOperationsInput>
+    expiration?: InputMaybe<DateTimeFieldUpdateOperationsInput>
+    id?: InputMaybe<StringFieldUpdateOperationsInput>
+    type?: InputMaybe<EnumTokenTypeFieldUpdateOperationsInput>
+    updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>
+    user?: InputMaybe<UserUpdateOneRequiredWithoutTokenInput>
+    valid?: InputMaybe<BoolFieldUpdateOperationsInput>
+}
+
+export type TokenUpdateManyMutationInput = {
+    createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>
+    emailToken?: InputMaybe<NullableStringFieldUpdateOperationsInput>
+    expiration?: InputMaybe<DateTimeFieldUpdateOperationsInput>
+    id?: InputMaybe<StringFieldUpdateOperationsInput>
+    type?: InputMaybe<EnumTokenTypeFieldUpdateOperationsInput>
+    updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>
+    valid?: InputMaybe<BoolFieldUpdateOperationsInput>
+}
+
+export type TokenUpdateManyWithWhereWithoutUserInput = {
+    data: TokenUpdateManyMutationInput
+    where: TokenScalarWhereInput
+}
+
+export type TokenUpdateManyWithoutUserInput = {
+    connect?: InputMaybe<Array<TokenWhereUniqueInput>>
+    connectOrCreate?: InputMaybe<Array<TokenCreateOrConnectWithoutUserInput>>
+    create?: InputMaybe<Array<TokenCreateWithoutUserInput>>
+    createMany?: InputMaybe<TokenCreateManyUserInputEnvelope>
+    delete?: InputMaybe<Array<TokenWhereUniqueInput>>
+    deleteMany?: InputMaybe<Array<TokenScalarWhereInput>>
+    disconnect?: InputMaybe<Array<TokenWhereUniqueInput>>
+    set?: InputMaybe<Array<TokenWhereUniqueInput>>
+    update?: InputMaybe<Array<TokenUpdateWithWhereUniqueWithoutUserInput>>
+    updateMany?: InputMaybe<Array<TokenUpdateManyWithWhereWithoutUserInput>>
+    upsert?: InputMaybe<Array<TokenUpsertWithWhereUniqueWithoutUserInput>>
+}
+
+export type TokenUpdateWithWhereUniqueWithoutUserInput = {
+    data: TokenUpdateWithoutUserInput
+    where: TokenWhereUniqueInput
+}
+
+export type TokenUpdateWithoutUserInput = {
+    createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>
+    emailToken?: InputMaybe<NullableStringFieldUpdateOperationsInput>
+    expiration?: InputMaybe<DateTimeFieldUpdateOperationsInput>
+    id?: InputMaybe<StringFieldUpdateOperationsInput>
+    type?: InputMaybe<EnumTokenTypeFieldUpdateOperationsInput>
+    updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>
+    valid?: InputMaybe<BoolFieldUpdateOperationsInput>
+}
+
+export type TokenUpsertWithWhereUniqueWithoutUserInput = {
+    create: TokenCreateWithoutUserInput
+    update: TokenUpdateWithoutUserInput
+    where: TokenWhereUniqueInput
+}
+
+export type TokenWhereInput = {
+    AND?: InputMaybe<Array<TokenWhereInput>>
+    NOT?: InputMaybe<Array<TokenWhereInput>>
+    OR?: InputMaybe<Array<TokenWhereInput>>
+    createdAt?: InputMaybe<DateTimeFilter>
+    emailToken?: InputMaybe<StringNullableFilter>
+    expiration?: InputMaybe<DateTimeFilter>
+    id?: InputMaybe<StringFilter>
+    type?: InputMaybe<EnumTokenTypeFilter>
+    updatedAt?: InputMaybe<DateTimeFilter>
+    user?: InputMaybe<UserRelationFilter>
+    userId?: InputMaybe<StringFilter>
+    valid?: InputMaybe<BoolFilter>
+}
+
+export type TokenWhereUniqueInput = {
+    emailToken?: InputMaybe<Scalars['String']>
+    id?: InputMaybe<Scalars['String']>
+}
+
 export type User = {
     __typename?: 'User'
+    Token: Array<Token>
     _count?: Maybe<UserCount>
     addedProductsToShops: Array<EdgeProductShop>
     alias: Scalars['String']
@@ -2635,8 +3160,18 @@ export type User = {
     createdProdcuts: Array<Product>
     createdShops: Array<Shop>
     email: Scalars['String']
+    hash: Scalars['String']
     id: Scalars['String']
     updatedAt: Scalars['DateTime']
+}
+
+export type UserTokenArgs = {
+    cursor?: InputMaybe<TokenWhereUniqueInput>
+    distinct?: InputMaybe<Array<TokenScalarFieldEnum>>
+    orderBy?: InputMaybe<Array<TokenOrderByWithRelationInput>>
+    skip?: InputMaybe<Scalars['Int']>
+    take?: InputMaybe<Scalars['Int']>
+    where?: InputMaybe<TokenWhereInput>
 }
 
 export type UserAddedProductsToShopsArgs = {
@@ -2668,6 +3203,7 @@ export type UserCreatedShopsArgs = {
 
 export type UserCount = {
     __typename?: 'UserCount'
+    Token: Scalars['Int']
     addedProductsToShops: Scalars['Int']
     createdProdcuts: Scalars['Int']
     createdShops: Scalars['Int']
@@ -2679,7 +3215,9 @@ export type UserCountAggregate = {
     alias: Scalars['Int']
     createdAt: Scalars['Int']
     email: Scalars['Int']
+    hash: Scalars['Int']
     id: Scalars['Int']
+    salt: Scalars['Int']
     updatedAt: Scalars['Int']
 }
 
@@ -2687,18 +3225,23 @@ export type UserCountOrderByAggregateInput = {
     alias?: InputMaybe<SortOrder>
     createdAt?: InputMaybe<SortOrder>
     email?: InputMaybe<SortOrder>
+    hash?: InputMaybe<SortOrder>
     id?: InputMaybe<SortOrder>
+    salt?: InputMaybe<SortOrder>
     updatedAt?: InputMaybe<SortOrder>
 }
 
 export type UserCreateInput = {
+    Token?: InputMaybe<TokenCreateNestedManyWithoutUserInput>
     addedProductsToShops?: InputMaybe<EdgeProductShopCreateNestedManyWithoutAddedByInput>
     alias: Scalars['String']
     createdAt?: InputMaybe<Scalars['DateTime']>
     createdProdcuts?: InputMaybe<ProductCreateNestedManyWithoutCreatedByInput>
     createdShops?: InputMaybe<ShopCreateNestedManyWithoutCreatedByInput>
     email: Scalars['String']
+    hash: Scalars['String']
     id?: InputMaybe<Scalars['String']>
+    salt?: InputMaybe<Scalars['String']>
     updatedAt?: InputMaybe<Scalars['DateTime']>
 }
 
@@ -2706,7 +3249,9 @@ export type UserCreateManyInput = {
     alias: Scalars['String']
     createdAt?: InputMaybe<Scalars['DateTime']>
     email: Scalars['String']
+    hash: Scalars['String']
     id?: InputMaybe<Scalars['String']>
+    salt?: InputMaybe<Scalars['String']>
     updatedAt?: InputMaybe<Scalars['DateTime']>
 }
 
@@ -2728,6 +3273,12 @@ export type UserCreateNestedOneWithoutCreatedShopsInput = {
     create?: InputMaybe<UserCreateWithoutCreatedShopsInput>
 }
 
+export type UserCreateNestedOneWithoutTokenInput = {
+    connect?: InputMaybe<UserWhereUniqueInput>
+    connectOrCreate?: InputMaybe<UserCreateOrConnectWithoutTokenInput>
+    create?: InputMaybe<UserCreateWithoutTokenInput>
+}
+
 export type UserCreateOrConnectWithoutAddedProductsToShopsInput = {
     create: UserCreateWithoutAddedProductsToShopsInput
     where: UserWhereUniqueInput
@@ -2743,33 +3294,60 @@ export type UserCreateOrConnectWithoutCreatedShopsInput = {
     where: UserWhereUniqueInput
 }
 
+export type UserCreateOrConnectWithoutTokenInput = {
+    create: UserCreateWithoutTokenInput
+    where: UserWhereUniqueInput
+}
+
 export type UserCreateWithoutAddedProductsToShopsInput = {
+    Token?: InputMaybe<TokenCreateNestedManyWithoutUserInput>
     alias: Scalars['String']
     createdAt?: InputMaybe<Scalars['DateTime']>
     createdProdcuts?: InputMaybe<ProductCreateNestedManyWithoutCreatedByInput>
     createdShops?: InputMaybe<ShopCreateNestedManyWithoutCreatedByInput>
     email: Scalars['String']
+    hash: Scalars['String']
     id?: InputMaybe<Scalars['String']>
+    salt?: InputMaybe<Scalars['String']>
     updatedAt?: InputMaybe<Scalars['DateTime']>
 }
 
 export type UserCreateWithoutCreatedProdcutsInput = {
+    Token?: InputMaybe<TokenCreateNestedManyWithoutUserInput>
     addedProductsToShops?: InputMaybe<EdgeProductShopCreateNestedManyWithoutAddedByInput>
     alias: Scalars['String']
     createdAt?: InputMaybe<Scalars['DateTime']>
     createdShops?: InputMaybe<ShopCreateNestedManyWithoutCreatedByInput>
     email: Scalars['String']
+    hash: Scalars['String']
     id?: InputMaybe<Scalars['String']>
+    salt?: InputMaybe<Scalars['String']>
     updatedAt?: InputMaybe<Scalars['DateTime']>
 }
 
 export type UserCreateWithoutCreatedShopsInput = {
+    Token?: InputMaybe<TokenCreateNestedManyWithoutUserInput>
     addedProductsToShops?: InputMaybe<EdgeProductShopCreateNestedManyWithoutAddedByInput>
     alias: Scalars['String']
     createdAt?: InputMaybe<Scalars['DateTime']>
     createdProdcuts?: InputMaybe<ProductCreateNestedManyWithoutCreatedByInput>
     email: Scalars['String']
+    hash: Scalars['String']
     id?: InputMaybe<Scalars['String']>
+    salt?: InputMaybe<Scalars['String']>
+    updatedAt?: InputMaybe<Scalars['DateTime']>
+}
+
+export type UserCreateWithoutTokenInput = {
+    addedProductsToShops?: InputMaybe<EdgeProductShopCreateNestedManyWithoutAddedByInput>
+    alias: Scalars['String']
+    createdAt?: InputMaybe<Scalars['DateTime']>
+    createdProdcuts?: InputMaybe<ProductCreateNestedManyWithoutCreatedByInput>
+    createdShops?: InputMaybe<ShopCreateNestedManyWithoutCreatedByInput>
+    email: Scalars['String']
+    hash: Scalars['String']
+    id?: InputMaybe<Scalars['String']>
+    salt?: InputMaybe<Scalars['String']>
     updatedAt?: InputMaybe<Scalars['DateTime']>
 }
 
@@ -2781,7 +3359,9 @@ export type UserGroupBy = {
     alias: Scalars['String']
     createdAt: Scalars['DateTime']
     email: Scalars['String']
+    hash: Scalars['String']
     id: Scalars['String']
+    salt?: Maybe<Scalars['String']>
     updatedAt: Scalars['DateTime']
 }
 
@@ -2790,7 +3370,9 @@ export type UserMaxAggregate = {
     alias?: Maybe<Scalars['String']>
     createdAt?: Maybe<Scalars['DateTime']>
     email?: Maybe<Scalars['String']>
+    hash?: Maybe<Scalars['String']>
     id?: Maybe<Scalars['String']>
+    salt?: Maybe<Scalars['String']>
     updatedAt?: Maybe<Scalars['DateTime']>
 }
 
@@ -2798,7 +3380,9 @@ export type UserMaxOrderByAggregateInput = {
     alias?: InputMaybe<SortOrder>
     createdAt?: InputMaybe<SortOrder>
     email?: InputMaybe<SortOrder>
+    hash?: InputMaybe<SortOrder>
     id?: InputMaybe<SortOrder>
+    salt?: InputMaybe<SortOrder>
     updatedAt?: InputMaybe<SortOrder>
 }
 
@@ -2807,7 +3391,9 @@ export type UserMinAggregate = {
     alias?: Maybe<Scalars['String']>
     createdAt?: Maybe<Scalars['DateTime']>
     email?: Maybe<Scalars['String']>
+    hash?: Maybe<Scalars['String']>
     id?: Maybe<Scalars['String']>
+    salt?: Maybe<Scalars['String']>
     updatedAt?: Maybe<Scalars['DateTime']>
 }
 
@@ -2815,7 +3401,9 @@ export type UserMinOrderByAggregateInput = {
     alias?: InputMaybe<SortOrder>
     createdAt?: InputMaybe<SortOrder>
     email?: InputMaybe<SortOrder>
+    hash?: InputMaybe<SortOrder>
     id?: InputMaybe<SortOrder>
+    salt?: InputMaybe<SortOrder>
     updatedAt?: InputMaybe<SortOrder>
 }
 
@@ -2826,18 +3414,23 @@ export type UserOrderByWithAggregationInput = {
     alias?: InputMaybe<SortOrder>
     createdAt?: InputMaybe<SortOrder>
     email?: InputMaybe<SortOrder>
+    hash?: InputMaybe<SortOrder>
     id?: InputMaybe<SortOrder>
+    salt?: InputMaybe<SortOrder>
     updatedAt?: InputMaybe<SortOrder>
 }
 
 export type UserOrderByWithRelationInput = {
+    Token?: InputMaybe<TokenOrderByRelationAggregateInput>
     addedProductsToShops?: InputMaybe<EdgeProductShopOrderByRelationAggregateInput>
     alias?: InputMaybe<SortOrder>
     createdAt?: InputMaybe<SortOrder>
     createdProdcuts?: InputMaybe<ProductOrderByRelationAggregateInput>
     createdShops?: InputMaybe<ShopOrderByRelationAggregateInput>
     email?: InputMaybe<SortOrder>
+    hash?: InputMaybe<SortOrder>
     id?: InputMaybe<SortOrder>
+    salt?: InputMaybe<SortOrder>
     updatedAt?: InputMaybe<SortOrder>
 }
 
@@ -2850,7 +3443,9 @@ export enum UserScalarFieldEnum {
     Alias = 'alias',
     CreatedAt = 'createdAt',
     Email = 'email',
+    Hash = 'hash',
     Id = 'id',
+    Salt = 'salt',
     UpdatedAt = 'updatedAt',
 }
 
@@ -2861,18 +3456,23 @@ export type UserScalarWhereWithAggregatesInput = {
     alias?: InputMaybe<StringWithAggregatesFilter>
     createdAt?: InputMaybe<DateTimeWithAggregatesFilter>
     email?: InputMaybe<StringWithAggregatesFilter>
+    hash?: InputMaybe<StringWithAggregatesFilter>
     id?: InputMaybe<StringWithAggregatesFilter>
+    salt?: InputMaybe<StringNullableWithAggregatesFilter>
     updatedAt?: InputMaybe<DateTimeWithAggregatesFilter>
 }
 
 export type UserUpdateInput = {
+    Token?: InputMaybe<TokenUpdateManyWithoutUserInput>
     addedProductsToShops?: InputMaybe<EdgeProductShopUpdateManyWithoutAddedByInput>
     alias?: InputMaybe<StringFieldUpdateOperationsInput>
     createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>
     createdProdcuts?: InputMaybe<ProductUpdateManyWithoutCreatedByInput>
     createdShops?: InputMaybe<ShopUpdateManyWithoutCreatedByInput>
     email?: InputMaybe<StringFieldUpdateOperationsInput>
+    hash?: InputMaybe<StringFieldUpdateOperationsInput>
     id?: InputMaybe<StringFieldUpdateOperationsInput>
+    salt?: InputMaybe<NullableStringFieldUpdateOperationsInput>
     updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>
 }
 
@@ -2880,7 +3480,9 @@ export type UserUpdateManyMutationInput = {
     alias?: InputMaybe<StringFieldUpdateOperationsInput>
     createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>
     email?: InputMaybe<StringFieldUpdateOperationsInput>
+    hash?: InputMaybe<StringFieldUpdateOperationsInput>
     id?: InputMaybe<StringFieldUpdateOperationsInput>
+    salt?: InputMaybe<NullableStringFieldUpdateOperationsInput>
     updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>
 }
 
@@ -2908,33 +3510,63 @@ export type UserUpdateOneRequiredWithoutCreatedShopsInput = {
     upsert?: InputMaybe<UserUpsertWithoutCreatedShopsInput>
 }
 
+export type UserUpdateOneRequiredWithoutTokenInput = {
+    connect?: InputMaybe<UserWhereUniqueInput>
+    connectOrCreate?: InputMaybe<UserCreateOrConnectWithoutTokenInput>
+    create?: InputMaybe<UserCreateWithoutTokenInput>
+    update?: InputMaybe<UserUpdateWithoutTokenInput>
+    upsert?: InputMaybe<UserUpsertWithoutTokenInput>
+}
+
 export type UserUpdateWithoutAddedProductsToShopsInput = {
+    Token?: InputMaybe<TokenUpdateManyWithoutUserInput>
     alias?: InputMaybe<StringFieldUpdateOperationsInput>
     createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>
     createdProdcuts?: InputMaybe<ProductUpdateManyWithoutCreatedByInput>
     createdShops?: InputMaybe<ShopUpdateManyWithoutCreatedByInput>
     email?: InputMaybe<StringFieldUpdateOperationsInput>
+    hash?: InputMaybe<StringFieldUpdateOperationsInput>
     id?: InputMaybe<StringFieldUpdateOperationsInput>
+    salt?: InputMaybe<NullableStringFieldUpdateOperationsInput>
     updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>
 }
 
 export type UserUpdateWithoutCreatedProdcutsInput = {
+    Token?: InputMaybe<TokenUpdateManyWithoutUserInput>
     addedProductsToShops?: InputMaybe<EdgeProductShopUpdateManyWithoutAddedByInput>
     alias?: InputMaybe<StringFieldUpdateOperationsInput>
     createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>
     createdShops?: InputMaybe<ShopUpdateManyWithoutCreatedByInput>
     email?: InputMaybe<StringFieldUpdateOperationsInput>
+    hash?: InputMaybe<StringFieldUpdateOperationsInput>
     id?: InputMaybe<StringFieldUpdateOperationsInput>
+    salt?: InputMaybe<NullableStringFieldUpdateOperationsInput>
     updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>
 }
 
 export type UserUpdateWithoutCreatedShopsInput = {
+    Token?: InputMaybe<TokenUpdateManyWithoutUserInput>
     addedProductsToShops?: InputMaybe<EdgeProductShopUpdateManyWithoutAddedByInput>
     alias?: InputMaybe<StringFieldUpdateOperationsInput>
     createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>
     createdProdcuts?: InputMaybe<ProductUpdateManyWithoutCreatedByInput>
     email?: InputMaybe<StringFieldUpdateOperationsInput>
+    hash?: InputMaybe<StringFieldUpdateOperationsInput>
     id?: InputMaybe<StringFieldUpdateOperationsInput>
+    salt?: InputMaybe<NullableStringFieldUpdateOperationsInput>
+    updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>
+}
+
+export type UserUpdateWithoutTokenInput = {
+    addedProductsToShops?: InputMaybe<EdgeProductShopUpdateManyWithoutAddedByInput>
+    alias?: InputMaybe<StringFieldUpdateOperationsInput>
+    createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>
+    createdProdcuts?: InputMaybe<ProductUpdateManyWithoutCreatedByInput>
+    createdShops?: InputMaybe<ShopUpdateManyWithoutCreatedByInput>
+    email?: InputMaybe<StringFieldUpdateOperationsInput>
+    hash?: InputMaybe<StringFieldUpdateOperationsInput>
+    id?: InputMaybe<StringFieldUpdateOperationsInput>
+    salt?: InputMaybe<NullableStringFieldUpdateOperationsInput>
     updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>
 }
 
@@ -2953,17 +3585,25 @@ export type UserUpsertWithoutCreatedShopsInput = {
     update: UserUpdateWithoutCreatedShopsInput
 }
 
+export type UserUpsertWithoutTokenInput = {
+    create: UserCreateWithoutTokenInput
+    update: UserUpdateWithoutTokenInput
+}
+
 export type UserWhereInput = {
     AND?: InputMaybe<Array<UserWhereInput>>
     NOT?: InputMaybe<Array<UserWhereInput>>
     OR?: InputMaybe<Array<UserWhereInput>>
+    Token?: InputMaybe<TokenListRelationFilter>
     addedProductsToShops?: InputMaybe<EdgeProductShopListRelationFilter>
     alias?: InputMaybe<StringFilter>
     createdAt?: InputMaybe<DateTimeFilter>
     createdProdcuts?: InputMaybe<ProductListRelationFilter>
     createdShops?: InputMaybe<ShopListRelationFilter>
     email?: InputMaybe<StringFilter>
+    hash?: InputMaybe<StringFilter>
     id?: InputMaybe<StringFilter>
+    salt?: InputMaybe<StringNullableFilter>
     updatedAt?: InputMaybe<DateTimeFilter>
 }
 
@@ -2975,18 +3615,12 @@ export type UserWhereUniqueInput = {
 export type AddUserMutationVariables = Exact<{
     alias: Scalars['String']
     email: Scalars['String']
+    password: Scalars['String']
 }>
 
 export type AddUserMutation = {
     __typename?: 'Mutation'
-    createUser: {
-        __typename?: 'User'
-        id: string
-        alias: string
-        email: string
-        createdAt: any
-        updatedAt: any
-    }
+    createUser: { __typename?: 'User'; alias: string; email: string }
 }
 
 export type GetUserLoginQueryVariables = Exact<{
@@ -3009,13 +3643,10 @@ export type GetUserLoginQuery = {
 }
 
 export const AddUserDocument = gql`
-    mutation addUser($alias: String!, $email: String!) {
-        createUser(data: { alias: $alias, email: $email }) {
-            id
+    mutation addUser($alias: String!, $email: String!, $password: String!) {
+        createUser(data: { alias: $alias, email: $email, hash: $password }) {
             alias
             email
-            createdAt
-            updatedAt
         }
     }
 `
@@ -3036,6 +3667,7 @@ export type AddUserMutationFn = Apollo.MutationFunction<AddUserMutation, AddUser
  *   variables: {
  *      alias: // value for 'alias'
  *      email: // value for 'email'
+ *      password: // value for 'password'
  *   },
  * });
  */

@@ -1,0 +1,111 @@
+@import "scss/mixins.scss";
+@import "scss/variables.scss";
+@import "scss/keyframes.scss";
+
+@keyframes slideInBottom {
+    from {
+        transform: translateY(-125%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+@keyframes changeBoxShadow {
+    from {
+        box-shadow: 11px 11px 0 10 $green;
+    }
+
+    to {
+        box-shadow: -11px -11px 0 10 $green;
+    }
+}
+
+@keyframes changeBoxShadowContainer {
+    from {
+        box-shadow: inset 0 0 $green;
+    }
+
+    to {
+        box-shadow: inset 0 -16px $green;
+    }
+}
+
+.wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: $zIndexTop;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+
+    > div {
+        width: 100%;
+        height: 100%;
+        @include animate(slideInBottom, 1s, 0, forwards, linear);
+
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background-color: $paperBg;
+            box-shadow: 0 16px $green;
+            @include animate(changeBoxShadowContainer, 300ms, 1s, forwards, linear);
+
+            &::after {
+                content: "";
+                display: block;
+                background-color: $paperBg;
+                position: absolute;
+                left: 0;
+                right: 0;
+                margin: auto;
+                width: 10rem;
+                height: 10rem;
+                bottom: -5rem;
+                transform: rotate(45deg);
+                z-index: 4;
+                box-shadow: 11px 11px 0 10 $green;
+
+                @include animate(changeBoxShadow, 500ms, 1s, forwards, linear);
+
+                @include breakpoint(tabletSmall) {
+                    width: 15rem;
+                    height: 15rem;
+                    bottom: -7.5rem;
+                }
+
+                @include breakpoint(tabletSmall, landscape) {
+                    width: 15rem;
+                    height: 15rem;
+                    bottom: -7.5rem;
+                }
+
+                @include breakpoint(tabletBig) {
+                    width: 20rem;
+                    height: 20rem;
+                    bottom: -10rem;
+                }
+
+                @include breakpoint(tabletBig, landscape) {
+                    width: 20rem;
+                    height: 20rem;
+                    bottom: -10rem;
+                }
+            }
+        }
+
+        @include breakpoint(mobile, landscape) {
+            .container {
+                &::after {
+                    width: 10rem;
+                    height: 10rem;
+                    bottom: -5rem;
+                }
+            }
+        }
+    }
+}

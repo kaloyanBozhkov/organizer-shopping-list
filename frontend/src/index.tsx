@@ -1,4 +1,4 @@
-import { errorLink } from 'graphql/apollo.links'
+import { errorLink, tokenAuthLink } from 'graphql/apollo.links'
 
 import React from 'react'
 import { createRoot } from 'react-dom'
@@ -22,12 +22,12 @@ export const cache = new InMemoryCache()
 
 const root = createRoot(rootElement),
     httpLink = new HttpLink({
-        uri: `${process.env.REACT_APP_ENDPOINT_URL}/graphql`,
+        uri: `${process.env.REACT_APP_BACKEND_ENDPOINT_URL}/graphql`,
         credentials: 'same-origin',
     }),
     apolloClient = new ApolloClient({
         cache,
-        link: from([errorLink, httpLink]),
+        link: from([tokenAuthLink, errorLink, httpLink]),
         connectToDevTools: true,
     })
 

@@ -1,9 +1,6 @@
-mutation addUser($alias: String!, $email: String!) {
-    createUser(data: { alias: $alias, email: $email }) {
-        id
+mutation addUser($alias: String!, $email: String!, $password: String!) {
+    createUser(data: { alias: $alias, email: $email, hash: $password }) {
         alias
         email
-        createdAt
-        updatedAt
     }
 }

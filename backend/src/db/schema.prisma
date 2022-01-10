@@ -89,6 +89,10 @@ model User {
   alias String
   email String @unique
 
+  /// @TypeGraphQL.omit(output: true, input: false)
+  salt String?
+  hash String
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 

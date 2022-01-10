@@ -6,9 +6,12 @@ import MainContainer from 'containers/Main.container'
 
 import NotFoundPage from 'pages/NotFound.page'
 
+import ConfirmedEmail from 'components/Access/ConfirmedEmail/ConfirmedEmail'
 import LoginForm from 'components/Access/LoginForm/LoginForm'
 import PasswordResetForm from 'components/Access/PasswordResetForm/PasswordResetForm'
+import PasswordResetSuccess from 'components/Access/PasswordResetSuccess/PasswordResetSuccess'
 import RegistrationForm from 'components/Access/RegistrationForm/RegistrationForm'
+import RegistrationSuccess from 'components/Access/RegistrationSuccess/RegistrationSuccess'
 
 import Authorized from './Authorized/Authorized'
 
@@ -40,11 +43,28 @@ const routes: RouteConfig[] = [
             {
                 path: 'register',
                 element: <RegistrationForm />,
-                children: [],
+                children: [
+                    {
+                        path: 'success',
+                        element: <RegistrationSuccess />,
+                        children: [],
+                    },
+                ],
             },
             {
                 path: 'password-reset',
                 element: <PasswordResetForm />,
+                children: [
+                    {
+                        path: 'success',
+                        element: <PasswordResetSuccess />,
+                        children: [],
+                    },
+                ],
+            },
+            {
+                path: 'confirmed/:jwt',
+                element: <ConfirmedEmail />,
                 children: [],
             },
             {

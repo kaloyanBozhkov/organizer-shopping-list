@@ -1,32 +1,41 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { setLoggedInUser } from 'reactives/User.reactives'
 
-import { useGetUserLoginLazyQuery } from 'types/graphQL.generated'
-
-import useGraphQLErrorHandler from 'hooks/useGraphQLErrorHandler'
+import usePromise from 'hooks/Data/usePromise/usePromise'
+import useErrorHandler from 'hooks/useErrorHandler'
 
 import Form from 'components/Form/Form'
 import Logo from 'components/UI/Logo/Logo'
 
 import { Paper } from '@material-ui/core'
 
+import authenticate, { AuthenticationResponse } from 'services/authenticate'
+
 import LOGIN_FORM_DEFINITIONS from 'constants/form/login.form.constants'
 
 import styles from './styles.module.scss'
 
 const LoginForm = () => {
-    const [getUser, { loading, error, data }] = useGetUserLoginLazyQuery({
-            onCompleted: ({ user }) => user && setLoggedInUser(user),
-            fetchPolicy: 'network-only',
-        }),
-        [errorMsg, clearErrorMsg] = useGraphQLErrorHandler({
-            prop: 'user',
-            errorMsg: 'Oops! Incorrect email or password :(',
-            data,
+    const {
+            onRunPromise: onAuthenticate,
             error,
             loading,
+        } = usePromise<AuthenticationResponse, string>(
+            ({ email, password }: Record<string, string> = {}) =>
+                authenticate({
+                    email,
+                    password,
+                }),
+            true
+        ),
+        [errorMsg, clearErrorMsg, setErrorMsg] = useErrorHandler({
+            error,
+            errorMsg: 'Oops! It looks like the credentials used are incorrect :(',
         })
+
+    useEffect(() => {
+        if (error) setErrorMsg(error)
+    })
 
     return (
         <Paper variant="outlined" className={styles.loginFormWrapper}>
@@ -38,7 +47,10 @@ const LoginForm = () => {
                 definitions={LOGIN_FORM_DEFINITIONS}
                 submitLabel="Login"
                 onSubmit={(form) => {
-                    getUser({ variables: { email: form.email!.value! } })
+                    onAuthenticate!({
+                        email: form.email!.value!,
+                        password: form.password!.value!,
+                    })
                 }}
                 isSubmitPending={loading}
             />
