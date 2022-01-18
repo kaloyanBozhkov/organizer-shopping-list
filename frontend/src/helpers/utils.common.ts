@@ -6,6 +6,7 @@ export const isValidEmail = (email: string): boolean => {
     return re.test(String(email).toLowerCase())
 }
 
+export const getDomainFromEmail = (email: string) => email.split('@')[1]
 /**
  * Run a promise crator fn multiple times until either all attempts to resolve the created promise fail or one succeeds. Also runs callbacks accordingly if provided.
  * @param runPromise Promise creator -> catch/on error should return { error: stirng | boolean }

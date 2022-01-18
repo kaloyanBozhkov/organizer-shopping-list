@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react'
+
 import { Navigate, useNavigate, useParams } from 'react-router-dom'
 
 import usePromise from 'hooks/Data/usePromise/usePromise'
@@ -30,7 +31,7 @@ const ConfirmedEmail = () => {
             <>
                 <p>Thank you for confirming your email address!</p>
                 <p>
-                    You will be logged in autocamically in <b>{count}</b>..
+                    You will be logged in automatically in <b>{count}</b>..
                 </p>
             </>
         ) : (
@@ -39,7 +40,7 @@ const ConfirmedEmail = () => {
 
     return (
         <Paper variant="outlined" className={styles.confirmedEmailWrapper}>
-            <Logo />
+            <Logo className={styles.logo} />
             {loading ? <p>Confirming validity of provided token...</p> : msg}
         </Paper>
     )

@@ -5,19 +5,23 @@ import { ApolloError } from '@apollo/client'
 type ErrorHandlerProps = {
     errorMsg: string
     error?: ApolloError | string
+    reset?: () => void
 }
 
 const useErrorHandler = ({
     errorMsg = 'Oops! There seems to have been an issue server-side :(',
     error,
-}: ErrorHandlerProps): [string | undefined, (() => void) | undefined, (errMsg: string) => void] => {
+    reset,
+}: ErrorHandlerProps): [string | undefined, (() => void) | undefined] => {
     const [errMsg, setErrMsg] = useState<undefined | string>()
 
     useEffect(() => {
         setErrMsg((error && errorMsg) || undefined)
-    }, [error, errorMsg])
+    }, [error, errorMsg, reset])
 
-    return [errMsg, errorMsg ? () => setErrMsg(undefined) : undefined, setErrMsg]
+    useEffect(() => reset?.(), [reset])
+
+    return [errMsg, errorMsg ? () => setErrMsg(undefined) : undefined]
 }
 
 export default useErrorHandler

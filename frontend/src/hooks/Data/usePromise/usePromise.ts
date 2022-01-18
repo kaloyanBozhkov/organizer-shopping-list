@@ -12,6 +12,7 @@ type ReturnObj<D, E> = {
  */
 const usePromise = <D, E>(
     promiseFnCreator: (props?: Record<string, string>) => Promise<D>,
+    // are we fetching on command (true) or on mount (false)?
     lazy = false
 ): ReturnObj<D, E> => {
     const [response, setResonse] = useState<D | undefined>(),
@@ -27,16 +28,22 @@ const usePromise = <D, E>(
             setLoading(true)
         }, []),
         onRunPromise = (props?: Record<string, string>) => {
-            if (lazy) setLoading(true)
+            if (lazy) {
+                if (fetched) onRefetch()
+                else setLoading(true)
+            }
 
             onPromiseCreator(props)
                 .then(setResonse)
                 .catch(setError)
-                .finally(() => setLoading(false))
+                .finally(() => {
+                    setLoading(false)
+                    setFetched(true)
+                })
         }
 
     useEffect(() => {
-        if (!lazy) onRunPromise()
+        if (!lazy && !fetched) onRunPromise()
     }, [onPromiseCreator, fetched])
 
     return {

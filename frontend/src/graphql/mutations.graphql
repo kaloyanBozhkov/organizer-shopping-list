@@ -4,3 +4,9 @@ mutation addUser($alias: String!, $email: String!, $password: String!) {
         email
     }
 }
+
+mutation UpdateUserPassword($data: UserUpdateInput!, $where: UserWhereUniqueInput!, $newPassword: String!) {
+    updateUser(data: $data, where: $where) {
+        id
+    }
+}

@@ -20,5 +20,5 @@ export const btnDefault = {
     padding: '0px 40px',
     borderRadius: '20px',
     transition: 'all 400ms',
-    fontWeight: 'bold',
+    fontWeight: 'normal',
 }

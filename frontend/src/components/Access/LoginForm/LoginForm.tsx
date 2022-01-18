@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react'
+import React from 'react'
+
 import { Link } from 'react-router-dom'
 
 import usePromise from 'hooks/Data/usePromise/usePromise'
@@ -28,18 +29,14 @@ const LoginForm = () => {
                 }),
             true
         ),
-        [errorMsg, clearErrorMsg, setErrorMsg] = useErrorHandler({
+        [errorMsg, clearErrorMsg] = useErrorHandler({
             error,
             errorMsg: 'Oops! It looks like the credentials used are incorrect :(',
         })
 
-    useEffect(() => {
-        if (error) setErrorMsg(error)
-    })
-
     return (
         <Paper variant="outlined" className={styles.loginFormWrapper}>
-            <Logo />
+            <Logo className={styles.logo} />
             <Form
                 formId="loginForm"
                 errorMsg={errorMsg}

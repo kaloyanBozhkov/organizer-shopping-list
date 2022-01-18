@@ -26,7 +26,7 @@ const authenticateEdnpoint = (prisma: PrismaClient) => async (req: Request, res:
     if (
         user &&
         validatePassword(password, user.salt!, user.hash) &&
-        (await hasUserConfirmedEmailAddress(user.id, prisma))
+        (await hasUserConfirmedEmailAddress(prisma, user.id))
     ) {
         const jwt = await getNewUserJwtToken({
             prisma,

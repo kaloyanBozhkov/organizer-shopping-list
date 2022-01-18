@@ -17,7 +17,9 @@
     ],
     "plugins": ["./node_modules/@trivago/prettier-plugin-sort-imports"],
     "importOrder": [
-        "react",
+        "^react$",
+        "^@apollo/client",
+        "<THIRD_PARTY_MODULES>",
         "^routing/(.*)",
         "^types/(.*)$",
         "^context/(.*)$",

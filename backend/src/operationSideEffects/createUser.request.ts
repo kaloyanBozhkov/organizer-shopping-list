@@ -4,9 +4,12 @@ import { Request } from 'express'
 import { PrismaClient } from '@prisma/client'
 
 import { getPasswordHashSalt } from 'helpers/password'
-import { hasUnconfirmedEmailAddressAndConfirmationLinkHasExpired } from 'helpers/tokens'
+import { hasActiveEmailTypeTokens } from 'helpers/tokens'
 
-const editGraphQLRequestToHaveHashAndSaltFromPassword = (password: string, graphQLRequest) => {
+const editGraphQLRequestToHaveHashAndSaltFromPassword = (
+        password: string,
+        graphQLRequest: GraphQLRequest
+    ) => {
         const { hash, salt } = getPasswordHashSalt(password),
             editedGraphQLRequest = {
                 ...graphQLRequest,
@@ -33,7 +36,7 @@ const editGraphQLRequestToHaveHashAndSaltFromPassword = (password: string, graph
     ): Promise<GraphQLRequest> => {
         const { password, email } = graphQLRequest.variables as Record<string, string>
 
-        if (await hasUnconfirmedEmailAddressAndConfirmationLinkHasExpired(email, prisma)) {
+        if (await hasActiveEmailTypeTokens(prisma, { email })) {
             await prisma.token.deleteMany({
                 where: {
                     user: {

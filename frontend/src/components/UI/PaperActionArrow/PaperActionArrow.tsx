@@ -11,7 +11,7 @@ const PaperActionArrow = ({ domain }: { domain: string }) => (
             <KeyboardArrowUpOutlinedIcon />
         </div>
         <p>
-            go to <br />
+            go to
             <b>{domain}</b>
         </p>
     </a>

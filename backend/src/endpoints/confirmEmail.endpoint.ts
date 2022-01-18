@@ -2,13 +2,13 @@ import { Request, Response } from 'express'
 
 import { PrismaClient } from '@prisma/client'
 
-import { compareDates, generatePageHTML } from 'helpers/common'
+import { generatePageHTML, hasExpired } from 'helpers/common'
 import { getNewUserJwtToken } from 'helpers/tokens'
 
 const confirmEmailEndpoint = (prisma: PrismaClient) => async (req: Request, res: Response) => {
     const { emailTokenId } = req.params
 
-    if (!emailTokenId) res.send(generatePageHTML(`Where's your token fool??`))
+    if (!emailTokenId) return res.send(generatePageHTML(`Where's your token fool??`))
 
     const token = await prisma.token.findUnique({
         where: {
@@ -30,7 +30,7 @@ const confirmEmailEndpoint = (prisma: PrismaClient) => async (req: Request, res:
             )
         )
 
-    if (compareDates(new Date(), token.expiration)) {
+    if (hasExpired(token.expiration)) {
         const { userId } = await prisma.token.delete({
             where: {
                 emailToken: emailTokenId,
@@ -51,36 +51,11 @@ const confirmEmailEndpoint = (prisma: PrismaClient) => async (req: Request, res:
         )
     }
 
-    // invalidate email token used for registration
-    await prisma.token.update({
-        data: {
-            valid: false,
-        },
-        where: {
-            // token is set for sure
-            emailToken: token.emailToken as string,
-        },
-    })
-
-    const tokensOfUser = await prisma.token.findMany({
-            where: {
-                id: token.userId,
-            },
-        }),
-        alreadyActivated = tokensOfUser.filter(({ valid }) => valid).length > 0
-
-    if (alreadyActivated) {
-        return res.send(
-            generatePageHTML(
-                `What the fukk brotha, you already activated this email addreass!!!!!!!!`
-            )
-        )
-    }
-
     const newJWT = await getNewUserJwtToken({
         prisma,
         userId: token.userId,
-        withDeleteExistingTokens: false,
+        // will only have email token in there which is now invalid since we activated the email
+        withDeleteExistingTokens: true,
     })
 
     res.redirect(`${process.env.FRONTEND_URL}/access/confirmed/${newJWT}`)

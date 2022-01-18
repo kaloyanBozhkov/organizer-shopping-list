@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+
 import { Navigate } from 'react-router-dom'
 
 import AccessAreaContext from 'context/AccessArea.context'
@@ -8,11 +9,13 @@ import DropDownPaperOutlet from 'templates/DropDownPaperOutlet/DropDownPaperOutl
 import Logo from 'components/UI/Logo/Logo'
 import PaperActionArrow from 'components/UI/PaperActionArrow/PaperActionArrow'
 
+import { getDomainFromEmail } from 'helpers/utils.common'
+
 import styles from './styles.module.scss'
 
 const RegistrationSuccess = () => {
     const { registeredUser } = useContext(AccessAreaContext),
-        domain = registeredUser ? registeredUser.email.split('@')[1] : null
+        domain = registeredUser ? getDomainFromEmail(registeredUser.email) : null
 
     return registeredUser ? (
         <DropDownPaperOutlet>

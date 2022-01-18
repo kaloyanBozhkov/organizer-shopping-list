@@ -3,8 +3,13 @@
 
 .passwordResetFormWrapper {
     @include genericPaperFormWrapper(passwordResetForm, true);
+
     @include breakpoint(desktop) {
         max-width: 55rem;
+    }
+
+    .logo {
+        @include mediaQueriesLogo;
     }
 
     .sideActions {

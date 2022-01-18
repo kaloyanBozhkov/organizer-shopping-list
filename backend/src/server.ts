@@ -1,3 +1,5 @@
+import 'reflect-metadata'
+
 import { ApolloServer } from 'apollo-server-express'
 import bodyParser from 'body-parser'
 import cors from 'cors'
@@ -5,12 +7,11 @@ import express from 'express'
 import jwt from 'jsonwebtoken'
 import { buildSchema } from 'type-graphql'
 
-import 'reflect-metadata'
-
 import { resolvers } from '@generated/type-graphql'
 import { PrismaClient } from '@prisma/client'
 
 import authenticateEdnpoint from 'endpoints/authenticate.endpoint'
+import requestPasswordResetEndpoint from 'endpoints/requestPasswordReset.endpoint'
 import validateJWT from 'endpoints/validateJWT.endpoint'
 
 import confirmEmailEndpoint from './endpoints/confirmEmail.endpoint'
@@ -38,9 +39,13 @@ const prisma = new PrismaClient(),
 
         app.get('/confirm/:emailTokenId', confirmEmailEndpoint(prisma))
 
+        app.get('/password-reset/:emailTokenId', requestPasswordResetEndpoint(prisma))
+
         app.post('/validate/:jwt', validateJWT)
 
         app.post('/authenticate', authenticateEdnpoint(prisma))
+
+        app.post('/request-password-reset', requestPasswordResetEndpoint(prisma))
 
         app.listen({ port: 4000 }, () => console.log('listening on port 4000'))
 

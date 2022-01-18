@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+
 import { Outlet } from 'react-router-dom'
 
 import StoreContext from 'context/Store.context'

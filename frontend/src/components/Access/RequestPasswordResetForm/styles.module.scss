@@ -1,0 +1,23 @@
+@import "scss/mixins.scss";
+@import "scss/breakpoints.scss";
+
+.requestPasswordResetFormWrapper {
+    @include genericPaperFormWrapper(passwordResetForm, true);
+
+    @include breakpoint(desktop) {
+        max-width: 55rem;
+    }
+
+    .logo {
+        @include mediaQueriesLogo;
+    }
+
+    .sideActions {
+        margin-top: 1rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+    }
+}

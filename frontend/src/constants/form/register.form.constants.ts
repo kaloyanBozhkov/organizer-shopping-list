@@ -4,9 +4,12 @@ import {
     isAtLeastThisLong,
     isMatchingValueOfField,
     isNotEmptyField,
+    isNotWithSpaces,
     isPassingTheseValidators,
     isValidEmailField,
 } from 'helpers/fieldValidators'
+
+import { PASSWORD_MIN_LENGTH } from 'constants/common.constants'
 
 const REGISTER_FORM_DEFINITIONS: FormFieldDefinition[] = [
     {
@@ -16,7 +19,11 @@ const REGISTER_FORM_DEFINITIONS: FormFieldDefinition[] = [
         required: true,
         description: 'What should we call you?',
         value: '',
-        validation: isPassingTheseValidators([isNotEmptyField, isAtLeastThisLong(5)]),
+        validation: isPassingTheseValidators([
+            isNotEmptyField,
+            isNotWithSpaces,
+            isAtLeastThisLong(5),
+        ]),
     },
     {
         name: 'email',
@@ -33,7 +40,8 @@ const REGISTER_FORM_DEFINITIONS: FormFieldDefinition[] = [
         required: true,
         value: '',
         validation: isPassingTheseValidators([
-            isAtLeastThisLong(6),
+            isAtLeastThisLong(PASSWORD_MIN_LENGTH),
+            isNotWithSpaces,
             isMatchingValueOfField('repeatPassword', 'Password fields'),
         ]),
     },
@@ -44,8 +52,9 @@ const REGISTER_FORM_DEFINITIONS: FormFieldDefinition[] = [
         required: true,
         value: '',
         validation: isPassingTheseValidators([
-            isAtLeastThisLong(6),
-            isMatchingValueOfField('password'),
+            isAtLeastThisLong(PASSWORD_MIN_LENGTH),
+            isNotWithSpaces,
+            isMatchingValueOfField('password', 'Password fields'),
         ]),
     },
 ]

@@ -1,11 +1,12 @@
 import React from 'react'
+
 import ReactDOMServer from 'react-dom/server'
 
 import { TokenType, User } from '@prisma/client'
 
 import { retryPromiseXTimes } from 'helpers/common'
 import sendEmailPromise from 'helpers/email'
-import { generateEmailToken } from 'helpers/tokens'
+import { createEmailToken, generateEmailToken } from 'helpers/tokens'
 
 import ConfirmEmail from 'reactComponents/ConfirmEmail'
 
@@ -24,21 +25,8 @@ const createUserSideEffectResponse: ResponseSideEffectFn = async (resp, prisma) 
                 createUser: { email, alias },
             },
         } = resp as GraphQLResponse<{ createUser: User }>,
-        periodActiveInMs = 10 * 1000 * 6 * 10,
-        // + 10m for expiration
-        tokenExpirationDate = new Date(new Date().getTime() + periodActiveInMs),
-        { emailToken } = await prisma.token.create({
-            data: {
-                emailToken: generateEmailToken(),
-                type: TokenType.EMAIL,
-                expiration: tokenExpirationDate,
-                user: {
-                    connect: {
-                        email,
-                    },
-                },
-            },
-        }),
+        minsActive = 10,
+        emailToken = await createEmailToken(prisma, email, minsActive),
         redirectUrl = `${process.env.BACKEND_URL}/confirm/${emailToken}`,
         promiseToSendMail = () =>
             sendEmailPromise({
@@ -48,12 +36,12 @@ const createUserSideEffectResponse: ResponseSideEffectFn = async (resp, prisma) 
                     <ConfirmEmail
                         alias={alias}
                         redirectUrl={redirectUrl}
-                        minutesActive={periodActiveInMs / 1000 / 60}
+                        minutesActive={minsActive}
                     />
                 ),
             })
 
-    // maybe save info for those who fail
+    // maybe save info for those who fail?
     retryPromiseXTimes(promiseToSendMail, 'promiseToSendMail', 5)
 }
 

@@ -17,7 +17,9 @@
     ],
     "plugins": ["./node_modules/@trivago/prettier-plugin-sort-imports"],
     "importOrder": [
-        "reflect-metadata",
+        "reflect-metadata", 
+        "^react$",
+        "<THIRD_PARTY_MODULES>",
         "^@(.*)$",
         "^types/(.*)$",
         "^graphql/(.*)$",

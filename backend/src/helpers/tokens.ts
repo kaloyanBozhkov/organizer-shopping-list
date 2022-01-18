@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken'
 
 import { PrismaClient, TokenType, User } from '@prisma/client'
 
+import { hasExpired } from './common'
 import { AUTHENTICATION_TOKEN_EXPIRATION_HOURS } from './constants'
 
 // Generate a random 8 digit number as the email token
@@ -40,6 +41,12 @@ type JwtPayload = {
     exp: number
 }
 
+/**
+ * Sign a JWT token
+ */
+export const signToken = (jwtPayload: Record<string, unknown>, userId: string) =>
+    jwt.sign(jwtPayload, userId + process.env.JWT_TOKEN_SECRET)
+
 export const getNewUserJwtToken = async ({
     prisma,
     userId,
@@ -72,7 +79,7 @@ export const getNewUserJwtToken = async ({
             exp: token.expiration.getTime(),
         }
 
-    return jwt.sign(jwtPayload, token.userId + process.env.JWT_TOKEN_SECRET)
+    return signToken(jwtPayload, token.userId)
 }
 
 export const verifyTokenAndReturnUserId = (
@@ -97,7 +104,7 @@ export const verifyTokenAndReturnUserId = (
 /**
  * User will have 1 token of EMAIL type if email not confirmed. If condirmed should never have EMAIL type token.
  */
-export const hasUserConfirmedEmailAddress = async (userId: User['id'], prisma: PrismaClient) => {
+export const hasUserConfirmedEmailAddress = async (prisma: PrismaClient, userId: User['id']) => {
     const userTokens = await prisma.token.findMany({
             where: {
                 userId,
@@ -108,25 +115,47 @@ export const hasUserConfirmedEmailAddress = async (userId: User['id'], prisma: P
     return !isUnconfirmed
 }
 
-/**
- * Determines if acc exists, is unconfirmed and temail actiivation link has expired
- */
-export const hasUnconfirmedEmailAddressAndConfirmationLinkHasExpired = async (
-    email: User['email'],
-    prisma: PrismaClient
-) => {
-    const userTokens = await prisma.token.findMany({
-            where: {
+export const createEmailToken = async (
+    prisma: PrismaClient,
+    email: string,
+    minutesActive: number
+): Promise<string | null> => {
+    const periodActiveInMs = minutesActive * 1000 * 6 * 10,
+        // + 10m for expiration
+        tokenExpirationDate = new Date(new Date().getTime() + periodActiveInMs),
+        { emailToken } = await prisma.token.create({
+            data: {
+                emailToken: generateEmailToken(),
+                type: TokenType.EMAIL,
+                expiration: tokenExpirationDate,
                 user: {
-                    email,
+                    connect: {
+                        email,
+                    },
                 },
             },
-        }),
-        isUnconfirmed = userTokens.length === 1 && userTokens[0].type === 'EMAIL'
+        })
 
-    if (!isUnconfirmed) return false
+    return emailToken
+}
 
-    const hasEmailTokenExpired = userTokens[0].expiration.getTime() <= new Date().getTime()
+export const hasActiveEmailTypeTokens = async (
+    prisma: PrismaClient,
+    user: { email: string } | { id: string }
+) => {
+    const existingActiveEmailTokens = await prisma.token.findMany({
+        select: {
+            expiration: true,
+        },
+        where: {
+            user,
+            valid: true,
+            type: 'EMAIL',
+        },
+    })
 
-    return hasEmailTokenExpired
+    return (
+        existingActiveEmailTokens.length > 0 &&
+        existingActiveEmailTokens.some(({ expiration }) => hasExpired(expiration))
+    )
 }

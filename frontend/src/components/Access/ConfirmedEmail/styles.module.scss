@@ -20,8 +20,8 @@
 
     padding: 3rem;
 
-    > div:first-child {
-        width: 25rem;
+    .logo {
+        @include mediaQueriesLogo;
     }
 
     p {

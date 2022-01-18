@@ -4,4 +4,8 @@
     @include genericPaperFormWrapper(registerForm);
 
     position: relative;
+
+    .logo {
+        @include mediaQueriesLogo;
+    }
 }

@@ -19,6 +19,7 @@ export const styles = {
         boxSizing: 'border-box',
         margin: '0',
         paddingBottom: '10px',
+        fontSize: '35px',
     },
 }
 const EmailComponent = ({

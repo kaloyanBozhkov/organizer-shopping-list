@@ -1,4 +1,5 @@
 import React from 'react'
+
 import { Link } from 'react-router-dom'
 
 import { FormFieldDefinition } from 'types/form.types'
@@ -23,7 +24,7 @@ const LOGIN_FORM_DEFINITIONS: FormFieldDefinition[] = [
         name: 'password',
         label: 'Password',
         type: 'password',
-        description: <Link to="../password-reset">Forgot your password?</Link>,
+        description: <Link to="../request-password-reset">Forgot your password?</Link>,
         required: true,
         value: '',
         validation: isPassingTheseValidators([isAtLeastThisLong(6)]),

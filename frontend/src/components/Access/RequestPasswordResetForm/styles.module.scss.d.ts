@@ -5,7 +5,8 @@ interface CssExports {
     opacityIn: string
     opacityInDelayed: string
     popIn: string
-    registerFormWrapper: string
+    requestPasswordResetFormWrapper: string
+    sideActions: string
     slideInBottomWithOpacity: string
     slideInRight: string
     slideInTop: string

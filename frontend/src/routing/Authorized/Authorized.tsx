@@ -1,8 +1,10 @@
 import React, { ReactElement } from 'react'
-import { Navigate } from 'react-router-dom'
-import { userVar } from 'reactives/User.reactives'
 
 import { useReactiveVar } from '@apollo/client'
+
+import { Navigate } from 'react-router-dom'
+
+import { userVar } from 'reactives/User.reactives'
 
 type PrivatePortalProps = {
     children: ReactElement

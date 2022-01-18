@@ -1,4 +1,5 @@
 import React, { ReactElement } from 'react'
+
 import { Navigate } from 'react-router-dom'
 
 import AccessAreaContainer from 'containers/AccessArea.container'
@@ -8,10 +9,11 @@ import NotFoundPage from 'pages/NotFound.page'
 
 import ConfirmedEmail from 'components/Access/ConfirmedEmail/ConfirmedEmail'
 import LoginForm from 'components/Access/LoginForm/LoginForm'
-import PasswordResetForm from 'components/Access/PasswordResetForm/PasswordResetForm'
-import PasswordResetSuccess from 'components/Access/PasswordResetSuccess/PasswordResetSuccess'
 import RegistrationForm from 'components/Access/RegistrationForm/RegistrationForm'
 import RegistrationSuccess from 'components/Access/RegistrationSuccess/RegistrationSuccess'
+import RequestPasswordResetForm from 'components/Access/RequestPasswordResetForm/RequestPasswordResetForm'
+import RequestPasswordResetSuccess from 'components/Access/RequestPasswordResetSuccess/RequestPasswordResetSuccess'
+import PasswordResetForm from 'components/Access/ResetPasswordForm/ResetPasswordForm'
 
 import Authorized from './Authorized/Authorized'
 
@@ -52,12 +54,23 @@ const routes: RouteConfig[] = [
                 ],
             },
             {
-                path: 'password-reset',
+                path: 'request-password-reset',
+                element: <RequestPasswordResetForm />,
+                children: [
+                    {
+                        path: 'success',
+                        element: <RequestPasswordResetSuccess />,
+                        children: [],
+                    },
+                ],
+            },
+            {
+                path: 'password-reset/:jwt',
                 element: <PasswordResetForm />,
                 children: [
                     {
                         path: 'success',
-                        element: <PasswordResetSuccess />,
+                        element: <RequestPasswordResetSuccess />,
                         children: [],
                     },
                 ],

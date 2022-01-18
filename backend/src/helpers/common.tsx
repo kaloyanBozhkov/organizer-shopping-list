@@ -1,4 +1,5 @@
 import React from 'react'
+
 import ReactDOMServer from 'react-dom/server'
 
 import OverTopErrorMsgPage from 'reactComponents/OverTopErrorMsgPage'
@@ -39,6 +40,13 @@ export const compareDates = (d1: Date, d2: Date, op: 'gt' = 'gt') => {
             return false
     }
 }
+
+export const hasExpired = (expiration: number | Date) =>
+    compareDates(
+        new Date(),
+        typeof expiration === 'number' ? new Date(expiration) : expiration,
+        'gt'
+    )
 
 export const generatePageHTML = (msg: string) =>
     ReactDOMServer.renderToString(<OverTopErrorMsgPage msg={msg} />)

@@ -1,12 +1,15 @@
 @import "scss/mixins.scss";
 @import "scss/variables.scss";
-@import "scss/keyframes.scss";
 
-.registrationSuccessWrapper {
+.requestPasswordResetSuccessWrapper {
     @include genericPaperFormWrapperOutlet;
 
     .logo {
-        margin: auto;
+        margin: 0 auto;
         @include mediaQueriesLogo;
+    }
+
+    p {
+        margin-top: 2rem;
     }
 }

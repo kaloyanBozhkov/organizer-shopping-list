@@ -20,8 +20,7 @@ const useFormValidation = (formState: FormState): FormValidationResp => {
                         ? acc
                         : {
                               ...acc,
-                              [field.name]:
-                                  validation.error || 'Field is invalid - no error msg setup',
+                              [field.name]: validation.error || 'Field is invalid',
                           }
                 }
 

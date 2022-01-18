@@ -43,7 +43,20 @@ export function isNotEmptyField(this: FormFieldDefinition): Validation {
           }
         : {
               isValid,
-              error: 'Cannot be empty',
+              error: 'Must not be empty',
+          }
+}
+
+export function isNotWithSpaces(this: FormFieldDefinition): Validation {
+    const isValid = !this.value!.includes(' ')
+
+    return isValid
+        ? {
+              isValid,
+          }
+        : {
+              isValid,
+              error: 'Must not contain spaces',
           }
 }
 

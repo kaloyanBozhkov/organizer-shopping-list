@@ -40,28 +40,32 @@ const styles = {
     },
 }
 
-type ConfirmEmailProps = {
+type RequestResetPasswordEmailProps = {
     alias: string
     redirectUrl: string
     minutesActive: string | number
 }
 
-const ConfirmEmail = ({ alias, redirectUrl, minutesActive }: ConfirmEmailProps) => (
+const RequestResetPasswordEmail = ({
+    alias,
+    redirectUrl,
+    minutesActive,
+}: RequestResetPasswordEmailProps) => (
     <EmailComponent>
         <p style={styles.text}>
             Hey <b style={styles.green}>{alias}</b>,
             <br />
             <br />
-            Thank you for creating an account with us, and welcome to <b>ShoppingList</b>!
+            We received a request for resetting your ShoppingList account password.
             <br /> <br />
-            All you have to do now is <b style={styles.green}>confirm your email</b> address by{' '}
+            To continue with the password reset process
             <b>
                 {' '}
                 <a style={styles.link} href={redirectUrl}>
-                    clicking here
+                    click here
                 </a>{' '}
             </b>
-            or opening the below link:
+            or, if that does not work, open the below link:
             <br />
             <a style={{ ...styles.link, ...styles.link2 }} href={redirectUrl}>
                 {redirectUrl}
@@ -69,8 +73,8 @@ const ConfirmEmail = ({ alias, redirectUrl, minutesActive }: ConfirmEmailProps) 
         </p>
         <p style={styles.warning}>
             You have <b style={styles.time}>{minutesActive} minutes</b> before the link expires. If
-            the link expires before you have had the chance to click it, you will have to register
-            again.
+            the link expires before you have had the chance to click it, you will have to request a
+            password reset again.
         </p>
         <p style={styles.info}>
             <i>(Please ignore this email if you did not expect to receive it)</i>
@@ -78,4 +82,4 @@ const ConfirmEmail = ({ alias, redirectUrl, minutesActive }: ConfirmEmailProps) 
     </EmailComponent>
 )
 
-export default ConfirmEmail
+export default RequestResetPasswordEmail

@@ -80,27 +80,49 @@
         transition: transform 300ms;
         transform: translateY(5rem);
         transition-delay: 0s;
-
+        margin-top: 2rem;
         b {
             line-height: 3rem;
+            display: block;
             margin-top: 2rem;
+            color: $green;
         }
     }
 
     @include breakpoint(mobile, portrait) {
         @include animateLinkArrowTextForMobile;
+        p {
+            font-size: 2.5rem;
+            b {
+                margin-top: 1.5rem;
+            }
+        }
 
         transform: scale(0.5);
     }
 
     @include breakpoint(tabletSmall, portrait) {
         @include animateLinkArrowTextForMobile;
+        p {
+            font-size: 2.8rem;
+            b {
+                font-size: 2.5rem;
+                margin-top: 1.5rem;
+            }
+        }
 
         transform: scale(0.75);
     }
 
     @include breakpoint(tabletSmall, landscape) {
         @include animateLinkArrowTextForMobile;
+        p {
+            font-size: 2.8rem;
+            b {
+                font-size: 2.5rem;
+                margin-top: 1.5rem;
+            }
+        }
 
         transform: scale(0.75);
     }

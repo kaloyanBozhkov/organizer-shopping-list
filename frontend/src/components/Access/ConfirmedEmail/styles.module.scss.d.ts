@@ -2,6 +2,7 @@
 // Please do not change this file!
 interface CssExports {
     confirmedEmailWrapper: string
+    logo: string
     opacityIn: string
     opacityInDelayed: string
     popIn: string

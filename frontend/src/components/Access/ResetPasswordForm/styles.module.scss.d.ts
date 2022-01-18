@@ -4,8 +4,9 @@ interface CssExports {
     logo: string
     opacityIn: string
     opacityInDelayed: string
-    passwordResetSuccessWrapper: string
+    passwordResetFormWrapper: string
     popIn: string
+    sideActions: string
     slideInBottomWithOpacity: string
     slideInRight: string
     slideInTop: string

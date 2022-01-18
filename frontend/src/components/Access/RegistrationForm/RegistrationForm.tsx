@@ -1,10 +1,12 @@
 import React, { useContext } from 'react'
+
 import { Link, Outlet } from 'react-router-dom'
 
 import AccessAreaContext from 'context/AccessArea.context'
 
 import useErrorHandler from 'hooks/useErrorHandler'
 
+// import useErrorHandler from 'hooks/useErrorHandler'
 import Form from 'components/Form/Form'
 import Logo from 'components/UI/Logo/Logo'
 
@@ -16,16 +18,17 @@ import styles from './styles.module.scss'
 
 const RegistrationForm = () => {
     const { addUserMutation } = useContext(AccessAreaContext),
-        [addUser, { loading, error }] = addUserMutation,
+        [addUser, { loading, error, reset }] = addUserMutation,
         [errorMsg, clearErrorMsg] = useErrorHandler({
             errorMsg: 'Oops! The provided credentials may already have been saved before :(',
             error,
+            reset,
         })
 
     return (
         <Paper variant="outlined" className={styles.registerFormWrapper}>
             <Outlet />
-            <Logo />
+            <Logo className={styles.logo} />
             <Form
                 formId="registerForm"
                 definitions={REGISTER_FORM_DEFINITIONS}

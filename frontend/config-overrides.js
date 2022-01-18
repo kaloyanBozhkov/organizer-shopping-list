@@ -3,7 +3,6 @@ const {
         addWebpackModuleRule,
         removeModuleScopePlugin,
         babelInclude,
-        addWebpackPlugin,
     } = require('customize-cra'),
     path = require('path')
 
