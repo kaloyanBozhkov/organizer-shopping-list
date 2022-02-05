@@ -1,8 +1,8 @@
 import React, { ReactElement } from 'react'
 
-import MainPage from 'pages/Main.page'
+import GenericLayout from 'components/layouts/Generic/Generic.layout'
 
-import GenericLayout from 'templates/GenericLayout/Generic.layout'
+import MainPage from 'components/pages/Main.page'
 
 const MainContainer = (): ReactElement => {
     // const { onGetShoppingItems } = useContext(ActionsContext),

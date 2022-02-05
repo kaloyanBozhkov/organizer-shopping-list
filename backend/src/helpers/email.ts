@@ -22,7 +22,7 @@ const createMailer = () =>
                     }
                 )
             } catch (err) {
-                errLogger('sendEmailPromise', err)
+                errLogger(`sendEmailPromise: ${err}`)
                 rej(err)
             }
         })

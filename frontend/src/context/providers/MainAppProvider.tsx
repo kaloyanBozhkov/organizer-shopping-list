@@ -26,8 +26,8 @@ export const ActionsProvider = ({
         () => ({
             onToggleLoginProcess: () => {
                 setStore((store) => ({
-                    prop: 'activeDialog',
-                    value: store.activeDialog === 'login' ? null : 'login',
+                    prop: 'activeModal',
+                    value: store.activeModal === 'login' ? null : 'login',
                 }))
             },
             onAddShoppingItemToCart: (id) => {

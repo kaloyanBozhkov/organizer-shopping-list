@@ -1,8 +1,8 @@
+import { makeVar } from '@apollo/client'
+
 import { GetUserLoginQuery } from 'types/graphQL.generated'
 
 import User from 'classes/User'
-
-import { makeVar } from '@apollo/client'
 
 export const userVar = makeVar<null | User>(null)
 

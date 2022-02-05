@@ -2,11 +2,11 @@ import React from 'react'
 
 import ReactDOMServer from 'react-dom/server'
 
-import { TokenType, User } from '@prisma/client'
+import { User } from '@prisma/client'
 
 import { retryPromiseXTimes } from 'helpers/common'
 import sendEmailPromise from 'helpers/email'
-import { createEmailToken, generateEmailToken } from 'helpers/tokens'
+import { createEmailToken } from 'helpers/tokens'
 
 import ConfirmEmail from 'reactComponents/ConfirmEmail'
 

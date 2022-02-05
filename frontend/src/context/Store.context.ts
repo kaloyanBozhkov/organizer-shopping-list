@@ -4,12 +4,12 @@ import { ListItem } from 'types/graphQL.generated'
 
 export type Store = {
     cart: ListItem['id'][]
-    activeDialog: null | 'login'
+    activeModal: null | 'login'
 }
 
 export const defaultStore: Store = {
     cart: [],
-    activeDialog: null,
+    activeModal: null,
 }
 
 const StoreContext = React.createContext<Store>(defaultStore)

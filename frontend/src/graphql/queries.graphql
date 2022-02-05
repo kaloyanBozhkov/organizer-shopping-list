@@ -7,3 +7,11 @@ query getUserLogin($email: String!) {
         updatedAt
     }
 }
+
+query getUsers {
+    users {
+        id
+        alias
+        email
+    }
+}

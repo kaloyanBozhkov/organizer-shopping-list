@@ -1,12 +1,5 @@
-const requestResetPassword = (email: string) =>
-    fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT_URL}/request-password-reset`, {
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        method: 'POST',
-        body: JSON.stringify({
-            email,
-        }),
-    })
+import { serviceFetcher } from './common'
+
+const requestResetPassword = (email: string) => serviceFetcher('request-password-reset', { email })
 
 export default requestResetPassword

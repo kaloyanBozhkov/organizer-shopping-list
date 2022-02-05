@@ -19,7 +19,7 @@ const PASSWORD_RESET_FORM_DEFINITIONS: FormFieldDefinition[] = [
         validation: isPassingTheseValidators([
             isNotEmptyField,
             isAtLeastThisLong(PASSWORD_MIN_LENGTH),
-            isMatchingValueOfField('repeatPassword', 'New Password'),
+            isMatchingValueOfField('repeatPassword', 'Passwords'),
         ]),
     },
     {
@@ -31,7 +31,7 @@ const PASSWORD_RESET_FORM_DEFINITIONS: FormFieldDefinition[] = [
         validation: isPassingTheseValidators([
             isNotEmptyField,
             isAtLeastThisLong(PASSWORD_MIN_LENGTH),
-            isMatchingValueOfField('newPassword', 'Repeat New Password'),
+            isMatchingValueOfField('newPassword', 'Passwords'),
         ]),
     },
 ]

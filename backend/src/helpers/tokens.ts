@@ -102,7 +102,7 @@ export const verifyTokenAndReturnUserId = (
 }
 
 /**
- * User will have 1 token of EMAIL type if email not confirmed. If condirmed should never have EMAIL type token.
+ * User will have 1 token of EMAIL type if email not confirmed. If confirmed should never have EMAIL type token.
  */
 export const hasUserConfirmedEmailAddress = async (prisma: PrismaClient, userId: User['id']) => {
     const userTokens = await prisma.token.findMany({

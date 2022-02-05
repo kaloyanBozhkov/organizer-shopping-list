@@ -4,15 +4,18 @@ import { useReactiveVar } from '@apollo/client'
 
 import { Navigate, useNavigate } from 'react-router-dom'
 
-import { useAddUserMutation, useUpdateUserPasswordMutation } from 'types/graphQL.generated'
+import { useAddUserMutation } from 'types/graphQL.generated'
 
 import AccessAreaContext, { props as AccessAreaContextProps } from 'context/AccessArea.context'
 
 import { userVar } from 'reactives/User.reactives'
 
-import AccessAreaPage from 'pages/AccessArea.page'
+import AccessAreaPage from 'components/pages/AccessArea.page'
 
 import requestResetPassword from 'services/requestResetPassword'
+import updatePassword from 'services/updatePassword'
+
+import { saveJWT } from 'helpers/token'
 
 const AccessAreaContainer = () => {
     const user = useReactiveVar(userVar),
@@ -27,12 +30,20 @@ const AccessAreaContainer = () => {
             },
             fetchPolicy: 'no-cache',
         }),
-        updatePasswordMutation = useUpdateUserPasswordMutation({
-            onCompleted: () => {
-                AccessAreaContextProps.updatedPassword = true
-                nav('/access/password-reset/success')
-            },
-        }),
+        onUpdatePassword = useCallback(
+            ({ emailTokenId, newPassword } = {}) =>
+                new Promise<Response>((res, rej) =>
+                    updatePassword(emailTokenId, newPassword)
+                        .then((resp) => {
+                            res(resp)
+
+                            AccessAreaContextProps.updatedPassword = true
+                            nav(`/access/password-reset/${emailTokenId}/success`)
+                        })
+                        .catch(rej)
+                ),
+            [nav]
+        ),
         onRequestPasswordReset = useCallback(
             ({ email } = {}) =>
                 new Promise<Response>((res, rej) =>
@@ -48,6 +59,13 @@ const AccessAreaContainer = () => {
                         .catch(rej)
                 ),
             [nav]
+        ),
+        onSaveConfirmedJWT = useCallback(
+            (jwt: string) => {
+                saveJWT(jwt)
+                nav('/')
+            },
+            [nav]
         )
 
     return user ? (
@@ -56,8 +74,9 @@ const AccessAreaContainer = () => {
         <AccessAreaContext.Provider
             value={{
                 addUserMutation,
-                updatePasswordMutation,
+                onUpdatePassword,
                 onRequestPasswordReset,
+                onSaveConfirmedJWT,
                 ...AccessAreaContextProps,
             }}
         >

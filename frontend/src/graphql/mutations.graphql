@@ -1,12 +1,7 @@
+# password is replaced on BE side in addUser.request middleware side effect
 mutation addUser($alias: String!, $email: String!, $password: String!) {
     createUser(data: { alias: $alias, email: $email, hash: $password }) {
         alias
         email
-    }
-}
-
-mutation UpdateUserPassword($data: UserUpdateInput!, $where: UserWhereUniqueInput!, $newPassword: String!) {
-    updateUser(data: $data, where: $where) {
-        id
     }
 }

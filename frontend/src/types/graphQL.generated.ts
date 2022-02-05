@@ -3162,6 +3162,7 @@ export type User = {
     email: Scalars['String']
     hash: Scalars['String']
     id: Scalars['String']
+    picture?: Maybe<Scalars['String']>
     updatedAt: Scalars['DateTime']
 }
 
@@ -3217,6 +3218,7 @@ export type UserCountAggregate = {
     email: Scalars['Int']
     hash: Scalars['Int']
     id: Scalars['Int']
+    picture: Scalars['Int']
     salt: Scalars['Int']
     updatedAt: Scalars['Int']
 }
@@ -3227,6 +3229,7 @@ export type UserCountOrderByAggregateInput = {
     email?: InputMaybe<SortOrder>
     hash?: InputMaybe<SortOrder>
     id?: InputMaybe<SortOrder>
+    picture?: InputMaybe<SortOrder>
     salt?: InputMaybe<SortOrder>
     updatedAt?: InputMaybe<SortOrder>
 }
@@ -3241,6 +3244,7 @@ export type UserCreateInput = {
     email: Scalars['String']
     hash: Scalars['String']
     id?: InputMaybe<Scalars['String']>
+    picture?: InputMaybe<Scalars['String']>
     salt?: InputMaybe<Scalars['String']>
     updatedAt?: InputMaybe<Scalars['DateTime']>
 }
@@ -3251,6 +3255,7 @@ export type UserCreateManyInput = {
     email: Scalars['String']
     hash: Scalars['String']
     id?: InputMaybe<Scalars['String']>
+    picture?: InputMaybe<Scalars['String']>
     salt?: InputMaybe<Scalars['String']>
     updatedAt?: InputMaybe<Scalars['DateTime']>
 }
@@ -3308,6 +3313,7 @@ export type UserCreateWithoutAddedProductsToShopsInput = {
     email: Scalars['String']
     hash: Scalars['String']
     id?: InputMaybe<Scalars['String']>
+    picture?: InputMaybe<Scalars['String']>
     salt?: InputMaybe<Scalars['String']>
     updatedAt?: InputMaybe<Scalars['DateTime']>
 }
@@ -3321,6 +3327,7 @@ export type UserCreateWithoutCreatedProdcutsInput = {
     email: Scalars['String']
     hash: Scalars['String']
     id?: InputMaybe<Scalars['String']>
+    picture?: InputMaybe<Scalars['String']>
     salt?: InputMaybe<Scalars['String']>
     updatedAt?: InputMaybe<Scalars['DateTime']>
 }
@@ -3334,6 +3341,7 @@ export type UserCreateWithoutCreatedShopsInput = {
     email: Scalars['String']
     hash: Scalars['String']
     id?: InputMaybe<Scalars['String']>
+    picture?: InputMaybe<Scalars['String']>
     salt?: InputMaybe<Scalars['String']>
     updatedAt?: InputMaybe<Scalars['DateTime']>
 }
@@ -3347,6 +3355,7 @@ export type UserCreateWithoutTokenInput = {
     email: Scalars['String']
     hash: Scalars['String']
     id?: InputMaybe<Scalars['String']>
+    picture?: InputMaybe<Scalars['String']>
     salt?: InputMaybe<Scalars['String']>
     updatedAt?: InputMaybe<Scalars['DateTime']>
 }
@@ -3361,6 +3370,7 @@ export type UserGroupBy = {
     email: Scalars['String']
     hash: Scalars['String']
     id: Scalars['String']
+    picture?: Maybe<Scalars['String']>
     salt?: Maybe<Scalars['String']>
     updatedAt: Scalars['DateTime']
 }
@@ -3372,6 +3382,7 @@ export type UserMaxAggregate = {
     email?: Maybe<Scalars['String']>
     hash?: Maybe<Scalars['String']>
     id?: Maybe<Scalars['String']>
+    picture?: Maybe<Scalars['String']>
     salt?: Maybe<Scalars['String']>
     updatedAt?: Maybe<Scalars['DateTime']>
 }
@@ -3382,6 +3393,7 @@ export type UserMaxOrderByAggregateInput = {
     email?: InputMaybe<SortOrder>
     hash?: InputMaybe<SortOrder>
     id?: InputMaybe<SortOrder>
+    picture?: InputMaybe<SortOrder>
     salt?: InputMaybe<SortOrder>
     updatedAt?: InputMaybe<SortOrder>
 }
@@ -3393,6 +3405,7 @@ export type UserMinAggregate = {
     email?: Maybe<Scalars['String']>
     hash?: Maybe<Scalars['String']>
     id?: Maybe<Scalars['String']>
+    picture?: Maybe<Scalars['String']>
     salt?: Maybe<Scalars['String']>
     updatedAt?: Maybe<Scalars['DateTime']>
 }
@@ -3403,6 +3416,7 @@ export type UserMinOrderByAggregateInput = {
     email?: InputMaybe<SortOrder>
     hash?: InputMaybe<SortOrder>
     id?: InputMaybe<SortOrder>
+    picture?: InputMaybe<SortOrder>
     salt?: InputMaybe<SortOrder>
     updatedAt?: InputMaybe<SortOrder>
 }
@@ -3416,6 +3430,7 @@ export type UserOrderByWithAggregationInput = {
     email?: InputMaybe<SortOrder>
     hash?: InputMaybe<SortOrder>
     id?: InputMaybe<SortOrder>
+    picture?: InputMaybe<SortOrder>
     salt?: InputMaybe<SortOrder>
     updatedAt?: InputMaybe<SortOrder>
 }
@@ -3430,6 +3445,7 @@ export type UserOrderByWithRelationInput = {
     email?: InputMaybe<SortOrder>
     hash?: InputMaybe<SortOrder>
     id?: InputMaybe<SortOrder>
+    picture?: InputMaybe<SortOrder>
     salt?: InputMaybe<SortOrder>
     updatedAt?: InputMaybe<SortOrder>
 }
@@ -3445,6 +3461,7 @@ export enum UserScalarFieldEnum {
     Email = 'email',
     Hash = 'hash',
     Id = 'id',
+    Picture = 'picture',
     Salt = 'salt',
     UpdatedAt = 'updatedAt',
 }
@@ -3458,6 +3475,7 @@ export type UserScalarWhereWithAggregatesInput = {
     email?: InputMaybe<StringWithAggregatesFilter>
     hash?: InputMaybe<StringWithAggregatesFilter>
     id?: InputMaybe<StringWithAggregatesFilter>
+    picture?: InputMaybe<StringNullableWithAggregatesFilter>
     salt?: InputMaybe<StringNullableWithAggregatesFilter>
     updatedAt?: InputMaybe<DateTimeWithAggregatesFilter>
 }
@@ -3472,6 +3490,7 @@ export type UserUpdateInput = {
     email?: InputMaybe<StringFieldUpdateOperationsInput>
     hash?: InputMaybe<StringFieldUpdateOperationsInput>
     id?: InputMaybe<StringFieldUpdateOperationsInput>
+    picture?: InputMaybe<NullableStringFieldUpdateOperationsInput>
     salt?: InputMaybe<NullableStringFieldUpdateOperationsInput>
     updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>
 }
@@ -3482,6 +3501,7 @@ export type UserUpdateManyMutationInput = {
     email?: InputMaybe<StringFieldUpdateOperationsInput>
     hash?: InputMaybe<StringFieldUpdateOperationsInput>
     id?: InputMaybe<StringFieldUpdateOperationsInput>
+    picture?: InputMaybe<NullableStringFieldUpdateOperationsInput>
     salt?: InputMaybe<NullableStringFieldUpdateOperationsInput>
     updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>
 }
@@ -3527,6 +3547,7 @@ export type UserUpdateWithoutAddedProductsToShopsInput = {
     email?: InputMaybe<StringFieldUpdateOperationsInput>
     hash?: InputMaybe<StringFieldUpdateOperationsInput>
     id?: InputMaybe<StringFieldUpdateOperationsInput>
+    picture?: InputMaybe<NullableStringFieldUpdateOperationsInput>
     salt?: InputMaybe<NullableStringFieldUpdateOperationsInput>
     updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>
 }
@@ -3540,6 +3561,7 @@ export type UserUpdateWithoutCreatedProdcutsInput = {
     email?: InputMaybe<StringFieldUpdateOperationsInput>
     hash?: InputMaybe<StringFieldUpdateOperationsInput>
     id?: InputMaybe<StringFieldUpdateOperationsInput>
+    picture?: InputMaybe<NullableStringFieldUpdateOperationsInput>
     salt?: InputMaybe<NullableStringFieldUpdateOperationsInput>
     updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>
 }
@@ -3553,6 +3575,7 @@ export type UserUpdateWithoutCreatedShopsInput = {
     email?: InputMaybe<StringFieldUpdateOperationsInput>
     hash?: InputMaybe<StringFieldUpdateOperationsInput>
     id?: InputMaybe<StringFieldUpdateOperationsInput>
+    picture?: InputMaybe<NullableStringFieldUpdateOperationsInput>
     salt?: InputMaybe<NullableStringFieldUpdateOperationsInput>
     updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>
 }
@@ -3566,6 +3589,7 @@ export type UserUpdateWithoutTokenInput = {
     email?: InputMaybe<StringFieldUpdateOperationsInput>
     hash?: InputMaybe<StringFieldUpdateOperationsInput>
     id?: InputMaybe<StringFieldUpdateOperationsInput>
+    picture?: InputMaybe<NullableStringFieldUpdateOperationsInput>
     salt?: InputMaybe<NullableStringFieldUpdateOperationsInput>
     updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>
 }
@@ -3603,6 +3627,7 @@ export type UserWhereInput = {
     email?: InputMaybe<StringFilter>
     hash?: InputMaybe<StringFilter>
     id?: InputMaybe<StringFilter>
+    picture?: InputMaybe<StringNullableFilter>
     salt?: InputMaybe<StringNullableFilter>
     updatedAt?: InputMaybe<DateTimeFilter>
 }
@@ -3623,17 +3648,6 @@ export type AddUserMutation = {
     createUser: { __typename?: 'User'; alias: string; email: string }
 }
 
-export type UpdateUserPasswordMutationVariables = Exact<{
-    data: UserUpdateInput
-    where: UserWhereUniqueInput
-    newPassword: Scalars['String']
-}>
-
-export type UpdateUserPasswordMutation = {
-    __typename?: 'Mutation'
-    updateUser?: { __typename?: 'User'; id: string } | null | undefined
-}
-
 export type GetUserLoginQueryVariables = Exact<{
     email: Scalars['String']
 }>
@@ -3651,6 +3665,13 @@ export type GetUserLoginQuery = {
           }
         | null
         | undefined
+}
+
+export type GetUsersQueryVariables = Exact<{ [key: string]: never }>
+
+export type GetUsersQuery = {
+    __typename?: 'Query'
+    users: Array<{ __typename?: 'User'; id: string; alias: string; email: string }>
 }
 
 export const AddUserDocument = gql`
@@ -3693,59 +3714,6 @@ export type AddUserMutationResult = Apollo.MutationResult<AddUserMutation>
 export type AddUserMutationOptions = Apollo.BaseMutationOptions<
     AddUserMutation,
     AddUserMutationVariables
->
-export const UpdateUserPasswordDocument = gql`
-    mutation UpdateUserPassword(
-        $data: UserUpdateInput!
-        $where: UserWhereUniqueInput!
-        $newPassword: String!
-    ) {
-        updateUser(data: $data, where: $where) {
-            id
-        }
-    }
-`
-export type UpdateUserPasswordMutationFn = Apollo.MutationFunction<
-    UpdateUserPasswordMutation,
-    UpdateUserPasswordMutationVariables
->
-
-/**
- * __useUpdateUserPasswordMutation__
- *
- * To run a mutation, you first call `useUpdateUserPasswordMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useUpdateUserPasswordMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [updateUserPasswordMutation, { data, loading, error }] = useUpdateUserPasswordMutation({
- *   variables: {
- *      data: // value for 'data'
- *      where: // value for 'where'
- *      newPassword: // value for 'newPassword'
- *   },
- * });
- */
-export function useUpdateUserPasswordMutation(
-    baseOptions?: Apollo.MutationHookOptions<
-        UpdateUserPasswordMutation,
-        UpdateUserPasswordMutationVariables
-    >
-) {
-    const options = { ...defaultOptions, ...baseOptions }
-    return Apollo.useMutation<UpdateUserPasswordMutation, UpdateUserPasswordMutationVariables>(
-        UpdateUserPasswordDocument,
-        options
-    )
-}
-export type UpdateUserPasswordMutationHookResult = ReturnType<typeof useUpdateUserPasswordMutation>
-export type UpdateUserPasswordMutationResult = Apollo.MutationResult<UpdateUserPasswordMutation>
-export type UpdateUserPasswordMutationOptions = Apollo.BaseMutationOptions<
-    UpdateUserPasswordMutation,
-    UpdateUserPasswordMutationVariables
 >
 export const GetUserLoginDocument = gql`
     query getUserLogin($email: String!) {
@@ -3801,4 +3769,47 @@ export type GetUserLoginQueryResult = Apollo.QueryResult<
 >
 export function refetchGetUserLoginQuery(variables: GetUserLoginQueryVariables) {
     return { query: GetUserLoginDocument, variables }
+}
+export const GetUsersDocument = gql`
+    query getUsers {
+        users {
+            id
+            alias
+            email
+        }
+    }
+`
+
+/**
+ * __useGetUsersQuery__
+ *
+ * To run a query within a React component, call `useGetUsersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUsersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUsersQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetUsersQuery(
+    baseOptions?: Apollo.QueryHookOptions<GetUsersQuery, GetUsersQueryVariables>
+) {
+    const options = { ...defaultOptions, ...baseOptions }
+    return Apollo.useQuery<GetUsersQuery, GetUsersQueryVariables>(GetUsersDocument, options)
+}
+export function useGetUsersLazyQuery(
+    baseOptions?: Apollo.LazyQueryHookOptions<GetUsersQuery, GetUsersQueryVariables>
+) {
+    const options = { ...defaultOptions, ...baseOptions }
+    return Apollo.useLazyQuery<GetUsersQuery, GetUsersQueryVariables>(GetUsersDocument, options)
+}
+export type GetUsersQueryHookResult = ReturnType<typeof useGetUsersQuery>
+export type GetUsersLazyQueryHookResult = ReturnType<typeof useGetUsersLazyQuery>
+export type GetUsersQueryResult = Apollo.QueryResult<GetUsersQuery, GetUsersQueryVariables>
+export function refetchGetUsersQuery(variables?: GetUsersQueryVariables) {
+    return { query: GetUsersDocument, variables }
 }

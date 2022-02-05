@@ -1,10 +1,19 @@
 import React from 'react'
 
+import { NextFunction } from 'express'
 import ReactDOMServer from 'react-dom/server'
 
 import OverTopErrorMsgPage from 'reactComponents/OverTopErrorMsgPage'
 
 import errLogger from './errLogger'
+
+export const errHandler = async (fn: () => void, next: NextFunction) => {
+    try {
+        await fn()
+    } catch (e) {
+        next(e)
+    }
+}
 
 export const retryPromiseXTimes = (
     promiseCreator: () => Promise<void>,

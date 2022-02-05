@@ -1,0 +1,22 @@
+@import "scss/mixins.scss";
+@import "scss/breakpoints.scss";
+
+.loginFormWrapper {
+    @include genericPaperFormWrapper(loginForm, true);
+    @include breakpoint(desktop) {
+        max-width: 55rem;
+    }
+
+    .logo {
+        @include mediaQueriesLogo;
+    }
+
+    [data-google-disabled="true"] {
+        box-shadow: inset 0 0 0 20px rgb(45 11 88 / 69%);
+    }
+
+    // only these buttons have min width to ensure loading of one is still sae width compared to other (visually better)
+    button {
+        min-width: 16.5rem;
+    }
+}

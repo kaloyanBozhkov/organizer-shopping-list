@@ -1,6 +1,6 @@
 import React, { ReactElement, Suspense } from 'react'
 
-import Loading, { LoadingProps } from 'components/Loading/Loading'
+import Loading, { LoadingProps } from 'components/molecules/Loading/Loading.molecule'
 
 interface SuspensifyProps extends LoadingProps {
     children: ReactElement

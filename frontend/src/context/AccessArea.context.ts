@@ -1,15 +1,15 @@
 import React from 'react'
 
-import { useAddUserMutation, useUpdateUserPasswordMutation } from 'types/graphQL.generated'
+import { useAddUserMutation } from 'types/graphQL.generated'
 
 export type AccessAreaContextType = {
     addUserMutation: ReturnType<typeof useAddUserMutation>
-    updatePasswordMutation: ReturnType<typeof useUpdateUserPasswordMutation>
     registeredUser: { alias: string; email: string } | null
     resetEmail: string | null
-    // has password been updated successfully
-    updatedPassword: null | true
+    updatedPassword: boolean
     onRequestPasswordReset: (input?: Record<string, string>) => Promise<Response>
+    onUpdatePassword: (input?: Record<string, string>) => Promise<Response>
+    onSaveConfirmedJWT: (jwt: string) => void
 }
 
 export const defaultAccessArea = {} as AccessAreaContextType
@@ -23,7 +23,7 @@ export const props: {
 } = {
     registeredUser: null,
     resetEmail: null,
-    updatedPassword: null,
+    updatedPassword: false,
 }
 
 export default AccessAreaContext

@@ -12,7 +12,7 @@ type PrivatePortalProps = {
 
 const PrivatePortal = ({ children }: PrivatePortalProps) => {
     const user = useReactiveVar(userVar)
-
+    debugger
     return user ? children : <Navigate to="access" />
 }
 

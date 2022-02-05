@@ -1,0 +1,47 @@
+@import "scss/breakpoints.scss";
+@import "scss/mixins.scss";
+@import "scss/variables.scss";
+
+.form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    gap: 4rem;
+
+    @include breakpoint(mobile, landscape) {
+        gap: 1rem;
+    }
+
+    &[data-error] {
+        position: relative;
+        &::before {
+            content: attr(data-error);
+            text-align: center;
+            font-size: 1.4rem;
+            color: $red;
+            margin: auto;
+            margin-top: -1.5rem;
+            margin-bottom: -2.5rem;
+            @include animate(popIn, 400ms);
+        }
+    }
+    > div:first-child {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    > button {
+        align-self: center;
+        margin-top: 2rem;
+        height: 3.5rem;
+    }
+
+    [form-field] {
+        &:not(:last-child) {
+            margin-bottom: 2rem;
+        }
+    }
+}

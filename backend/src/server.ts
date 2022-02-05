@@ -1,21 +1,12 @@
 import 'reflect-metadata'
 
 import { ApolloServer } from 'apollo-server-express'
-import bodyParser from 'body-parser'
-import cors from 'cors'
 import express from 'express'
-import jwt from 'jsonwebtoken'
+import generateAppConfig, { setupAppCRUDEndpoints } from 'generateAppConfig'
 import { buildSchema } from 'type-graphql'
 
 import { resolvers } from '@generated/type-graphql'
 import { PrismaClient } from '@prisma/client'
-
-import authenticateEdnpoint from 'endpoints/authenticate.endpoint'
-import requestPasswordResetEndpoint from 'endpoints/requestPasswordReset.endpoint'
-import validateJWT from 'endpoints/validateJWT.endpoint'
-
-import confirmEmailEndpoint from './endpoints/confirmEmail.endpoint'
-import attachOperationSideEffectsToResponse from './operationSideEffects/index'
 
 const prisma = new PrismaClient(),
     setupAndRunServer = async () => {
@@ -23,29 +14,12 @@ const prisma = new PrismaClient(),
                 resolvers,
                 validate: false,
             }),
-            app = express()
+            app = express(),
+            { middlewares, crud } = generateAppConfig(prisma)
 
-        // Enable All CORS Requests
-        app.use(
-            cors({
-                origin: '*',
-            })
-        )
-        app.use(bodyParser.json())
+        middlewares.forEach((m) => app.use(m))
 
-        app.use(attachOperationSideEffectsToResponse(prisma))
-
-        app.get('/', (req, res) => res.end('Welcome to API'))
-
-        app.get('/confirm/:emailTokenId', confirmEmailEndpoint(prisma))
-
-        app.get('/password-reset/:emailTokenId', requestPasswordResetEndpoint(prisma))
-
-        app.post('/validate/:jwt', validateJWT)
-
-        app.post('/authenticate', authenticateEdnpoint(prisma))
-
-        app.post('/request-password-reset', requestPasswordResetEndpoint(prisma))
+        setupAppCRUDEndpoints(app, crud)
 
         app.listen({ port: 4000 }, () => console.log('listening on port 4000'))
 
@@ -57,7 +31,9 @@ const prisma = new PrismaClient(),
             },
             formatError: (err) => {
                 console.log(err)
-                return new Error('Internal server error')
+                return new Error(
+                    process.env.NODE_ENV === 'production' ? 'Internal server error' : err.message
+                )
             },
         })
 

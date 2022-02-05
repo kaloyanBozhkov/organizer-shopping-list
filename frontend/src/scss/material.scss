@@ -46,6 +46,24 @@
     &:hover {
         background-color: darken($green, 10%);
     }
+    &.MuiButton-contained.Mui-disabled {
+        background-color: $green;
+        color: $purple;
+
+        &:hover {
+            background-color: $green;
+        }
+
+        svg {
+            circle {
+                color: $purple;
+            }
+        }
+
+        .MuiCircularProgress-svg {
+            transform: scale(0.5);
+        }
+    }
 }
 
 .MuiButton-outlinedPrimary {
