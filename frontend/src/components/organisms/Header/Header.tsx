@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { userVar } from 'reactives/User.reactives'
+import { setLoggedOutUser } from 'reactives/User.reactive'
 
 import Logo from 'components/atoms/Logo/Logo.atom'
 
@@ -16,7 +16,7 @@ const Header = () => {
 
     return (
         <>
-            <Logo className={styles.mobileLogo} />
+            <Logo modifier="pageBG" className={styles.mobileLogo} />
             <div className={styles.header} data-open={mobileHeaderOpen}>
                 <Button
                     variant="text"
@@ -25,7 +25,7 @@ const Header = () => {
                 >
                     {mobileHeaderOpen ? <MenuOpenIcon /> : <MenuIcon />}
                 </Button>
-                <Logo className={styles.logo} />
+                <Logo modifier="pageBG" className={styles.logo} />
                 <div className={styles.actions}>
                     <Button color="primary" variant="contained" onClick={() => alert('')}>
                         Account
@@ -34,7 +34,7 @@ const Header = () => {
                         className={styles.logoutBtn}
                         color="primary"
                         variant="outlined"
-                        onClick={() => userVar(null)}
+                        onClick={setLoggedOutUser}
                     >
                         Logout
                     </Button>

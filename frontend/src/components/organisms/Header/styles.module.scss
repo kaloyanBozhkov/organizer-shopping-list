@@ -111,6 +111,7 @@
     }
 
     > .logo {
+        width: auto;
         position: relative;
         top: -0.5rem;
         @include logoMobile;

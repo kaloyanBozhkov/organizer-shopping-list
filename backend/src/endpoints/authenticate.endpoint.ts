@@ -2,9 +2,9 @@ import { Request, Response } from 'express'
 
 import { PrismaClient, User } from '@prisma/client'
 
-import { ifNewGoogleUserRegisterAndReturnUser } from 'helpers/ifNewGoogleUserRegisterAndReturnUser'
 import { validatePassword } from 'helpers/password'
 import { getNewUserJwtToken, hasUserConfirmedEmailAddress } from 'helpers/tokens'
+import { ifNewGoogleUserRegisterAndReturnUser } from 'helpers/user/ifNewGoogleUserRegisterAndReturnUser'
 
 /**
  * Authenticate user by email & password, return new user JWT
@@ -53,7 +53,9 @@ const authenticateEdnpoint = (prisma: PrismaClient) => async (req: Request, res:
             userObj: user,
             withDeleteExistingTokens: false,
         })
-        res.json({ jwt })
+        res.json({
+            jwt,
+        })
     } else {
         // valid gmail acc but the email is already registered normally so pass verify failed
         if (user && tokenId)

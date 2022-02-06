@@ -5,3 +5,9 @@ mutation addUser($alias: String!, $email: String!, $password: String!) {
         email
     }
 }
+
+mutation deleteToken($tokenId: String) {
+    deleteToken(where: { id: $tokenId }) {
+        userId
+    }
+}

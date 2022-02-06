@@ -1,8 +1,8 @@
 import React from 'react'
 
-import NotFound from 'components/organisms/NotFound/NotFound'
-
 import CenteredLayout from 'components/layouts/Centered/Centered.layout'
+
+import NotFound from 'components/templates/NotFound/NotFound.template'
 
 const NotFoundPage = () => (
     <CenteredLayout>

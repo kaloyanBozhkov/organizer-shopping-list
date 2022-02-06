@@ -29,7 +29,7 @@ const PasswordResetForm = () => {
     return emailTokenId ? (
         <Paper variant="outlined" className={styles.passwordResetFormWrapper}>
             <Outlet />
-            <Logo className={styles.logo} />
+            <Logo modifier="paperBG" className={styles.logo} />
             <Form
                 formId="passwordResetForm"
                 definitions={PASSWORD_RESET_FORM_DEFINITIONS}

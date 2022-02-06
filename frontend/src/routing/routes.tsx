@@ -16,7 +16,8 @@ import NotFoundPage from 'components/pages/NotFound.page'
 import AccessAreaContainer from 'containers/AccessArea.container'
 import MainContainer from 'containers/Main.container'
 
-import Authorized from './Authorized/Authorized'
+import SignedInGate from './Gates/SignedIn.gate'
+import SignedOutGate from './Gates/SignedOut.gate'
 
 export type RouteConfig = {
     path: string
@@ -28,15 +29,19 @@ const routes: RouteConfig[] = [
     {
         path: '/',
         element: (
-            <Authorized>
+            <SignedInGate>
                 <MainContainer />
-            </Authorized>
+            </SignedInGate>
         ),
         children: [],
     },
     {
         path: '/access',
-        element: <AccessAreaContainer />,
+        element: (
+            <SignedOutGate>
+                <AccessAreaContainer />
+            </SignedOutGate>
+        ),
         children: [
             {
                 path: 'login',

@@ -1,25 +1,20 @@
 import React, { useCallback } from 'react'
 
-import { useReactiveVar } from '@apollo/client'
-
-import { Navigate, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import { useAddUserMutation } from 'types/graphQL.generated'
 
 import AccessAreaContext, { props as AccessAreaContextProps } from 'context/AccessArea.context'
 
-import { userVar } from 'reactives/User.reactives'
+import { setAuthenticatedUser } from 'reactives/Token.reactive'
 
 import AccessAreaPage from 'components/pages/AccessArea.page'
 
 import requestResetPassword from 'services/requestResetPassword'
 import updatePassword from 'services/updatePassword'
 
-import { saveJWT } from 'helpers/token'
-
 const AccessAreaContainer = () => {
-    const user = useReactiveVar(userVar),
-        nav = useNavigate(),
+    const nav = useNavigate(),
         addUserMutation = useAddUserMutation({
             onCompleted: ({ createUser: { alias, email } }) => {
                 AccessAreaContextProps.registeredUser = { alias, email }
@@ -59,24 +54,15 @@ const AccessAreaContainer = () => {
                         .catch(rej)
                 ),
             [nav]
-        ),
-        onSaveConfirmedJWT = useCallback(
-            (jwt: string) => {
-                saveJWT(jwt)
-                nav('/')
-            },
-            [nav]
         )
 
-    return user ? (
-        <Navigate to="/" />
-    ) : (
+    return (
         <AccessAreaContext.Provider
             value={{
                 addUserMutation,
                 onUpdatePassword,
                 onRequestPasswordReset,
-                onSaveConfirmedJWT,
+                onSaveConfirmedJWT: setAuthenticatedUser,
                 ...AccessAreaContextProps,
             }}
         >

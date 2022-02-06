@@ -20,7 +20,7 @@ const RegistrationSuccess = () => {
     return registeredUser ? (
         <DropDownPaperOutletLayout>
             <div className={styles.registrationSuccessWrapper}>
-                <Logo className={styles.logo} />
+                <Logo modifier="paperBG" className={styles.logo} />
                 <p>
                     Hey <b>{registeredUser.alias}</b>, thank you for creating an acount!
                 </p>

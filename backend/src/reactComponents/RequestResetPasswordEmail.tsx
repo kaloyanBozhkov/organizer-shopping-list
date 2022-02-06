@@ -38,7 +38,7 @@ const styles = {
         textAlign: 'center',
         padding: '20px',
     },
-}
+} as Record<string, React.CSSProperties>
 
 type RequestResetPasswordEmailProps = {
     alias: string

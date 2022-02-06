@@ -17,7 +17,7 @@ const PasswordResetSuccess = () => {
     return updatedPassword ? (
         <DropDownPaperOutletLayout>
             <div className={styles.resetPasswordSuccess}>
-                <Logo className={styles.logo} />
+                <Logo modifier="paperBG" className={styles.logo} />
                 <p>
                     Your password was updated successfully! Now please write it down somewhere
                     before you forget it again :)

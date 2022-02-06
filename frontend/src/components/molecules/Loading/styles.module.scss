@@ -15,18 +15,15 @@
     &[data-modifier="main"] {
         flex-direction: row;
         justify-content: flex-start;
-        font-size: 10rem;
         font-weight: bolder;
-        gap: 6rem;
+        gap: 1.5rem;
         .spinner {
             margin-left: 2rem;
-            svg {
-                transform: scale(2);
-            }
         }
     }
 
     &[data-modifier="generic"] {
+        gap: 1.5rem;
         flex-direction: column;
     }
 }

@@ -36,6 +36,7 @@ const editGraphQLRequestToHaveHashAndSaltFromPassword = (
     ): Promise<GraphQLRequest> => {
         const { password, email } = graphQLRequest.variables as Record<string, string>
 
+        // if email used but not activated just delete the token and user for that stale acc
         if (await hasActiveEmailTypeTokens(prisma, { email })) {
             await prisma.token.deleteMany({
                 where: {

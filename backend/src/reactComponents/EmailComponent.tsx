@@ -21,13 +21,14 @@ export const styles = {
         paddingBottom: '10px',
         fontSize: '35px',
     },
-}
+} as Record<string, React.CSSProperties>
+
 const EmailComponent = ({
     children,
     extraWrapperStyles,
 }: {
     children: ReactNode
-    extraWrapperStyles?: Record<string, string>
+    extraWrapperStyles?: Record<string, string> | React.CSSProperties
 }) => (
     <div style={{ ...styles.wrapper, ...(extraWrapperStyles || {}) }}>
         <h1 style={styles.shoppingList}>- ShoppingList -</h1>

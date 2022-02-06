@@ -1,6 +1,6 @@
 @import "scss/mixins.scss";
 
-@keyframes dashArray {
+@keyframes dashArrayPaperBG {
     0% {
         stroke-width: 30px;
         stroke: $paperBg;
@@ -14,6 +14,33 @@
     0.6% {
         stroke-width: 3px;
         stroke: $paperBg;
+    }
+
+    // 2.6s
+    0.866% {
+        stroke-width: 3px;
+        stroke: $green;
+    }
+
+    to {
+        stroke-dashoffset: 7500;
+    }
+}
+
+@keyframes dashArrayPageBG {
+    0% {
+        stroke-width: 30px;
+        stroke: $purple;
+    }
+    // 1s
+    0.333% {
+        stroke-width: 20px;
+    }
+
+    // 1.8s
+    0.6% {
+        stroke-width: 3px;
+        stroke: $purple;
     }
 
     // 2.6s
@@ -51,8 +78,22 @@
             @include breakpoint(tabletBig, landscape) {
                 stroke-width: 3px;
             }
+        }
+    }
 
-            @include animate(dashArray, 300s, unset, none);
+    // determine the bg color that the text appars from
+    &[data-modifier="paperBG"] {
+        > svg > path {
+            @include animate(dashArrayPaperBG, 300s, unset, none);
+
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+        }
+    }
+
+    &[data-modifier="pageBG"] {
+        > svg > path {
+            @include animate(dashArrayPageBG, 300s, unset, none);
 
             animation-timing-function: linear;
             animation-iteration-count: infinite;

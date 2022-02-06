@@ -40,7 +40,7 @@ const styles = {
             display: 'flex',
             flexDirection: 'column',
         },
-    },
+    } as Record<string, React.CSSProperties>,
     OverTopErrorMsgPage = ({ msg }: { msg: string }) => (
         <div style={styles.wrapper}>
             <div style={styles.contain}>

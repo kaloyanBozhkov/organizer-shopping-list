@@ -51,6 +51,19 @@ const confirmEmailEndpoint = (prisma: PrismaClient) => async (req: Request, res:
         )
     }
 
+    // setup membership of user once email confirmed
+    await prisma.membership.create({
+        data: {
+            // new accs free for a year
+            expiresAt: new Date(Date.now() + 60 * 60 * 24 * 365),
+            user: {
+                connect: {
+                    id: token.userId,
+                },
+            },
+        },
+    })
+
     const newJWT = await getNewUserJwtToken({
         prisma,
         userId: token.userId,

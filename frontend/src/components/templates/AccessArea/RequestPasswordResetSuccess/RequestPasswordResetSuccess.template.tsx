@@ -19,7 +19,7 @@ const RequestPasswordResetSuccess = () => {
     return resetEmail ? (
         <DropDownPaperOutletLayout>
             <div className={styles.requestPasswordResetSuccessWrapper}>
-                <Logo className={styles.logo} />
+                <Logo modifier="paperBG" className={styles.logo} />
                 <p>
                     An email containing a password-reset link has been sent to <b>{resetEmail}</b>{' '}
                     as long as that email is indeed associated with an existing non-Google account.

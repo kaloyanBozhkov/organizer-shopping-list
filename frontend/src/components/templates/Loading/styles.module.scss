@@ -1,0 +1,16 @@
+@import "scss/mixins.scss";
+@import "scss/breakpoints.scss";
+@import "scss/variables.scss";
+
+.loadingWrapper {
+    // @include genericPaperWrapper();
+    background: none;
+    p,
+    svg {
+        color: $white;
+    }
+
+    p {
+        font-size: 3rem;
+    }
+}

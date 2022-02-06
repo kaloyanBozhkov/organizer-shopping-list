@@ -22,7 +22,7 @@ const RegistrationForm = () => {
     return (
         <Paper variant="outlined" className={styles.registerFormWrapper}>
             <Outlet />
-            <Logo className={styles.logo} />
+            <Logo modifier="paperBG" className={styles.logo} />
             <Form
                 formId="registerForm"
                 definitions={REGISTER_FORM_DEFINITIONS}

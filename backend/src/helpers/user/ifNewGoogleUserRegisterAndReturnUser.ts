@@ -1,6 +1,7 @@
 import { OAuth2Client } from 'google-auth-library'
+import { v4 as uuid } from 'uuid'
 
-import type { PrismaClient, User } from '@prisma/client'
+import { MembershipStatus, PrismaClient, User } from '@prisma/client'
 
 import { getPasswordHashSalt } from 'helpers/password'
 
@@ -36,6 +37,7 @@ export const ifNewGoogleUserRegisterAndReturnUser = async (
 
     if (!user) {
         const { hash, salt } = getPasswordHashSalt(userId)
+
         user = await prisma.user.create({
             select: userFields,
             data: {
@@ -45,6 +47,12 @@ export const ifNewGoogleUserRegisterAndReturnUser = async (
                 hash,
                 salt,
                 fromProvider: true,
+                membership: {
+                    create: {
+                        // 1 year free
+                        expiresAt: new Date(Date.now() + 60 * 60 * 24 * 365),
+                    },
+                },
             },
         })
     }

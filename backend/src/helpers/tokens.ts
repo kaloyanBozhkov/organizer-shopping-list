@@ -5,6 +5,15 @@ import { PrismaClient, TokenType, User } from '@prisma/client'
 import { hasExpired } from './common'
 import { AUTHENTICATION_TOKEN_EXPIRATION_HOURS } from './constants'
 
+export type JwtPayload = {
+    user: {
+        id: string
+        alias: string
+        email: string
+    }
+    tokenId: string
+    exp: number
+}
 // Generate a random 8 digit number as the email token
 export const generateEmailToken = (): string =>
     Math.floor(10000000 + Math.random() * 90000000).toString()
@@ -31,20 +40,10 @@ export const deleteJWTToken = (prisma: PrismaClient, userId: string) =>
         },
     })
 
-type JwtPayload = {
-    user: {
-        id: string
-        alias: string
-        email: string
-    }
-    tokenId: string
-    exp: number
-}
-
 /**
  * Sign a JWT token
  */
-export const signToken = (jwtPayload: Record<string, unknown>, userId: string) =>
+export const signToken = (jwtPayload: JwtPayload, userId: string) =>
     jwt.sign(jwtPayload, userId + process.env.JWT_TOKEN_SECRET)
 
 export const getNewUserJwtToken = async ({

@@ -62,7 +62,7 @@ const handleErrorMessage = (errorResp: { code: string } | string) => {
 
         return (
             <Paper variant="outlined" className={styles.loginFormWrapper}>
-                <Logo className={styles.logo} />
+                <Logo modifier="paperBG" className={styles.logo} />
                 <Form
                     formId="loginForm"
                     errorMsg={error}
@@ -99,7 +99,7 @@ const handleErrorMessage = (errorResp: { code: string } | string) => {
                             data-google-disabled={disabled}
                             disabled={disabled || isGoogleSignInPending}
                             onClick={onClick}
-                            startIcon={<GoogleIcon />}
+                            startIcon={isGoogleSignInPending ? undefined : <GoogleIcon />}
                         >
                             {isGoogleSignInPending ? <CircularProgress /> : 'Sign In'}
                         </Button>

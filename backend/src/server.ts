@@ -8,6 +8,8 @@ import { buildSchema } from 'type-graphql'
 import { resolvers } from '@generated/type-graphql'
 import { PrismaClient } from '@prisma/client'
 
+import { getUserContext } from 'helpers/context/getUser.context'
+
 const prisma = new PrismaClient(),
     setupAndRunServer = async () => {
         const schema = await buildSchema({
@@ -26,8 +28,13 @@ const prisma = new PrismaClient(),
         const server = new ApolloServer({
             schema,
             // make these available to all root values
-            context: {
-                prisma,
+            context: async ({ req }) => {
+                const reqUser = await getUserContext(prisma, req.headers?.authorization)
+                console.log(reqUser)
+                return {
+                    prisma,
+                    ...(reqUser ? { reqUser } : {}),
+                }
             },
             formatError: (err) => {
                 console.log(err)

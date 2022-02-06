@@ -40,7 +40,7 @@ const ConfirmedEmail = () => {
 
     return (
         <Paper variant="outlined" className={styles.confirmedEmailWrapper}>
-            <Logo className={styles.logo} />
+            <Logo modifier="paperBG" className={styles.logo} />
             {loading ? <p>Confirming validity of provided token...</p> : msg}
         </Paper>
     )

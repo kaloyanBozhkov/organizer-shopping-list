@@ -28,7 +28,7 @@ const RequestPasswordResetForm = () => {
     return (
         <Paper variant="outlined" className={styles.requestPasswordResetFormWrapper}>
             <Outlet />
-            <Logo className={styles.logo} />
+            <Logo modifier="paperBG" className={styles.logo} />
             <Form
                 formId="requestPasswordResetForm"
                 definitions={REQUEST_PASSWORD_RESET_FORM_DEFINITIONS}
