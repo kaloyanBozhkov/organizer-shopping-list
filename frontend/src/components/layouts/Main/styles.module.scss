@@ -33,8 +33,27 @@
         }
     }
 
-    main {
+    .contentWrapper {
         flex: 1;
-        margin-top: $spacingMain;
+        margin-top: $marginUnit;
+        display: flex;
+        flex-direction: row;
+
+        main {
+            flex: 1;
+        }
+
+        nav {
+            display: none;
+            width: 26rem;
+
+            @include breakpoint(tabletSmall) {
+                display: block;
+            }
+
+            @include breakpoint(tabletSmall, landscape) {
+                display: block;
+            }
+        }
     }
 }

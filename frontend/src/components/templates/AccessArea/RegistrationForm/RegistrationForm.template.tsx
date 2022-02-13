@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 
 import { Link, Outlet } from 'react-router-dom'
 
@@ -18,6 +18,9 @@ import styles from './styles.module.scss'
 const RegistrationForm = () => {
     const { addUserMutation } = useContext(AccessAreaContext),
         [addUser, { loading, error, reset }] = addUserMutation
+
+    // reset on unmount so error msgs cear
+    useEffect(() => reset, [reset])
 
     return (
         <Paper variant="outlined" className={styles.registerFormWrapper}>

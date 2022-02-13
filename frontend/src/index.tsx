@@ -8,7 +8,7 @@ import { BrowserRouter } from 'react-router-dom'
 
 import IndexRouter from 'routing/IndexRouter'
 
-import ErrorBoundary from 'components/Errors/ErrorBoundary'
+import ErrorBoundary from 'containers/ErrorBoundary.container'
 
 import { StylesProvider } from '@material-ui/core/styles'
 
@@ -35,14 +35,14 @@ const root = createRoot(rootElement),
 root.render(
     // Add back when Apollo Client useMutation is no longer failing with StrictMode due to re-renders https://github.com/apollographql/apollo-client/issues/9251
     // <React.StrictMode>
-    <ErrorBoundary>
-        <StylesProvider injectFirst>
+    <StylesProvider injectFirst>
+        <ErrorBoundary>
             <BrowserRouter>
                 <ApolloProvider client={apolloClient}>
                     <IndexRouter />
                 </ApolloProvider>
             </BrowserRouter>
-        </StylesProvider>
-    </ErrorBoundary>
+        </ErrorBoundary>
+    </StylesProvider>
     // </React.StrictMode>
 )

@@ -23,8 +23,12 @@
             color: $red;
             margin: auto;
             margin-top: -1.5rem;
-            margin-bottom: -2.5rem;
             @include animate(popIn, 400ms);
+
+            margin-bottom: -2.5rem;
+            @include breakpoint(mobile, landscape) {
+                margin-bottom: unset;
+            }
         }
     }
     > div:first-child {

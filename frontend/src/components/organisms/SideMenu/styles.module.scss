@@ -1,0 +1,52 @@
+@import "scss/variables.scss";
+
+.sideMenuWrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: $marginUnit;
+
+    .category {
+        display: flex;
+        flex-direction: column;
+        gap: $baseUnit;
+
+        &[data-cat="main"] {
+            max-width: 12rem;
+        }
+
+        .heading {
+            p {
+                color: $textPrimary;
+                text-transform: uppercase;
+                font-size: 1.4rem;
+                font-weight: bold;
+            }
+        }
+
+        button {
+            position: relative;
+            left: -3rem;
+            box-sizing: content-box;
+            font-size: 2.2rem;
+            text-transform: unset;
+            padding: $baseUnit * 0.5 3.5rem;
+            text-align: left;
+            width: 100%;
+
+            > span {
+                display: inline-block;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                line-height: 2.2rem;
+
+                > span {
+                    display: inline-block;
+                    margin-left: 0;
+                    vertical-align: middle;
+                }
+            }
+        }
+    }
+}

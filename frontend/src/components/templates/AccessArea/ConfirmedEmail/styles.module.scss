@@ -18,7 +18,7 @@
         width: 55rem;
     }
 
-    padding: 3rem;
+    padding: $marginUnit;
 
     .logo {
         @include mediaQueriesLogo;

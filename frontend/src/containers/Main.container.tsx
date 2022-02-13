@@ -14,25 +14,33 @@ import MainPage from 'components/pages/Main.page'
 
 const MainContainer = (): ReactElement => {
     const token = useReactiveVar(tokenVar),
-        [getUser, { loading, error }] = useGetUserLoginLazyQuery({
+        [getUser, { loading }] = useGetUserLoginLazyQuery({
             onCompleted: ({ user }) => setLoggedInUser(user!),
             onError: () => {
                 // do something with error
-
                 setLoggedOutUser()
             },
         })
 
     useEffect(() => {
         if (token) {
-            const decodedToken = jwtDecode<{ user: { email: string } }>(token)
-            getUser({ variables: { email: decodedToken.user.email } })
+            try {
+                const {
+                    user: { email },
+                } = jwtDecode<{ user: { email: string } }>(token)
+
+                getUser({ variables: { email } })
+            } catch (err) {
+                setLoggedOutUser()
+
+                throw Error(
+                    'There seems to have been an issue with the token used for authentication. You will have to sign in again :('
+                )
+            }
         }
     }, [token, getUser])
 
     if (loading) return <LoadingPage message="Loading user data.." />
-
-    if (error) return <p>AAAAAA</p>
 
     return <MainPage />
 }

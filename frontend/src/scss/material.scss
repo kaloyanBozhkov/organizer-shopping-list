@@ -77,9 +77,21 @@
     }
 }
 
+.MuiButton-textPrimary {
+    border: none;
+    color: $textPrimary;
+    background-color: transparent;
+    font-weight: bold;
+    &:hover {
+        color: $green;
+        background-color: $highlightPurple;
+    }
+}
+
 .MuiButton-containedPrimary,
 .MuiButton-containedSecondary,
-.MuiButton-outlinedPrimary {
+.MuiButton-outlinedPrimary,
+.MuiButton-textPrimary {
     border-radius: 2rem;
     font-size: 1.8rem;
     height: 3.5rem;

@@ -2,6 +2,9 @@
 
 .registerFormWrapper {
     @include genericPaperFormWrapper(registerForm);
+    @include breakpoint(desktop) {
+        max-width: 75rem;
+    }
 
     position: relative;
 

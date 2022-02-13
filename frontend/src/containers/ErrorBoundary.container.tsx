@@ -1,12 +1,12 @@
 import React, { Component, ErrorInfo, ReactNode } from 'react'
 
-import ClientError from './ClientError'
+import { ErrorPage } from 'components/pages/Error.page'
 
-interface Props {
+type Props = {
     children: ReactNode
 }
 
-interface State {
+type State = {
     errorMsg: null | string
 }
 
@@ -29,8 +29,17 @@ class ErrorBoundary extends Component<Props, State> {
         } = this
 
         // Render either fallback UI for error or children if no errorMsg
-
-        return errorMsg ? <ClientError error={errorMsg} /> : children
+        return errorMsg ? (
+            <ErrorPage
+                errorMsg={
+                    process.env.NODE_ENV === 'development'
+                        ? errorMsg
+                        : 'Oops! Something went wrong :('
+                }
+            />
+        ) : (
+            children
+        )
     }
 }
 
