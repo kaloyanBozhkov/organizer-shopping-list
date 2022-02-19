@@ -5,7 +5,7 @@ import ReactDOMServer from 'react-dom/server'
 
 import OverTopErrorMsgPage from 'reactComponents/OverTopErrorMsgPage'
 
-import errLogger from './errLogger'
+import { errLogger } from './logger'
 
 export const errHandler = async (fn: () => void, next: NextFunction) => {
     try {

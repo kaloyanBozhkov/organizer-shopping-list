@@ -9,7 +9,6 @@ interface CssExports {
     popIn: string
     slideInBottom: string
     slideInBottomWithOpacity: string
-    slideInRight: string
     slideInTop: string
     wrapper: string
 }

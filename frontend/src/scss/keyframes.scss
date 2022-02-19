@@ -29,14 +29,16 @@
     }
 }
 
-@keyframes slideInRight {
-    from {
-        transform: translateX(10%);
-        opacity: 0;
-    }
-    to {
-        transform: translateX(0);
-        opacity: 1;
+@mixin slideInRightBy($x, $name) {
+    @keyframes slideInRight#{$name} {
+        from {
+            transform: translateX($x);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
     }
 }
 

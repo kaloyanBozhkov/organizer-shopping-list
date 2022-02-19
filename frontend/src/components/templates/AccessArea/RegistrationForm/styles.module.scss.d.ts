@@ -7,7 +7,6 @@ interface CssExports {
     popIn: string
     registerFormWrapper: string
     slideInBottomWithOpacity: string
-    slideInRight: string
     slideInTop: string
 }
 export const cssExports: CssExports

@@ -8,7 +8,6 @@ interface CssExports {
     requestPasswordResetFormWrapper: string
     sideActions: string
     slideInBottomWithOpacity: string
-    slideInRight: string
     slideInTop: string
 }
 export const cssExports: CssExports

@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 
-import errLogger from './errLogger'
+import { errLogger } from './logger'
 
 const errorHandler =
     (fn: (req: Request, res: Response) => void | Promise<void>, path: string, method: string) =>

@@ -5,10 +5,12 @@ import express from 'express'
 import generateAppConfig, { setupAppCRUDEndpoints } from 'generateAppConfig'
 import { buildSchema } from 'type-graphql'
 
+// eslint-disable-next-line
 import { resolvers } from '@generated/type-graphql'
 import { PrismaClient } from '@prisma/client'
 
 import { getUserContext } from 'helpers/context/getUser.context'
+import { logger } from 'helpers/logger'
 
 const prisma = new PrismaClient(),
     setupAndRunServer = async () => {
@@ -23,21 +25,21 @@ const prisma = new PrismaClient(),
 
         setupAppCRUDEndpoints(app, crud)
 
-        app.listen({ port: 4000 }, () => console.log('listening on port 4000'))
+        app.listen({ port: 4000 }, () => logger('listening on port 4000'))
 
         const server = new ApolloServer({
             schema,
             // make these available to all root values
             context: async ({ req }) => {
                 const reqUser = await getUserContext(prisma, req.headers?.authorization)
-                console.log(reqUser)
+                logger(reqUser)
                 return {
                     prisma,
                     ...(reqUser ? { reqUser } : {}),
                 }
             },
             formatError: (err) => {
-                console.log(err)
+                logger(err)
                 return new Error(
                     process.env.NODE_ENV === 'production' ? 'Internal server error' : err.message
                 )

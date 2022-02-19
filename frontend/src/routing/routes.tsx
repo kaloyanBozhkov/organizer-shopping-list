@@ -14,6 +14,7 @@ import PasswordResetSuccess from 'components/templates/AccessArea/ResetPasswordS
 import NotFoundPage from 'components/pages/NotFound.page'
 
 import AccessAreaContainer from 'containers/AccessArea.container'
+import ItemsContainer from 'containers/Items.container'
 import MainContainer from 'containers/Main.container'
 
 import SignedInGate from './Gates/SignedIn.gate'
@@ -33,7 +34,13 @@ const routes: RouteConfig[] = [
                 <MainContainer />
             </SignedInGate>
         ),
-        children: [],
+        children: [
+            {
+                path: '/items',
+                element: <ItemsContainer />,
+                children: [],
+            },
+        ],
     },
     {
         path: '/access',

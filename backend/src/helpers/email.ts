@@ -1,6 +1,6 @@
 import nodemailer, { SendMailOptions } from 'nodemailer'
 
-import errLogger from './errLogger'
+import { errLogger } from './logger'
 
 const createMailer = () =>
         nodemailer.createTransport({

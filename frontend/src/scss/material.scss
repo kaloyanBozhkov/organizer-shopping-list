@@ -82,7 +82,9 @@
     color: $textPrimary;
     background-color: transparent;
     font-weight: bold;
-    &:hover {
+    transition: all 400ms;
+    &:hover,
+    &[data-is-active="true"] {
         color: $green;
         background-color: $highlightPurple;
     }

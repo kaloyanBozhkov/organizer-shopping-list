@@ -15,8 +15,6 @@
     border-right: 0;
     padding: 0;
 
-    @include animate(slideInRight, 600ms);
-
     &::before,
     &::after {
         display: none;
@@ -39,10 +37,11 @@
 
     // logo
     > .logo {
-        position: initial;
-        top: 0;
-        left: 0;
+        position: relative;
         height: 6rem;
+        top: 0;
+        // make up for white space of logo
+        left: -5px;
     }
 
     > .headerMobileBtn {

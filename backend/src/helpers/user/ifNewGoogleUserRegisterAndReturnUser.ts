@@ -1,7 +1,6 @@
 import { OAuth2Client } from 'google-auth-library'
-import { v4 as uuid } from 'uuid'
 
-import { MembershipStatus, PrismaClient, User } from '@prisma/client'
+import { PrismaClient, User } from '@prisma/client'
 
 import { getPasswordHashSalt } from 'helpers/password'
 

@@ -5,7 +5,7 @@ import { Outlet } from 'react-router-dom'
 import StoreContext from 'context/Store.context'
 
 import Header from 'components/organisms/Header/Header'
-import SideMenu from 'components/organisms/SideMenu/SideMenu.organism'
+import MainSideMenu from 'components/organisms/MainSideMenu/MainSideMenu.organism'
 
 import GenericLayout from 'components/layouts/Generic/Generic.layout'
 import MainLayout from 'components/layouts/Main/Main.layout'
@@ -19,7 +19,7 @@ const MainPage = () => {
         <GenericLayout>
             <MainLayout
                 header={<Header />}
-                nav={<SideMenu />}
+                nav={<MainSideMenu />}
                 modal={activeModal ? <LoginModal /> : null}
             >
                 <Outlet />
