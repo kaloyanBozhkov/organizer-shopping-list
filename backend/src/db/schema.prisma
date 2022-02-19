@@ -12,6 +12,16 @@ generator typegraphql {
   output   = "../../node_modules/@generated/type-graphql"
 }
 
+enum Role {
+  USER
+  ADMIN
+}
+
+enum MembershipStatus {
+  FREE
+  PAID
+}
+
 enum Currency {
   BGN
   USD
@@ -81,17 +91,10 @@ model Product {
   userId    String @db.VarChar(36)
   createdBy User   @relation(fields: [userId], references: [id])
 
+  // photo  File?   @relation(fields: [fileId], references: [id])
+  // fileId String?
+
   @@map("product")
-}
-
-enum Role {
-  USER
-  ADMIN
-}
-
-enum MembershipStatus {
-  FREE
-  PAID
 }
 
 model Membership {
@@ -162,3 +165,14 @@ model ListItem {
 
   @@map("listItem")
 }
+
+// model File {
+//   id          String    @id @default(uuid())
+//   createdAt   DateTime  @default(now())
+//   updatedAt   DateTime  @updatedAt
+//   path        String
+//   size        Int
+//   mimetype    String
+//   description String
+//   Product     Product[]
+// }
