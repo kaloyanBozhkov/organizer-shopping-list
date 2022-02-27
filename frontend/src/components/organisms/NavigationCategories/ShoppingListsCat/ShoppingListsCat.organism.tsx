@@ -47,11 +47,22 @@ const formatBtnsArr = <T extends { path: string; label: string }>({
                 goNextPage: shoppingListsGoNextPage,
             } = useArrayPagination({
                 arr: shoppingLists,
-                itemsCount: 2,
+                itemsCount: 4,
                 withNextSlice: true,
                 withPrevSlice: true,
             }),
-            [buttonAnimation, setBtnAnim] = useState(true)
+            [buttonAnimation, setBtnAnim] = useState(true),
+            currentPageButtons = (
+                <ButtonsStack
+                    withAnimation={buttonAnimation}
+                    alignment="left"
+                    btnsDef={formatBtnsArr({
+                        nav,
+                        location,
+                        btnsArr: listsArr,
+                    })}
+                />
+            )
 
         // animations of button only at first mount
         useEffect(() => {
@@ -86,51 +97,45 @@ const formatBtnsArr = <T extends { path: string; label: string }>({
                                     />
                                 ) : undefined,
                             noContentMsg: 'You have not created any shopping lists',
-                            customContent: (
-                                <Slider
-                                    withFadedSidesDuringDrag
-                                    dragTriggeredByPercentOfWidth={10}
-                                    onSlideLeft={shoppingListsGoNextPage}
-                                    onSlideRight={shoppingListsGoPrevPage}
-                                    prev={
-                                        listsPrevArr?.length ? (
-                                            <ButtonsStack
-                                                withAnimation={buttonAnimation}
-                                                alignment="left"
-                                                btnsDef={formatBtnsArr({
-                                                    nav,
-                                                    location,
-                                                    btnsArr: listsPrevArr,
-                                                })}
-                                            />
-                                        ) : undefined
-                                    }
-                                    curr={
-                                        <ButtonsStack
-                                            withAnimation={buttonAnimation}
-                                            alignment="left"
-                                            btnsDef={formatBtnsArr({
-                                                nav,
-                                                location,
-                                                btnsArr: listsArr,
-                                            })}
-                                        />
-                                    }
-                                    next={
-                                        listsNextArr?.length ? (
-                                            <ButtonsStack
-                                                withAnimation={buttonAnimation}
-                                                alignment="left"
-                                                btnsDef={formatBtnsArr({
-                                                    nav,
-                                                    location,
-                                                    btnsArr: listsNextArr,
-                                                })}
-                                            />
-                                        ) : undefined
-                                    }
-                                />
-                            ),
+                            customContent:
+                                // no need of a slider if we got just 1 page
+                                shoppingListsPageCount === 1 ? (
+                                    currentPageButtons
+                                ) : (
+                                    <Slider
+                                        withFadedSidesDuringDrag
+                                        dragTriggeredByPercentOfWidth={10}
+                                        onSlideLeft={shoppingListsGoNextPage}
+                                        onSlideRight={shoppingListsGoPrevPage}
+                                        prev={
+                                            listsPrevArr?.length ? (
+                                                <ButtonsStack
+                                                    withAnimation={buttonAnimation}
+                                                    alignment="left"
+                                                    btnsDef={formatBtnsArr({
+                                                        nav,
+                                                        location,
+                                                        btnsArr: listsPrevArr,
+                                                    })}
+                                                />
+                                            ) : undefined
+                                        }
+                                        curr={currentPageButtons}
+                                        next={
+                                            listsNextArr?.length ? (
+                                                <ButtonsStack
+                                                    withAnimation={buttonAnimation}
+                                                    alignment="left"
+                                                    btnsDef={formatBtnsArr({
+                                                        nav,
+                                                        location,
+                                                        btnsArr: listsNextArr,
+                                                    })}
+                                                />
+                                            ) : undefined
+                                        }
+                                    />
+                                ),
                         },
                     }}
                 />

@@ -12,7 +12,7 @@ const useArrayPagination = <T>({
     withNextSlice?: boolean
 }) => {
     const itemsCount = itemsCountMinusOne - 1 < 1 ? 1 : itemsCountMinusOne,
-        pageCount = arr.length ? Math.round(arr.length / itemsCount) : 0,
+        pageCount = arr.length ? Math.ceil(arr.length / itemsCount) : 0,
         [currPage, setPage] = useState(0),
         { currSlice, prevSlice, nextSlice } = useMemo(() => {
             const currSliceFrom = currPage * itemsCount,
@@ -26,8 +26,7 @@ const useArrayPagination = <T>({
                               currPage > 0
                                   ? arr.slice(currSliceFrom - itemsCount, currSliceFrom)
                                   : arr.slice(
-                                        Math.floor(arr.length / itemsCount) * itemsCount -
-                                            itemsCount
+                                        Math.ceil(arr.length / itemsCount) * itemsCount - itemsCount
                                     ),
                       }
                     : {}),
