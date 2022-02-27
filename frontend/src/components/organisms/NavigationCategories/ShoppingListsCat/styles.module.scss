@@ -1,0 +1,47 @@
+@import "scss/mixins.scss";
+@import "scss/variables.scss";
+
+@keyframes shake {
+    0% {
+        transform: translate("-1px", "-1px");
+    }
+
+    50% {
+        transform: translate("1px", "1px");
+    }
+
+    100% {
+        transform: translate("-1px", "1px");
+    }
+}
+
+.shoppingListsCat {
+    width: 100%;
+    height: 100%;
+
+    .navigationDots {
+        border-bottom: 1px solid transparentize($text, 0.55);
+        height: auto;
+        width: auto;
+        padding-bottom: $marginUnit;
+        margin-right: $spacingUnit * 2;
+    }
+
+    [data-id="sliderWrapper"] {
+        margin-left: -($spacingUnit * 2);
+        [data-id="slider"] {
+            [data-id="slide"] {
+                &:first-child {
+                    opacity: 0;
+                    @include animate(opacityIn, 300ms, 2s);
+                }
+
+                box-sizing: border-box;
+                button {
+                    box-sizing: border-box;
+                    left: 0;
+                }
+            }
+        }
+    }
+}

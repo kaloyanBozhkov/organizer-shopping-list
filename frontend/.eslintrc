@@ -76,7 +76,9 @@
         // allow single non-default exports for a module
         "import/prefer-default-export": ["off"],
         // not providing subs yet
-        "jsx-a11y/media-has-caption": ["off"]
+        "jsx-a11y/media-has-caption": ["off"],
+        // sometimes we should be able to have 1 liner for just setting stuff
+        "no-return-assign": ["off"]
     },
     "settings": {
         "react": {

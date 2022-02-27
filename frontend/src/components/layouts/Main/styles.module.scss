@@ -6,6 +6,7 @@
     height: 100%;
     display: flex;
     flex-direction: column;
+    gap: $marginUnit;
     padding: 0 0;
 
     @include breakpoint(tabletSmall) {
@@ -35,7 +36,6 @@
 
     .contentWrapper {
         flex: 1;
-        margin-top: $marginUnit;
         display: flex;
         flex-direction: row;
 

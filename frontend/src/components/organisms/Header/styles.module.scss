@@ -137,6 +137,15 @@
                 top: -3px;
             }
         }
+
+        > [data-id="mainSideMenu"] {
+            width: 100%;
+
+            > div {
+                max-width: 100%;
+                padding: 0 $marginUnit;
+            }
+        }
     }
 
     @media all and (max-width: 350px) {
@@ -182,6 +191,12 @@
     .mobileLogo {
         display: none;
     }
+
+    .actions {
+        > [data-id="mainSideMenu"] {
+            display: none;
+        }
+    }
 }
 
 @include breakpoint(tabletSmall, landscape) {
@@ -191,6 +206,12 @@
 
     .mobileLogo {
         display: none;
+    }
+
+    .actions {
+        > [data-id="mainSideMenu"] {
+            display: none;
+        }
     }
 }
 

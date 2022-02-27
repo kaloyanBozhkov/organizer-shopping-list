@@ -6,12 +6,14 @@ const NavigationDots = ({
     dotCount,
     activeIdx,
     onClick,
+    className,
 }: {
     dotCount: number
     activeIdx: number
     onClick: (n: number) => void
+    className?: string
 }) => (
-    <div className={styles.navigationDotsWrapper}>
+    <div className={`${styles.navigationDotsWrapper}${className ? ` ${className}` : ''}`}>
         {Array(dotCount)
             .fill(undefined)
             .map((unused, idx) => {

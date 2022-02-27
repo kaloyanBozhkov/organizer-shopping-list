@@ -4,11 +4,5 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: $marginUnit;
-
-    [data-id="categoryButtonsWrapper"] {
-        &:first-of-type {
-            max-width: 12rem;
-        }
-    }
+    gap: $marginUnit * 2;
 }

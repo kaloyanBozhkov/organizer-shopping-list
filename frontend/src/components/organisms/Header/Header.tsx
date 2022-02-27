@@ -4,6 +4,8 @@ import { setLoggedOutUser } from 'reactives/User.reactive'
 
 import Logo from 'components/atoms/Logo/Logo.atom'
 
+import MainSideMenu from 'components/organisms/MainSideMenu/MainSideMenu.organism'
+
 import { Button } from '@material-ui/core'
 import MenuIcon from '@mui/icons-material/Menu'
 import MenuOpenIcon from '@mui/icons-material/MenuOpen'
@@ -30,6 +32,7 @@ const Header = () => {
                     <Button color="primary" variant="contained" onClick={() => alert('')}>
                         Account
                     </Button>
+                    <MainSideMenu />
                     <Button
                         className={styles.logoutBtn}
                         color="primary"
