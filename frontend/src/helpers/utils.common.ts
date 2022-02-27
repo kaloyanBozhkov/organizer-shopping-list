@@ -1,3 +1,5 @@
+import { TouchEvent } from 'react'
+
 import { ResponseError } from 'types/common.types'
 
 export const isValidEmail = (email: string): boolean => {
@@ -45,3 +47,16 @@ export const retryPromisePromisified = <T>(promiseCreator: () => Promise<T>) =>
     new Promise<T>((res, rej) => {
         retryPromise<T>(promiseCreator, rej, res, 7)
     })
+
+export const getTouchEventOffset = <T extends HTMLElement>(event: TouchEvent<T>) => {
+    // pick first touch active or the last one that was active (touch end)
+    const touch = event.touches[0] || event.changedTouches[0],
+        rect = event.currentTarget.getBoundingClientRect(),
+        offsetX = touch.clientX - window.pageXOffset - rect.left,
+        offsetY = touch.clientY - window.pageYOffset - rect.top
+
+    return {
+        offsetX,
+        offsetY,
+    }
+}

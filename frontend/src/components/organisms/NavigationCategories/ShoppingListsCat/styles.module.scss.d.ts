@@ -5,7 +5,6 @@ interface CssExports {
     opacityIn: string
     opacityInDelayed: string
     popIn: string
-    shake: string
     shoppingListsCat: string
     slideInBottomWithOpacity: string
     slideInTop: string
