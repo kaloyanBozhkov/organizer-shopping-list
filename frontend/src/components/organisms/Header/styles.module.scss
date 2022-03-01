@@ -64,7 +64,7 @@
     height: 100%;
     padding: $marginUnit;
     box-sizing: border-box;
-    z-index: zindexmax;
+    z-index: $zIndexMax;
 
     &[data-open="true"] {
         transform: translateX(100%);
@@ -112,7 +112,6 @@
     > .logo {
         width: auto;
         position: relative;
-        top: -0.5rem;
         @include logoMobile;
     }
 
@@ -120,9 +119,10 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        gap: 1.5rem;
+        gap: $spacingUnit;
         width: 100%;
-        padding-top: 3rem;
+        max-width: 100%;
+        overflow: auto;
         flex: 1;
 
         > button {
@@ -130,20 +130,38 @@
         }
 
         .logoutBtn {
-            position: relative;
             transition: 800ms all $cubicBezier_0;
-
             &:hover {
-                top: -3px;
+                transform: translateY(-3px);
             }
         }
 
         > [data-id="mainSideMenu"] {
-            width: 100%;
+            flex: 1;
+            margin-top: $marginUnit;
 
             > div {
                 max-width: 100%;
-                padding: 0 $marginUnit;
+
+                button {
+                    box-sizing: border-box;
+                    left: 0;
+                    margin-bottom: $spacingUnit;
+                }
+            }
+
+            @mixin mobileStyles {
+                > div:not(:first-of-type) {
+                    display: none;
+                }
+            }
+
+            @include breakpoint(mobile, portrait) {
+                @include mobileStyles;
+            }
+
+            @include breakpoint(mobile, landscape) {
+                @include mobileStyles;
             }
         }
     }

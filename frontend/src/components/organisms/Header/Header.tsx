@@ -29,10 +29,10 @@ const Header = () => {
                 </Button>
                 <Logo modifier="pageBG" className={styles.logo} />
                 <div className={styles.actions}>
+                    <MainSideMenu />
                     <Button color="primary" variant="contained" onClick={() => alert('')}>
                         Account
                     </Button>
-                    <MainSideMenu />
                     <Button
                         className={styles.logoutBtn}
                         color="primary"

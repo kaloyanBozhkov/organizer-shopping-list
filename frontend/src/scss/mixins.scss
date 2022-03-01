@@ -299,3 +299,13 @@
         max-width: 15vw;
     }
 }
+
+@mixin mainButtonStyles {
+    border-radius: 2rem;
+    font-size: 1.8rem;
+    height: 3.5rem;
+    padding: 0.5rem 4rem;
+    text-transform: uppercase;
+    font-weight: normal;
+    line-height: 1.75rem;
+}

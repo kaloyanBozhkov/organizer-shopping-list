@@ -1,7 +1,37 @@
+@import "scss/breakpoints.scss";
+@import "scss/mixins.scss";
 @import "scss/variables.scss";
 
 .mainNavCat {
     width: 100%;
     max-width: 12rem;
     height: 100%;
+
+    // reusing this component for side menu on mobile
+    @mixin mobileStyles {
+        max-width: 100%;
+
+        [data-id="categoryWrapper"] {
+            // hide label on mobile
+            > div:first-child {
+                display: none;
+            }
+
+            // remove animaton on mobile
+            > div:not(:first-child) > button {
+                @include mainButtonStyles;
+
+                animation: none;
+                opacity: 1;
+            }
+        }
+    }
+
+    @include breakpoint(mobile, portrait) {
+        @include mobileStyles;
+    }
+
+    @include breakpoint(mobile, landscape) {
+        @include mobileStyles;
+    }
 }
