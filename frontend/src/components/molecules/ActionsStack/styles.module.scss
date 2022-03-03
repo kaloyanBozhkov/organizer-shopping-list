@@ -1,0 +1,32 @@
+@import "scss/variables.scss";
+@import "scss/mixins.scss";
+@import "scss/keyframes.scss";
+
+.actionStackWrapper {
+    width: auto;
+    height: auto;
+    z-index: $zIndexAboveBase;
+    position: absolute;
+    display: flex;
+    gap: $spacingUnit;
+
+    &[data-position="bottom-right"] {
+        right: 0;
+        bottom: 0;
+    }
+
+    &[data-alignment="vertical"] {
+        flex-direction: column;
+    }
+
+    &[data-with-animation="true"] {
+        button {
+            opacity: 0;
+            @for $j from 0 through 6 {
+                &:nth-child(#{$j}) {
+                    @include animate(slideInBottomWithOpacity, 300ms, ($j + 1) * 300ms);
+                }
+            }
+        }
+    }
+}

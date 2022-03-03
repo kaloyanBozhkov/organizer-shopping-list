@@ -7,7 +7,8 @@
     display: flex;
     flex-direction: column;
     gap: $marginUnit;
-    padding: 0 0;
+    padding: 0;
+    position: relative;
 
     @include breakpoint(tabletSmall) {
         padding: 0 $marginUnit;
@@ -17,7 +18,7 @@
         padding: 0 $marginUnit;
     }
 
-    header {
+    > header {
         height: 100%;
         width: 100%;
 
@@ -34,12 +35,13 @@
         flex: 1;
         display: flex;
         flex-direction: row;
+        gap: $rowGap $columnGap;
 
-        main {
+        > main {
             flex: 1;
         }
 
-        nav {
+        > nav {
             display: none;
             width: 26rem;
 
@@ -51,5 +53,17 @@
                 display: block;
             }
         }
+    }
+
+    > section {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
     }
 }

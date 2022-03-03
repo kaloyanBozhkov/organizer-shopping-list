@@ -1,8 +1,6 @@
-import React, { useContext } from 'react'
+import React from 'react'
 
 import { Outlet } from 'react-router-dom'
-
-import StoreContext from 'context/Store.context'
 
 import Header from 'components/organisms/Header/Header'
 import MainSideMenu from 'components/organisms/MainSideMenu/MainSideMenu.organism'
@@ -10,18 +8,12 @@ import MainSideMenu from 'components/organisms/MainSideMenu/MainSideMenu.organis
 import GenericLayout from 'components/layouts/Generic/Generic.layout'
 import MainLayout from 'components/layouts/Main/Main.layout'
 
-import LoginModal from 'components/modals/Login.modal'
+import IndexModal from 'components/templates/modals/Index.modal'
 
 const MainPage = () => {
-    const { activeModal } = useContext(StoreContext)
-
     return (
-        <GenericLayout>
-            <MainLayout
-                header={<Header />}
-                nav={<MainSideMenu />}
-                modal={activeModal ? <LoginModal /> : null}
-            >
+        <GenericLayout sideContent={<p>ads content</p>}>
+            <MainLayout header={<Header />} nav={<MainSideMenu />} modal={<IndexModal />}>
                 <Outlet />
             </MainLayout>
         </GenericLayout>

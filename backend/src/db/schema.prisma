@@ -70,6 +70,9 @@ model EdgeProductShop {
   userId    String  @db.VarChar(36)
   addedBy   User    @relation(fields: [userId], references: [id])
 
+  // if set, will show this as price if shop selected is that one?
+  productPriceInThisShop Float? @default(0)
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 

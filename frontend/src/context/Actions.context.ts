@@ -1,12 +1,11 @@
 import React from 'react'
 
-import { ListItem } from 'types/graphQL.generated'
+// import { ListItem } from 'types/graphQL.generated'
+import type { Store } from './Store.context'
 
 export type Actions = {
-    onToggleLoginProcess: () => void
-    onAddShoppingItemToCart: (id: ListItem['id']) => void
-    onRemoveShoppingItemFromCart: (id: ListItem['id']) => void
-    onMarkPurchased: (id: ListItem['id']) => void
+    onCloseModal: () => void
+    onOpenModal: (modal: NonNullable<Store['activeModal']>) => void
 }
 
 const ActionsContext = React.createContext<Actions>({} as Actions)

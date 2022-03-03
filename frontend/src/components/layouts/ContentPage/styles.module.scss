@@ -2,21 +2,28 @@
 @import "scss/breakpoints.scss";
 
 .contentPageLayout {
-    header {
+    width: 100%;
+    height: 100%;
+
+    > header {
         width: 100%;
         height: auto;
     }
 
     .contentWrapper {
+        width: 100%;
+        height: 100%;
         display: flex;
         flex-direction: row;
-        nav {
+
+        > nav {
             width: fit-content;
             height: 100%;
         }
 
-        main {
+        > main {
             flex: 1;
+            position: relative;
         }
     }
 }

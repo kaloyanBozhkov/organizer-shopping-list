@@ -6,6 +6,9 @@ import jwtDecode from 'jwt-decode'
 
 import { useGetUserLoginLazyQuery } from 'types/graphQL.generated'
 
+import ActionsProvider from 'context/providers/Actions.provider'
+import StoreProvider from 'context/providers/Store.provider'
+
 import { tokenVar } from 'reactives/Token.reactive'
 import { setLoggedInUser, setLoggedOutUser } from 'reactives/User.reactive'
 
@@ -42,7 +45,13 @@ const MainContainer = (): ReactElement => {
 
     if (loading) return <LoadingPage message="Loading user data.." />
 
-    return <MainPage />
+    return (
+        <StoreProvider>
+            <ActionsProvider>
+                <MainPage />
+            </ActionsProvider>
+        </StoreProvider>
+    )
 }
 
 export default MainContainer

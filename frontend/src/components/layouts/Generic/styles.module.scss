@@ -3,10 +3,25 @@
 .genericLayout {
     min-height: 100%;
     width: 100%;
-    background-color: $purple;
-    main {
+    display: flex;
+    background-color: grey;
+
+    > main {
+        background-color: $purple;
         padding: $marginUnit;
-        width: 100%;
-        height: 100%;
+        flex: 1;
+    }
+
+    > section {
+        // @TODO remove when we do not pss react node to component for mobile
+        @media (max-width: 750px) {
+            display: none;
+        }
+
+        width: 20vw;
+        margin-left: 1px;
+        border-left: 1px solid $green;
+        padding: $marginUnit;
+        background-color: darken($purple, 5%);
     }
 }

@@ -1,0 +1,26 @@
+@import "scss/breakpoints.scss";
+@import "scss/mixins.scss";
+@import "scss/keyframes.scss";
+
+.indexModalWrapper {
+    :global(.MuiPaper-root) {
+        background: none;
+        background-color: none;
+
+        @mixin mobileStyles {
+            align-self: flex-end;
+            margin: $spacingUnit;
+            width: 100%;
+        }
+
+        @include breakpoint(mobile, portrait) {
+            @include mobileStyles();
+        }
+
+        @include breakpoint(mobile, landscape) {
+            @include mobileStyles();
+        }
+
+        @include animate(slideInBottomWithOpacity, 200ms);
+    }
+}

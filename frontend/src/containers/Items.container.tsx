@@ -1,9 +1,14 @@
-import React, { ReactElement } from 'react'
+import React, { ReactElement, useCallback, useContext } from 'react'
 
-import ItemsPage from 'components/pages/Items.page'
+import ActionsContext from 'context/Actions.context'
+
+import ItemsTemplate from 'components/templates/Main/Items/Items.template'
 
 const ItemsContainer = (): ReactElement => {
-    return <ItemsPage />
+    const { onOpenModal } = useContext(ActionsContext),
+        onCreateNewItem = useCallback(() => onOpenModal('createItem'), [onOpenModal])
+
+    return <ItemsTemplate onCreateNew={onCreateNewItem} onFilter={() => alert('')} />
 }
 
 export default ItemsContainer

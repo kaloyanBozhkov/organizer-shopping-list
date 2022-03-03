@@ -1,4 +1,6 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+
+import { useLocation } from 'react-router-dom'
 
 import { setLoggedOutUser } from 'reactives/User.reactive'
 
@@ -14,7 +16,15 @@ import styles from './styles.module.scss'
 
 const Header = () => {
     const [mobileHeaderOpen, setMobileHeaderOpen] = useState(false),
-        toggleMobileHeader = () => setMobileHeaderOpen((prev) => !prev)
+        toggleMobileHeader = () => setMobileHeaderOpen((prev) => !prev),
+        loc = useLocation()
+
+    // close mobile menu if we change location by clicking nav btn
+    useEffect(() => {
+        // wait for btn animation to end
+        const tId = setTimeout(() => setMobileHeaderOpen(false), 400)
+        return () => clearTimeout(tId)
+    }, [loc])
 
     return (
         <>
@@ -33,12 +43,7 @@ const Header = () => {
                     <Button color="primary" variant="contained" onClick={() => alert('')}>
                         Account
                     </Button>
-                    <Button
-                        className={styles.logoutBtn}
-                        color="primary"
-                        variant="outlined"
-                        onClick={setLoggedOutUser}
-                    >
+                    <Button color="primary" variant="outlined" onClick={setLoggedOutUser}>
                         Logout
                     </Button>
                 </div>

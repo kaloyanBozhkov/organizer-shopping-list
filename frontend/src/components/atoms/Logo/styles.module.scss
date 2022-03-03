@@ -1,58 +1,37 @@
 @import "scss/mixins.scss";
 
-@keyframes dashArrayPaperBG {
-    0% {
-        stroke-width: 30px;
-        stroke: $paperBg;
-    }
-    // 1s
-    0.333% {
-        stroke-width: 20px;
-    }
+@mixin dashArrayWithCustomBG($variantName, $bgColor, $dashColor) {
+    @keyframes dashArrayAnimate#{$variantName} {
+        0% {
+            stroke-width: 30px;
+            stroke: $bgColor;
+        }
+        // 1s
+        0.333% {
+            stroke-width: 20px;
+        }
 
-    // 1.8s
-    0.6% {
-        stroke-width: 3px;
-        stroke: $paperBg;
-    }
+        // 1.8s
+        0.6% {
+            stroke-width: 3px;
+            stroke: $bgColor;
+        }
 
-    // 2.6s
-    0.866% {
-        stroke-width: 3px;
-        stroke: $green;
-    }
+        // 2.6s
+        0.866% {
+            stroke-width: 3px;
+            stroke: $dashColor;
+        }
 
-    to {
-        stroke-dashoffset: 7500;
+        to {
+            stroke-dashoffset: 7500;
+        }
     }
 }
 
-@keyframes dashArrayPageBG {
-    0% {
-        stroke-width: 30px;
-        stroke: $purple;
-    }
-    // 1s
-    0.333% {
-        stroke-width: 20px;
-    }
-
-    // 1.8s
-    0.6% {
-        stroke-width: 3px;
-        stroke: $purple;
-    }
-
-    // 2.6s
-    0.866% {
-        stroke-width: 3px;
-        stroke: $green;
-    }
-
-    to {
-        stroke-dashoffset: 7500;
-    }
-}
+// create keyframes
+@include dashArrayWithCustomBG("PageBG", $purple, $green);
+@include dashArrayWithCustomBG("PaperBG", $paperBg, $green);
 
 .logo {
     width: 100%;
@@ -84,7 +63,7 @@
     // determine the bg color that the text appars from
     &[data-modifier="paperBG"] {
         > svg > path {
-            @include animate(dashArrayPaperBG, 300s, unset, none);
+            @include animate(dashArrayAnimatePaperBG, 300s, unset, none);
 
             animation-timing-function: linear;
             animation-iteration-count: infinite;
@@ -93,7 +72,7 @@
 
     &[data-modifier="pageBG"] {
         > svg > path {
-            @include animate(dashArrayPageBG, 300s, unset, none);
+            @include animate(dashArrayAnimatePageBG, 300s, unset, none);
 
             animation-timing-function: linear;
             animation-iteration-count: infinite;

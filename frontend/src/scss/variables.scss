@@ -29,18 +29,10 @@ $paperBorder: #4c249f;
 
 $cubicBezier_0: cubic-bezier(0, 0.71, 0.11, 0.99);
 
-$uniswap-radial-gradient: linear-gradient(var(--color-bg-card), var(--color-bg-card)),
-    radial-gradient(circle at top left, #feccd2 40%, rgba(240, 47, 198, 0.9));
-$flashyGreen: linear-gradient(
-    40deg,
-    #ff9304,
-    #ff04ea 10%,
-    #9b4beb 20%,
-    #0e8dd6 30%,
-    #0bc6df 40%,
-    #07d464 50%,
-    #dfd105 60%,
-    #ff04ab 78%,
-    #8933eb 90%,
-    #3b89ff
-);
+$sweetGradient: linear-gradient(40deg, #4c249f, #1c3857 50%, #650380);
+
+// layout
+$rowGap: $marginUnit; // downm
+$columnGap: $marginUnit * 2; // right
+
+$borderRadius: 10px;
