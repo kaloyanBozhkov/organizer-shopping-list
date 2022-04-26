@@ -3,75 +3,19 @@
 @import "scss/mixins.scss";
 @import "scss/breakpoints.scss";
 
-@mixin noSideMenu {
+.header {
     position: relative;
-    top: 0;
-    left: 0;
-    transition: unset;
-    background-color: transparent;
+    width: 100%;
+    height: 6rem;
+    box-sizing: border-box;
+    background-color: $purple;
+    display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
     border-right: 0;
+    margin: 0;
     padding: 0;
-    height: 6rem;
-
-    &::before,
-    &::after {
-        display: none;
-    }
-
-    .actions {
-        width: auto;
-        flex: unset;
-        padding-top: 0;
-        gap: $spacingUnit;
-
-        > button {
-            width: 12rem;
-            font-size: 1.4rem;
-            height: 3rem;
-
-            &:first-of-type {
-                @include animate(opacityInDelayed, 1s, unset, forwards, $cubicBezier_0);
-            }
-
-            &:last-of-type {
-                @include animate(opacityInDelayed, 2.5s, unset, forwards, $cubicBezier_0);
-            }
-        }
-    }
-
-    > .logo {
-        position: relative;
-        height: auto;
-        width: 24rem;
-        top: 0;
-        // make up for white space of logo
-        left: -5px;
-    }
-
-    > .headerMobileBtn {
-        display: none;
-    }
-}
-
-@mixin logoMobile {
-    height: 4rem;
-    left: 1.5rem;
-    z-index: 0;
-}
-
-.header {
-    position: fixed;
-    top: 0;
-    left: -100%;
-    transition: 300ms all linear;
-    width: 100%;
-    height: 100%;
-    padding: $marginUnit;
-    box-sizing: border-box;
-    z-index: $zIndexMax;
 
     &[data-open="true"] {
         transform: translateX(100%);
@@ -90,36 +34,22 @@
         right: 1px;
     }
 
-    @include madeByMixin();
     &::after {
         bottom: 0.5rem;
         font-size: 0.8rem;
     }
 
-    background-color: $purple;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    margin: 0;
-
-    .headerMobileBtn {
-        position: fixed;
-        top: 1rem;
-        left: 2rem;
-        z-index: 1;
-
-        svg {
-            color: $text;
-            width: 5rem;
-            height: 5rem;
-        }
+    &::before,
+    &::after {
+        display: none;
     }
 
     > .logo {
-        width: auto;
         position: relative;
-        @include logoMobile;
+        width: 24rem;
+        top: 0;
+        // make up for white space of logo
+        left: -5px;
     }
 
     .actions {
@@ -131,9 +61,21 @@
         max-width: 100%;
         overflow: auto;
         flex: 1;
+        flex: unset;
+        padding-top: 0;
 
         > button {
-            width: 100%;
+            width: 12rem;
+            font-size: 1.4rem;
+            height: 3rem;
+
+            &:first-of-type {
+                @include animate(opacityInDelayed, 1s, unset, forwards, $cubicBezier_0);
+            }
+
+            &:last-of-type {
+                @include animate(opacityInDelayed, 2.5s, unset, forwards, $cubicBezier_0);
+            }
         }
 
         > [data-id="mainSideMenu"] {
@@ -149,86 +91,6 @@
                     margin-bottom: $spacingUnit;
                 }
             }
-
-            @mixin mobileStyles {
-                > div:not(:first-of-type) {
-                    display: none;
-                }
-            }
-
-            @include breakpoint(mobile, portrait) {
-                @include mobileStyles;
-            }
-
-            @include breakpoint(mobile, landscape) {
-                @include mobileStyles;
-            }
-        }
-    }
-
-    @media all and (max-width: 350px) {
-        padding-top: 8rem;
-        > .logo {
-            position: initial;
-            top: 0;
-            left: 0;
-            height: 6rem;
-        }
-    }
-
-    @include breakpoint(mobile, landscape) {
-        width: 35rem;
-        left: -35rem;
-
-        &[data-open="true"] {
-            transform: translateX(35rem);
-        }
-
-        > .logo {
-            left: 2.5rem;
-        }
-    }
-}
-
-.mobileLogo {
-    position: fixed;
-    @include logoMobile;
-
-    top: 2.5rem;
-
-    @include breakpoint(mobile, landscape) {
-        left: 5rem;
-    }
-}
-
-@include breakpoint(tabletSmall, portrait) {
-    .header {
-        @include noSideMenu;
-    }
-
-    .mobileLogo {
-        display: none;
-    }
-
-    .actions {
-        > [data-id="mainSideMenu"] {
-            display: none;
-        }
-    }
-}
-
-@include breakpoint(tabletSmall, landscape) {
-    .header {
-        @include noSideMenu;
-    }
-
-    .mobileLogo {
-        display: none;
-    }
-
-    .actions {
-        > [data-id="mainSideMenu"] {
-            display: none;
         }
     }
 }
@@ -238,9 +100,5 @@
         .actions {
             flex-direction: row;
         }
-    }
-
-    .mobileLogo {
-        display: none;
     }
 }

@@ -6,7 +6,7 @@
     height: 100%;
 
     .navigationDots {
-        border-bottom: 1px solid transparentize($text, 0.55);
+        border-bottom: 1px solid $textTransparentize55Percent;
         height: auto;
         width: auto;
         padding-bottom: $marginUnit;

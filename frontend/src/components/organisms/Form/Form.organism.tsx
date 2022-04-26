@@ -2,8 +2,8 @@ import React, { ReactElement } from 'react'
 
 import { FormFieldDefinition, FormState } from 'types/form.types'
 
-import useFormState from 'hooks/Form/useFormState'
-import useFormValidation from 'hooks/Form/useFormValidation'
+import useFormState from 'hooks/form/useFormState'
+import useFormValidation from 'hooks/form/useFormValidation'
 
 import { Button, CircularProgress, TextField } from '@material-ui/core'
 

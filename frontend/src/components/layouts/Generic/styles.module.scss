@@ -22,6 +22,6 @@
         margin-left: 1px;
         border-left: 1px solid $green;
         padding: $marginUnit;
-        background-color: darken($purple, 5%);
+        background-color: $purpleDarken5Percent;
     }
 }

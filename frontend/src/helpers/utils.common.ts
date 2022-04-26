@@ -60,3 +60,6 @@ export const getTouchEventOffset = <T extends HTMLElement>(event: TouchEvent<T>)
         offsetY,
     }
 }
+
+export const extendClassNameProp = (className1: string, className2?: string) =>
+    className2 ? [className1, className2].join(' ').trim() : className1

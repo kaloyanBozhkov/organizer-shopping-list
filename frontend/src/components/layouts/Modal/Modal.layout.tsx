@@ -1,5 +1,7 @@
 import React, { ReactNode } from 'react'
 
+import { extendClassNameProp } from 'helpers/utils.common'
+
 import styles from './modalLayout.module.scss'
 
 const ModalLayout = ({
@@ -13,11 +15,7 @@ const ModalLayout = ({
     buttons?: ReactNode
     className?: string
 }) => (
-    <div
-        className={
-            className ? [className, styles.modalLayout].join(' ').trim() : styles.modalLayout
-        }
-    >
+    <div className={extendClassNameProp(styles.modalLayout, className)}>
         {header && <header>{header}</header>}
         <main>{children}</main>
         {buttons && <section>{buttons}</section>}

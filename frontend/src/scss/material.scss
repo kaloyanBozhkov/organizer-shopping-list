@@ -45,7 +45,7 @@
     background-color: $green;
     color: $purple;
     &:hover {
-        background-color: darken($green, 10%);
+        background-color: $greenDarken10Percent;
     }
     &.MuiButton-contained.Mui-disabled {
         background-color: $green;

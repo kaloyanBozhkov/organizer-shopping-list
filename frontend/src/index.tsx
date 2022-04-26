@@ -5,6 +5,7 @@ import { ApolloClient, ApolloProvider, HttpLink, InMemoryCache, from } from '@ap
 import { errorLink, tokenAuthLink } from 'graphql/apollo.links'
 import { createRoot } from 'react-dom'
 import { BrowserRouter } from 'react-router-dom'
+import { GlobalStyles } from 'scss/variables'
 
 import IndexRouter from 'routing/IndexRouter'
 
@@ -34,15 +35,16 @@ const root = createRoot(rootElement),
 
 root.render(
     // Add back when Apollo Client useMutation is no longer failing with StrictMode due to re-renders https://github.com/apollographql/apollo-client/issues/9251
-    // <React.StrictMode>
-    <StylesProvider injectFirst>
-        <ErrorBoundary>
-            <BrowserRouter>
-                <ApolloProvider client={apolloClient}>
-                    <IndexRouter />
-                </ApolloProvider>
-            </BrowserRouter>
-        </ErrorBoundary>
-    </StylesProvider>
-    // </React.StrictMode>
+    <React.StrictMode>
+        <StylesProvider injectFirst>
+            <ErrorBoundary>
+                <BrowserRouter>
+                    <ApolloProvider client={apolloClient}>
+                        <GlobalStyles />
+                        <IndexRouter />
+                    </ApolloProvider>
+                </BrowserRouter>
+            </ErrorBoundary>
+        </StylesProvider>
+    </React.StrictMode>
 )

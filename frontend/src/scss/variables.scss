@@ -4,35 +4,38 @@ $zIndexAboveBase: 2;
 $zIndexBase: 0;
 $zIndexBelowBase: -1;
 
-$blue: #26547c;
-$light: #84a9c0;
-$yellow: #fc0;
-$red: #ef476f;
+$red: var(--red);
 
-$green: #05e6c4;
-$purple: #2d0b59;
-$white: #fffcf9;
-$black: #000;
+$green: var(--green);
+$purple: var(--purple);
+$white: var(--white);
+$black: var(--black);
 
 $text: #cdc5df;
-$textPrimary: #9f82d7;
+$textPrimary: var(--textPrimary);
 
-$highlightPurple: #282967;
+$highlightPurple: var(--highlightPurple);
+
+$paperBg: var(--paperBg);
+$paperBorder: var(--paperBorder);
 
 $baseUnit: 0.8rem;
 $marginUnit: 2.4rem;
 $spacingUnit: 1.6rem;
 $tapUnit: 4.8rem;
 
-$paperBg: #341662;
-$paperBorder: #4c249f;
-
 $cubicBezier_0: cubic-bezier(0, 0.71, 0.11, 0.99);
 
-$sweetGradient: linear-gradient(40deg, #4c249f, #1c3857 50%, #650380);
+$sweetGradient: var(--sweetGradient);
 
 // layout
 $rowGap: $marginUnit; // downm
 $columnGap: $marginUnit * 2; // right
 
 $borderRadius: 10px;
+
+// MODIFIED COLORS
+$textDarken20Percent: var(--textDarken20Percent);
+$greenDarken10Percent: var(--greenDarken10Percent);
+$purpleDarken5Percent: var(--purpleDarken5Percent);
+$textTransparentize55Percent: var(--textTransparentize55Percent);

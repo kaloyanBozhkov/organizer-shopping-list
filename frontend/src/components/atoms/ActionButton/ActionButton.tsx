@@ -3,6 +3,8 @@ import React from 'react'
 import { Button } from '@material-ui/core'
 import type { SvgIconComponent } from '@mui/icons-material'
 
+import { extendClassNameProp } from 'helpers/utils.common'
+
 import styles from './styles.module.scss'
 
 export type ActionButtonProps = {
@@ -16,9 +18,7 @@ const ActionButton = ({ icon: IconComponent, label, onClick, className }: Action
     <Button
         variant="contained"
         color="primary"
-        className={
-            className ? [styles.actionButton, className].join(' ').trim() : styles.actionButton
-        }
+        className={extendClassNameProp(styles.actionButton, className)}
         onClick={onClick}
     >
         <div>

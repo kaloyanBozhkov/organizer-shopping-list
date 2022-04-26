@@ -1,0 +1,22 @@
+@import "scss/variables.scss";
+
+.sideSlideAction {
+    z-index: $zIndexMax + 1;
+    position: fixed;
+
+    &[data-side="left"] {
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: $marginUnit;
+        background-color: transparent;
+    }
+
+    &[data-side="right"] {
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: $marginUnit;
+        background-color: transparent;
+    }
+}

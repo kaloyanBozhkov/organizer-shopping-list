@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from 'react'
+import React, { ReactElement, useContext, useMemo } from 'react'
 
 import ActionsContext from 'context/Actions.context'
 import StoreContext from 'context/Store.context'
@@ -9,7 +9,7 @@ import { Dialog } from '@material-ui/core'
 
 import styles from './indexModal.module.scss'
 
-const IndexModal = () => {
+const IndexModal = (): ReactElement => {
     const { activeModal } = useContext(StoreContext),
         { onCloseModal } = useContext(ActionsContext),
         content = useMemo(() => {

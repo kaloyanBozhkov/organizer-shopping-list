@@ -1,0 +1,139 @@
+@import "scss/variables.scss";
+@import "scss/keyframes.scss";
+@import "scss/mixins.scss";
+@import "scss/breakpoints.scss";
+
+@mixin logoMobile {
+    height: 4rem;
+    left: 1.5rem;
+    z-index: 0;
+}
+
+.headerMobile {
+    @include madeByMixin();
+
+    position: fixed;
+    top: 0;
+    left: -100%;
+    transition: 300ms all linear;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: $marginUnit;
+    box-sizing: border-box;
+    z-index: $zIndexMax;
+    background-color: $purple;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: $marginUnit;
+
+    &::before {
+        content: "";
+        width: 1px;
+        height: 100%;
+        background-color: $green;
+        position: absolute;
+        top: 0;
+        right: 1px;
+    }
+
+    &::after {
+        bottom: 0.5rem;
+        font-size: 0.8rem;
+    }
+
+    &[data-open="true"] {
+        transform: translateX(100%);
+        &::before {
+            right: -1px;
+        }
+    }
+
+    > .headerMobileBtn {
+        position: fixed;
+        top: 1rem;
+        left: 2rem;
+        z-index: 1;
+
+        svg {
+            color: $text;
+            width: 5rem;
+            height: 5rem;
+        }
+    }
+
+    > .logo {
+        width: auto;
+        position: relative;
+        @include logoMobile;
+    }
+
+    > .actions {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: $spacingUnit;
+        width: 100%;
+        max-width: 100%;
+        overflow: auto;
+        flex: 1;
+        padding-bottom: $baseUnit;
+
+        > button {
+            width: 100%;
+        }
+    }
+
+    [data-id="mainSideMenu"] {
+        flex: 1;
+        margin-top: $spacingUnit;
+
+        > div {
+            max-width: 100%;
+
+            button {
+                box-sizing: border-box;
+                left: 0;
+                margin-bottom: $spacingUnit;
+            }
+        }
+
+        @mixin mobileStyles {
+            > div:not(:first-of-type) {
+                display: none;
+            }
+        }
+
+        @include breakpoint(mobile, portrait) {
+            @include mobileStyles;
+        }
+
+        @include breakpoint(mobile, landscape) {
+            @include mobileStyles;
+        }
+    }
+
+    @media all and (max-width: 350px) {
+        padding-top: 8rem;
+    }
+
+    @include breakpoint(mobile, landscape) {
+        width: 35rem;
+        left: -35rem;
+
+        &[data-open="true"] {
+            transform: translateX(35rem);
+        }
+    }
+}
+
+.mobileLogo {
+    position: fixed;
+    top: 2.5rem;
+    @include logoMobile;
+    @include breakpoint(mobile, landscape) {
+        left: 5rem;
+    }
+}

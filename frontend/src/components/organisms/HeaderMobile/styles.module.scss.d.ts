@@ -2,8 +2,10 @@
 // Please do not change this file!
 interface CssExports {
     actions: string
-    header: string
+    headerMobile: string
+    headerMobileBtn: string
     logo: string
+    mobileLogo: string
     opacityIn: string
     opacityInDelayed: string
     popIn: string

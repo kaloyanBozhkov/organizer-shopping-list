@@ -4,7 +4,7 @@ import { Navigate, useParams } from 'react-router-dom'
 
 import AccessAreaContext from 'context/AccessArea.context'
 
-import usePromise from 'hooks/Data/usePromise/usePromise'
+import usePromise from 'hooks/data/usePromise/usePromise'
 import useCountdown from 'hooks/useCountdown'
 
 import Logo from 'components/atoms/Logo/Logo.atom'

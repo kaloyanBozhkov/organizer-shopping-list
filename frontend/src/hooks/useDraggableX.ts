@@ -63,7 +63,7 @@ const common = {
 type useDraggableXProps<T> = {
     onDragLeft?: (ref: RefObject<T>) => void
     onDragRight?: (ref: RefObject<T>) => void
-    sensitiviy: number
+    sensitiviy?: number
 } & (
     | {
           onDragOngoing: (ref: RefObject<T>, movedBy: number) => void
